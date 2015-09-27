@@ -26,9 +26,9 @@ public class DataProducer {
         Producer<String, String> producer = new Producer<>(config);
 
         for (long nEvents = 0; nEvents < 5; nEvents++) {
-            long runtime = new Date().getTime();
+            String runtime = new Date().toString();
             String ip = "192.168.2." + rnd.nextInt(255);
-            String msg = runtime + ",www.example.com," + ip;
+            String msg = runtime + ", www.example.com, " + ip;
             KeyedMessage<String, String> data = new KeyedMessage<>("page_visits", ip, msg);
             producer.send(data);
         }
