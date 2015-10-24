@@ -1,5 +1,10 @@
 package fi.muni.cz;
 
+import com.espertech.esper.client.EPAdministrator;
+import com.espertech.esper.client.EPServiceProvider;
+import com.espertech.esper.client.EPStatement;
+import fi.muni.cz.esper.EventListener;
+import fi.muni.cz.esper.Utils;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
@@ -16,15 +21,10 @@ import java.util.concurrent.TimeUnit;
  * Created by tomasskopal on 26.09.15.
  */
 public class Consumer {
+
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
-
-    private static final String LOCALHOST_ZK = "localhost:2181";
-    private static final String LOCALHOST_TOPIC = "page_visits";
-    private static final int LOCALHOST_THREATS = 1;
-    private static final String LOCALHOST_GROUP = "group1";
-
 
     public Consumer(String a_zookeeper, String a_groupId, String a_topic) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
@@ -32,17 +32,6 @@ public class Consumer {
         this.topic = a_topic;
     }
 
-    public void shutdown() {
-        if (consumer != null) consumer.shutdown();
-        if (executor != null) executor.shutdown();
-        try {
-            if (!executor.awaitTermination(5000, TimeUnit.MILLISECONDS)) {
-                System.out.println("Timed out waiting for consumer threads to shut down, exiting uncleanly");
-            }
-        } catch (InterruptedException e) {
-            System.out.println("Interrupted during shutdown, exiting uncleanly");
-        }
-    }
 
     public void run(int a_numThreads) {
         Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
@@ -51,16 +40,24 @@ public class Consumer {
         List<KafkaStream<byte[], byte[]>> streams = consumerMap.get(topic);
 
         // now launch all the threads
-        //
         executor = Executors.newFixedThreadPool(a_numThreads);
 
+        // esper
+        EPServiceProvider cep = Utils.getServiceProvider();
+        EPAdministrator cepAdm = cep.getEPAdministrator();
+        EPStatement cepStatement = cepAdm.createEPL("select * from "
+                + "IncommingEvent.win:time_batch(10 sec) "
+                + "having count(*) > 3");
+        cepStatement.addListener(new EventListener());
+
+
         // now create an object to consume the messages
-        //
         int threadNumber = 0;
         for (final KafkaStream stream : streams) {
-            executor.submit(new SimpleConsumer(stream, threadNumber));
+            executor.submit(new SimpleConsumer(stream, threadNumber, cep.getEPRuntime()));
             threadNumber++;
         }
+        System.out.println(threadNumber + " threads is running.");
     }
 
     private static ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {
@@ -74,21 +71,4 @@ public class Consumer {
         return new ConsumerConfig(props);
     }
 
-    public static void main(String[] args) {
-        String zooKeeper = LOCALHOST_ZK;
-        String groupId = LOCALHOST_GROUP;
-        String topic = LOCALHOST_TOPIC;
-        int threads = LOCALHOST_THREATS;
-
-        Consumer example = new Consumer(zooKeeper, groupId, topic);
-        example.run(threads);
-
-   /*     try {
-            Thread.sleep(10000);
-        } catch (InterruptedException ie) {
-
-        }
-        example.shutdown();
-        */
-    }
 }
