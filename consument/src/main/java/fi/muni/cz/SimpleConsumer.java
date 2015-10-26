@@ -11,11 +11,11 @@ import kafka.consumer.KafkaStream;
 public class SimpleConsumer implements Runnable {
 
     private KafkaStream m_stream;
-    private int m_threadNumber;
+    private String topic;
     private EPRuntime epRuntime;
 
-    public SimpleConsumer(KafkaStream a_stream, int a_threadNumber, EPRuntime epRuntime) {
-        this.m_threadNumber = a_threadNumber;
+    public SimpleConsumer(KafkaStream a_stream, String topic, EPRuntime epRuntime) {
+        this.topic = topic;
         this.m_stream = a_stream;
         this.epRuntime = epRuntime;
     }
@@ -24,7 +24,7 @@ public class SimpleConsumer implements Runnable {
         ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
         while (it.hasNext()) {
             String msg = new String(it.next().message());
-            System.out.println("Thread " + m_threadNumber + ": " + msg);
+            System.out.println("Topic " + topic + ": " + msg);
             epRuntime.sendEvent(new IncommingEvent(msg));
         }
     }

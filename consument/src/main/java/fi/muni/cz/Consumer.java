@@ -34,7 +34,7 @@ public class Consumer {
 
 
     public void run(int a_numThreads) {
-        Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
+        Map<String, Integer> topicCountMap = new HashMap<>();
         topicCountMap.put(topic, new Integer(a_numThreads));
         Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumer.createMessageStreams(topicCountMap);
         List<KafkaStream<byte[], byte[]>> streams = consumerMap.get(topic);
@@ -54,10 +54,10 @@ public class Consumer {
         // now create an object to consume the messages
         int threadNumber = 0;
         for (final KafkaStream stream : streams) {
-            executor.submit(new SimpleConsumer(stream, threadNumber, cep.getEPRuntime()));
+            executor.submit(new SimpleConsumer(stream, topic, cep.getEPRuntime()));
             threadNumber++;
         }
-        System.out.println(threadNumber + " threads is running.");
+        System.out.println(threadNumber + " threads is running. On topic: " + topic);
     }
 
     private static ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {

@@ -4,18 +4,25 @@ import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 
-import java.util.Date;
 import java.util.Properties;
-import java.util.Random;
 
 /**
  * https://cwiki.apache.org/confluence/display/KAFKA/0.8.0+Producer+Example
  */
 public class DataProducer {
 
-    public static void main( String[] args ) {
-        Random rnd = new Random();
+    private static final String DEFAULT_TOPIC = "topic1";
+    private static final String DEFAULT_IDENTIFIER = "PC1";
 
+    public static void main( String[] args ) {
+        String topic = DEFAULT_TOPIC;
+        String identifier = DEFAULT_IDENTIFIER;
+        if (args.length > 0) {
+            topic = args[0];
+        }
+        if (args.length > 1) {
+            identifier = args[1];
+        }
         Properties props = new Properties();
         props.put("metadata.broker.list", "localhost:9092");
         props.put("serializer.class", "kafka.serializer.StringEncoder");
@@ -25,13 +32,31 @@ public class DataProducer {
 
         Producer<String, String> producer = new Producer<>(config);
 
-        for (long nEvents = 0; nEvents < 5; nEvents++) {
-            String runtime = new Date().toString();
-            String ip = "192.168.2." + rnd.nextInt(255);
-            String msg = runtime + ", www.example.com, " + ip;
-            KeyedMessage<String, String> data = new KeyedMessage<>("page_visits", ip, msg);
+        System.out.println("Start sending data to topic: " + topic);
+
+        int counter = 0;
+        while (counter < 20) {
+            String msg = "Level1, identifier:" + identifier;
+            KeyedMessage<String, String> data = new KeyedMessage<>(topic, msg);
             producer.send(data);
+            System.out.println("MSG: " + msg);
+
+            if (counter % 2 == 0) {
+                msg = "Level2, identifier:" + identifier;
+                data = new KeyedMessage<>(topic, msg);
+                producer.send(data);
+                System.out.println("MSG: " + msg);
+            }
+
+            counter++;
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        System.out.println("Producer Ends");
         producer.close();
     }
 }
