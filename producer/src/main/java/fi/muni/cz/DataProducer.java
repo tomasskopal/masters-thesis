@@ -35,14 +35,14 @@ public class DataProducer {
         System.out.println("Start sending data to topic: " + topic);
 
         int counter = 0;
-        while (counter < 20) {
-            String msg = "Level1, identifier:" + identifier;
+        while (counter < 10) {
+            String msg = "Severity:Level1, identifier:" + identifier;
             KeyedMessage<String, String> data = new KeyedMessage<>(topic, msg);
             producer.send(data);
             System.out.println("MSG: " + msg);
 
             if (counter % 2 == 0) {
-                msg = "Level2, identifier:" + identifier;
+                msg = "Severity:Level2, identifier:" + identifier;
                 data = new KeyedMessage<>(topic, msg);
                 producer.send(data);
                 System.out.println("MSG: " + msg);

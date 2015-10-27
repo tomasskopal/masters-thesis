@@ -1,10 +1,6 @@
 package fi.muni.cz;
 
-import com.espertech.esper.client.EPAdministrator;
-import com.espertech.esper.client.EPServiceProvider;
-import com.espertech.esper.client.EPStatement;
-import fi.muni.cz.esper.EventListener;
-import fi.muni.cz.esper.Utils;
+import com.espertech.esper.client.EPRuntime;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
@@ -15,7 +11,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by tomasskopal on 26.09.15.
@@ -25,11 +20,13 @@ public class Consumer {
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
+    private EPRuntime epRuntime; // should be as singelton somewhere //TODO: make it
 
-    public Consumer(String a_zookeeper, String a_groupId, String a_topic) {
+    public Consumer(String a_zookeeper, String a_groupId, String a_topic, EPRuntime epRuntime) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
                 createConsumerConfig(a_zookeeper, a_groupId));
         this.topic = a_topic;
+        this.epRuntime = epRuntime;
     }
 
 
@@ -42,19 +39,10 @@ public class Consumer {
         // now launch all the threads
         executor = Executors.newFixedThreadPool(a_numThreads);
 
-        // esper
-        EPServiceProvider cep = Utils.getServiceProvider();
-        EPAdministrator cepAdm = cep.getEPAdministrator();
-        EPStatement cepStatement = cepAdm.createEPL("select * from "
-                + "IncommingEvent.win:time_batch(10 sec) "
-                + "having count(*) > 3");
-        cepStatement.addListener(new EventListener());
-
-
         // now create an object to consume the messages
         int threadNumber = 0;
         for (final KafkaStream stream : streams) {
-            executor.submit(new SimpleConsumer(stream, topic, cep.getEPRuntime()));
+            executor.submit(new SimpleConsumer(stream, topic, epRuntime));
             threadNumber++;
         }
         System.out.println(threadNumber + " threads is running. On topic: " + topic);

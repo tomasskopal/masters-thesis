@@ -1,5 +1,12 @@
 package fi.muni.cz;
 
+import com.espertech.esper.client.EPAdministrator;
+import com.espertech.esper.client.EPRuntime;
+import com.espertech.esper.client.EPServiceProvider;
+import com.espertech.esper.client.EPStatement;
+import fi.muni.cz.esper.EventListener;
+import fi.muni.cz.esper.Utils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,10 +28,21 @@ public class Application {
         String groupId = LOCALHOST_GROUP;
         int threads = LOCALHOST_THREATS;
 
+        EPRuntime epRuntime = getEsperRuntime();
+
         topics.forEach((topic) -> {
-            Consumer example = new Consumer(zooKeeper, groupId, topic);
+            Consumer example = new Consumer(zooKeeper, groupId, topic, epRuntime);
             example.run(threads);
         });
+    }
+
+    private static EPRuntime getEsperRuntime() {
+        EPServiceProvider cep = Utils.getServiceProvider();
+        EPAdministrator cepAdm = cep.getEPAdministrator();
+        EPStatement cepStatement = cepAdm.createEPL("select *, count(*) from "
+                + "IncommingEvent(severity='Level1').win:time_batch(5) having count(*) > 3");
+        cepStatement.addListener(new EventListener());
+        return cep.getEPRuntime();
     }
 
 }
