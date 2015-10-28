@@ -1,0 +1,7 @@
+[2015-10-25 12:10:56,321] INFO Closing socket connection to /192.168.0.11. (kafka.network.Processor)
+[2015-10-25 12:13:02,320] INFO Closing socket connection to /192.168.0.11. (kafka.network.Processor)
+[2015-10-25 12:13:10,104] INFO Closing socket connection to /127.0.0.1. (kafka.network.Processor)
+[2015-10-25 12:13:12,860] INFO Closing socket connection to /127.0.0.1. (kafka.network.Processor)
+[2015-10-25 12:13:30,452] INFO Closing socket connection to /192.168.0.11. (kafka.network.Processor)
+[2015-10-25 12:13:33,167] INFO Closing socket connection to /192.168.0.11. (kafka.network.Processor)
+[2015-10-25 12:13:52,986] INFO Closing socket connection to /192.168.0.11. (kafka.network.Processor)

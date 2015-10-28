@@ -1,0 +1,14 @@
+[2015-09-26 21:38:01,559] INFO [Controller-0-to-broker-0-send-thread], Controller 0 connected to id:0,host:192.168.2.29,port:9092 for sending state change requests (kafka.controller.RequestSendThread)
+[2015-09-26 21:38:01,875] WARN [Controller-0-to-broker-0-send-thread], Controller 0 epoch 2 fails to send request Name:UpdateMetadataRequest;Version:0;Controller:0;ControllerEpoch:2;CorrelationId:12;ClientId:id_0-host_null-port_9092;AliveBrokers:id:0,host:192.168.2.29,port:9092;PartitionState:[page_visits,0] -> (LeaderAndIsrInfo:(Leader:0,ISR:0,LeaderEpoch:0,ControllerEpoch:1),ReplicationFactor:1),AllReplicas:0) to broker id:0,host:192.168.2.29,port:9092. Reconnecting to broker. (kafka.controller.RequestSendThread)
+java.nio.channels.ClosedChannelException
+	at kafka.network.BlockingChannel.send(BlockingChannel.scala:100)
+	at kafka.controller.RequestSendThread.liftedTree1$1(ControllerChannelManager.scala:132)
+	at kafka.controller.RequestSendThread.doWork(ControllerChannelManager.scala:131)
+	at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:60)
+[2015-09-26 21:38:31,887] INFO [Controller-0-to-broker-0-send-thread], Controller 0 connected to id:0,host:192.168.2.29,port:9092 for sending state change requests (kafka.controller.RequestSendThread)
+[2015-09-26 21:38:32,198] WARN [Controller-0-to-broker-0-send-thread], Controller 0 epoch 2 fails to send request Name:UpdateMetadataRequest;Version:0;Controller:0;ControllerEpoch:2;CorrelationId:12;ClientId:id_0-host_null-port_9092;AliveBrokers:id:0,host:192.168.2.29,port:9092;PartitionState:[page_visits,0] -> (LeaderAndIsrInfo:(Leader:0,ISR:0,LeaderEpoch:0,ControllerEpoch:1),ReplicationFactor:1),AllReplicas:0) to broker id:0,host:192.168.2.29,port:9092. Reconnecting to broker. (kafka.controller.RequestSendThread)
+java.nio.channels.ClosedChannelException
+	at kafka.network.BlockingChannel.send(BlockingChannel.scala:100)
+	at kafka.controller.RequestSendThread.liftedTree1$1(ControllerChannelManager.scala:132)
+	at kafka.controller.RequestSendThread.doWork(ControllerChannelManager.scala:131)
+	at kafka.utils.ShutdownableThread.run(ShutdownableThread.scala:60)
