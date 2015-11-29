@@ -4,6 +4,8 @@ import com.espertech.esper.client.EPRuntime;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.concurrent.Executors;
  * Created by tomasskopal on 26.09.15.
  */
 public class Consumer {
+
+    private static final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
     private final ConsumerConnector consumer;
     private final String topic;
@@ -45,7 +49,7 @@ public class Consumer {
             executor.submit(new SimpleConsumer(stream, topic, epRuntime));
             threadNumber++;
         }
-        System.out.println(threadNumber + " threads is running. On topic: " + topic);
+        logger.info(threadNumber + " threads is running. On topic: " + topic);
     }
 
     private static ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {
