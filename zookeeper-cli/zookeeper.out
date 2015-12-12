@@ -1,0 +1,32 @@
+2015-12-12 19:52:09,517 [myid:] - INFO  [main:QuorumPeerConfig@103] - Reading configuration from: /Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../conf/zoo.cfg
+2015-12-12 19:52:09,523 [myid:] - INFO  [main:DatadirCleanupManager@78] - autopurge.snapRetainCount set to 3
+2015-12-12 19:52:09,524 [myid:] - INFO  [main:DatadirCleanupManager@79] - autopurge.purgeInterval set to 0
+2015-12-12 19:52:09,524 [myid:] - INFO  [main:DatadirCleanupManager@101] - Purge task is not scheduled.
+2015-12-12 19:52:09,525 [myid:] - WARN  [main:QuorumPeerMain@113] - Either no config or no quorum defined in config, running  in standalone mode
+2015-12-12 19:52:09,551 [myid:] - INFO  [main:QuorumPeerConfig@103] - Reading configuration from: /Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../conf/zoo.cfg
+2015-12-12 19:52:09,551 [myid:] - INFO  [main:ZooKeeperServerMain@95] - Starting server
+2015-12-12 19:52:09,570 [myid:] - INFO  [main:Environment@100] - Server environment:zookeeper.version=3.4.6-1569965, built on 02/20/2014 09:09 GMT
+2015-12-12 19:52:09,570 [myid:] - INFO  [main:Environment@100] - Server environment:host.name=192.168.0.14
+2015-12-12 19:52:09,570 [myid:] - INFO  [main:Environment@100] - Server environment:java.version=1.8.0_05
+2015-12-12 19:52:09,570 [myid:] - INFO  [main:Environment@100] - Server environment:java.vendor=Oracle Corporation
+2015-12-12 19:52:09,570 [myid:] - INFO  [main:Environment@100] - Server environment:java.home=/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre
+2015-12-12 19:52:09,570 [myid:] - INFO  [main:Environment@100] - Server environment:java.class.path=/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../build/classes:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../build/lib/*.jar:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../lib/slf4j-log4j12-1.6.1.jar:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../lib/slf4j-api-1.6.1.jar:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../lib/netty-3.7.0.Final.jar:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../lib/log4j-1.2.16.jar:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../lib/jline-0.9.94.jar:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../zookeeper-3.4.6.jar:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../src/java/lib/*.jar:/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper/bin/../conf:
+2015-12-12 19:52:09,570 [myid:] - INFO  [main:Environment@100] - Server environment:java.library.path=/Users/tomasskopal/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+2015-12-12 19:52:09,571 [myid:] - INFO  [main:Environment@100] - Server environment:java.io.tmpdir=/var/folders/5g/3zhkx5td1wzc3yctpx372f1c0000gn/T/
+2015-12-12 19:52:09,571 [myid:] - INFO  [main:Environment@100] - Server environment:java.compiler=<NA>
+2015-12-12 19:52:09,575 [myid:] - INFO  [main:Environment@100] - Server environment:os.name=Mac OS X
+2015-12-12 19:52:09,575 [myid:] - INFO  [main:Environment@100] - Server environment:os.arch=x86_64
+2015-12-12 19:52:09,576 [myid:] - INFO  [main:Environment@100] - Server environment:os.version=10.11.1
+2015-12-12 19:52:09,576 [myid:] - INFO  [main:Environment@100] - Server environment:user.name=tomasskopal
+2015-12-12 19:52:09,582 [myid:] - INFO  [main:Environment@100] - Server environment:user.home=/Users/tomasskopal
+2015-12-12 19:52:09,582 [myid:] - INFO  [main:Environment@100] - Server environment:user.dir=/Users/tomasskopal/Documents/Diplomka/masters-thesis/zookeeper
+2015-12-12 19:52:09,594 [myid:] - INFO  [main:ZooKeeperServer@755] - tickTime set to 2000
+2015-12-12 19:52:09,595 [myid:] - INFO  [main:ZooKeeperServer@764] - minSessionTimeout set to -1
+2015-12-12 19:52:09,596 [myid:] - INFO  [main:ZooKeeperServer@773] - maxSessionTimeout set to -1
+2015-12-12 19:52:09,620 [myid:] - INFO  [main:NIOServerCnxnFactory@94] - binding to port 0.0.0.0/0.0.0.0:2181
+2015-12-12 19:52:13,276 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@197] - Accepted socket connection from /127.0.0.1:63417
+2015-12-12 19:52:13,296 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@868] - Client attempting to establish new session at /127.0.0.1:63417
+2015-12-12 19:52:13,304 [myid:] - INFO  [SyncThread:0:FileTxnLog@199] - Creating new log file: log.3
+2015-12-12 19:52:13,357 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@617] - Established session 0x151978932320000 with negotiated timeout 30000 for client /127.0.0.1:63417
+2015-12-12 20:17:50,340 [myid:] - INFO  [ProcessThread(sid:0 cport:-1)::PrepRequestProcessor@494] - Processed session termination for sessionid: 0x151978932320000
+2015-12-12 20:17:50,687 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1007] - Closed socket connection for client /127.0.0.1:63417 which had sessionid 0x151978932320000
