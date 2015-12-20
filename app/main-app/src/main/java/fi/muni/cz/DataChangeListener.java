@@ -46,8 +46,15 @@ public class DataChangeListener implements NodeCacheListener {
             case CREATE:
                 if (json.get("parent") != null) {
                     createProducer((String)json.get("parent"));
+                } else {
+                    createConsumer();
                 }
         }
+    }
+
+    private void createConsumer() {
+        Consumer consumer = new Consumer(null, "group-id", "topic1", null);
+        consumer.run(1);
     }
 
     private void createProducer(String parent) {

@@ -51,29 +51,38 @@ public class MainApp {
                         .forPath("/root");
             }
 
-            String znodePath = curatorFramework
-                    .create()
-                    .withMode(CreateMode.PERSISTENT)
-                    .forPath("/root/" + nodeName, "init".getBytes());
-            uriToZnodePath.put("127.0.0.1:2181", znodePath);
-
-            // register watcher
-            NodeCache dataCache = new NodeCache(curatorFramework, "/root/" + nodeName);
-            dataCache.getListenable().addListener(new DataChangeListener(dataCache));
-            dataCache.start();
+            createNodeAndRegisterWatcher("/root/" + nodeName);
+            createNodeAndRegisterWatcher("/root/" + nodeName + "/" + nodeName);
 
             Thread.sleep(1000);
 
             JSONObject data = new JSONObject();
             data.put("action", ActionType.CREATE.toString());
-            data.put("parent", "127.0.0.1");
             curatorFramework.setData().forPath("/root/" + nodeName, data.toString().getBytes());
+
+            Thread.sleep(1000);
+
+            data = new JSONObject();
+            data.put("action", ActionType.CREATE.toString());
+            data.put("parent", "127.0.0.1");
+            curatorFramework.setData().forPath("/root/" + nodeName + "/" + nodeName, data.toString().getBytes());
 
             while (true){}
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void createNodeAndRegisterWatcher(String path) throws Exception {
+        curatorFramework.create()
+                .withMode(CreateMode.PERSISTENT)
+                .forPath(path, "init".getBytes());
+
+        // register watcher
+        NodeCache dataCache = new NodeCache(curatorFramework, path);
+        dataCache.getListenable().addListener(new DataChangeListener(dataCache));
+        dataCache.start();
     }
 
     public static void main(String[] args) {
