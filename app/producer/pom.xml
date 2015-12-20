@@ -2,10 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fi.muni.cz</groupId>
-    <artifactId>master-thesis</artifactId>
+    <artifactId>producer</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
-    <name>master-thesis</name>
 
     <properties>
         <maven.compiler.plugin>1.8</maven.compiler.plugin>
@@ -56,11 +55,6 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>zookeeper-project</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
