@@ -1,6 +1,11 @@
 package fi.muni.cz;
 
+import com.espertech.esper.client.EPAdministrator;
 import com.espertech.esper.client.EPRuntime;
+import com.espertech.esper.client.EPServiceProvider;
+import com.espertech.esper.client.EPStatement;
+import fi.muni.cz.esper.EventListener;
+import fi.muni.cz.esper.Utils;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
@@ -21,6 +26,8 @@ public class Consumer {
 
     private static final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
+    private static final String LOCALHOST_ZK = "localhost:2181";
+
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
@@ -30,7 +37,7 @@ public class Consumer {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
                 createConsumerConfig(a_zookeeper, a_groupId));
         this.topic = a_topic;
-        this.epRuntime = epRuntime;
+        this.epRuntime = epRuntime != null ? epRuntime : getEsperRuntime();
     }
 
 
@@ -52,15 +59,24 @@ public class Consumer {
         logger.info(threadNumber + " threads is running. On topic: " + topic);
     }
 
-    private static ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {
+    private ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {
         Properties props = new Properties();
-        props.put("zookeeper.connect", a_zookeeper);
+        props.put("zookeeper.connect", a_zookeeper != null ? a_zookeeper : LOCALHOST_ZK);
         props.put("group.id", a_groupId);
         props.put("zookeeper.session.timeout.ms", "400");
         props.put("zookeeper.sync.time.ms", "200");
         props.put("auto.commit.interval.ms", "1000");
 
         return new ConsumerConfig(props);
+    }
+
+    private EPRuntime getEsperRuntime() {
+        EPServiceProvider cep = Utils.getServiceProvider();
+        EPAdministrator cepAdm = cep.getEPAdministrator();
+        EPStatement cepStatement = cepAdm.createEPL("select *, count(*) from "
+                + "IncommingEvent(severity='Level1').win:time_batch(5) having count(*) > 3");
+        cepStatement.addListener(new EventListener());
+        return cep.getEPRuntime();
     }
 
 }
