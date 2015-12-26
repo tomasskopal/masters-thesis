@@ -3,7 +3,6 @@ package fi.muni.cz;
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -19,9 +18,11 @@ public class DataChangeListener implements NodeCacheListener {
     private static final Logger logger = LoggerFactory.getLogger(DataChangeListener.class);
 
     private NodeCache dataCache;
+    private String ip;
 
-    public DataChangeListener(NodeCache dataCache) {
+    public DataChangeListener(NodeCache dataCache, String ip) {
         this.dataCache = dataCache;
+        this.ip = ip;
     }
 
     @Override
@@ -53,13 +54,13 @@ public class DataChangeListener implements NodeCacheListener {
     }
 
     private void createConsumer() {
-        Consumer consumer = new Consumer(null, "group-id", "topic1", null);
+        Consumer consumer = new Consumer(null, "group-id", ip, null);
         consumer.run(1);
     }
 
     private void createProducer(String parent) {
         Thread producer = new Thread(
-                new DataProducer(parent, "topic1", "PC1")
+                new DataProducer(parent, parent, ip)
         );
         producer.start();
     }

@@ -11,7 +11,7 @@ public class IncommingEvent {
 
     public IncommingEvent(String msg) {
         this.msg = msg;
-        parseMsg(msg);
+        //parseMsg(msg);
     }
 
     private void parseMsg(String msg) { // TODO: better parsing please. Use regex
@@ -32,8 +32,6 @@ public class IncommingEvent {
     public String toString() {
         return "IncommingEvent{" +
                 "msg='" + msg + '\'' +
-                ", identifier='" + identifier + '\'' +
-                ", severity=" + severity +
                 '}';
     }
 

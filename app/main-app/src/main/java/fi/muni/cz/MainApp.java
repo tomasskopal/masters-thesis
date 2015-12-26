@@ -57,8 +57,8 @@ public class MainApp {
                         .forPath(ZK_ROOT);
             }
 
-            createNodeAndRegisterWatcher(ZK_ROOT + "/" + ip);
-            createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip);
+            createNodeAndRegisterWatcher(ZK_ROOT + "/" + ip, ip);
+            createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip, ip);
 
             Thread.sleep(1000);
 
@@ -70,7 +70,7 @@ public class MainApp {
 
             data = new JSONObject();
             data.put("action", ActionType.CREATE.toString());
-            data.put("parent", "127.0.0.1");
+            data.put("parent", parentIp);
             curatorFramework.setData().forPath(ZK_ROOT + zkPath + "/" + ip, data.toString().getBytes());
 
             while (true){}
@@ -80,14 +80,14 @@ public class MainApp {
         }
     }
 
-    private void createNodeAndRegisterWatcher(String path) throws Exception {
+    private void createNodeAndRegisterWatcher(String path, String ip) throws Exception {
         curatorFramework.create()
                 .withMode(CreateMode.PERSISTENT)
                 .forPath(path, "init".getBytes());
 
         // register watcher
         NodeCache dataCache = new NodeCache(curatorFramework, path);
-        dataCache.getListenable().addListener(new DataChangeListener(dataCache));
+        dataCache.getListenable().addListener(new DataChangeListener(dataCache, ip));
         dataCache.start();
     }
 
