@@ -29,7 +29,7 @@ public class MainApp {
 
     private CuratorFramework curatorFramework;
 
-    public MainApp(String ip, String zkPath, String zkList, String parentIp) {
+    public MainApp(String ip, String zkPath, String zkList, AppMode appMode, String parentIp) {
         try {
             curatorFramework = CuratorFrameworkFactory.newClient(
                     zkList,                                  //   server list
@@ -57,17 +57,24 @@ public class MainApp {
                         .forPath(ZK_ROOT);
             }
 
-            createNodeAndRegisterWatcher(ZK_ROOT + "/" + ip, ip);
-            createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip, ip);
-
-            Thread.sleep(1000);
-
             JSONObject data = new JSONObject();
-            data.put("action", ActionType.CREATE.toString());
-            curatorFramework.setData().forPath(ZK_ROOT + "/" + ip, data.toString().getBytes());
 
+            if (appMode == AppMode.COMBINED) {
+                // create node
+                createNodeAndRegisterWatcher(ZK_ROOT + "/" + ip, ip);
+                Thread.sleep(1000);
+
+                // dispatch action - consumer
+                data.put("action", ActionType.CREATE.toString());
+                curatorFramework.setData().forPath(ZK_ROOT + "/" + ip, data.toString().getBytes());
+                Thread.sleep(1000);
+            }
+
+            // create node
+            createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip, ip);
             Thread.sleep(1000);
 
+            // dispatch action - producer
             data = new JSONObject();
             data.put("action", ActionType.CREATE.toString());
             data.put("parent", parentIp);
@@ -100,6 +107,8 @@ public class MainApp {
             zkPathOpt.setRequired(true);
             Option zkListOpt = new Option("zklist", true, "All zk servers. Required.");
             zkPathOpt.setRequired(true);
+            Option modeOpt = new Option("m", true, "Mode of app. Required.");
+            modeOpt.setRequired(true);
 
             options.addOption(ipOpt);
             options.addOption(zkPathOpt);
@@ -124,6 +133,7 @@ public class MainApp {
                     cmd.getOptionValue("ip"),
                     cmd.getOptionValue("zkpath"),
                     cmd.getOptionValue("zklist"),
+                    AppMode.valueOf(cmd.getOptionValue("m").toUpperCase()),
                     cmd.getOptionValue("p")
             );
 
