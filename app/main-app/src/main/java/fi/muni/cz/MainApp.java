@@ -1,6 +1,14 @@
 package fi.muni.cz;
 
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.MissingOptionException;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.NodeCache;
@@ -10,8 +18,6 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by tomasskopal on 13.12.15.
@@ -19,22 +25,21 @@ import java.util.Map;
 public class MainApp {
 
     private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
+    private static final String ZK_ROOT = "/root";
 
     private CuratorFramework curatorFramework;
-    private Map<String, String> uriToZnodePath;
 
-    public MainApp(String nodeName) {
+    public MainApp(String ip, String zkPath, String zkList, String parentIp) {
         try {
             curatorFramework = CuratorFrameworkFactory.newClient(
-                    "127.0.0.1:2181",                    //   server list
+                    zkList,                                  //   server list
                     5000,                                    //   session timeout time
                     3000,                                    //   connection create timeout time
                     new ExponentialBackoffRetry(1000, 3)     //   retry strategy
             );
             curatorFramework.start();
-            uriToZnodePath = new HashMap<>();
-            //conn.connect("147.251.43.129:2181,147.251.43.130:2181");
 
+            /*
             if (curatorFramework.checkExists().forPath("/root") != null) {
                 logger.info("clear");
                 curatorFramework.delete()
@@ -43,29 +48,30 @@ public class MainApp {
                         .withVersion(-1)
                         .forPath("/root");
             }
+            */
 
-            if (curatorFramework.checkExists().forPath("/root") == null) {
+            if (curatorFramework.checkExists().forPath(ZK_ROOT) == null) {
                 logger.info("Root znode is not created. Lets create it.");
                 curatorFramework.create()
                         .withMode(CreateMode.PERSISTENT)
-                        .forPath("/root");
+                        .forPath(ZK_ROOT);
             }
 
-            createNodeAndRegisterWatcher("/root/" + nodeName);
-            createNodeAndRegisterWatcher("/root/" + nodeName + "/" + nodeName);
+            createNodeAndRegisterWatcher(ZK_ROOT + "/" + ip);
+            createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip);
 
             Thread.sleep(1000);
 
             JSONObject data = new JSONObject();
             data.put("action", ActionType.CREATE.toString());
-            curatorFramework.setData().forPath("/root/" + nodeName, data.toString().getBytes());
+            curatorFramework.setData().forPath(ZK_ROOT + "/" + ip, data.toString().getBytes());
 
             Thread.sleep(1000);
 
             data = new JSONObject();
             data.put("action", ActionType.CREATE.toString());
             data.put("parent", "127.0.0.1");
-            curatorFramework.setData().forPath("/root/" + nodeName + "/" + nodeName, data.toString().getBytes());
+            curatorFramework.setData().forPath(ZK_ROOT + zkPath + "/" + ip, data.toString().getBytes());
 
             while (true){}
 
@@ -86,11 +92,48 @@ public class MainApp {
     }
 
     public static void main(String[] args) {
-//        if (args.length < 1) {
-//            logger.error("Please enter app name");
-//            return;
-//        }
-        new MainApp("PC1");
+        try {
+            Options options = new Options();
+            Option ipOpt = new Option("ip", true, "PC ip address. Required.");
+            ipOpt.setRequired(true);
+            Option zkPathOpt = new Option("zkpath", true, "Place at zk-tree where pc have to include in. Required.");
+            zkPathOpt.setRequired(true);
+            Option zkListOpt = new Option("zklist", true, "All zk servers. Required.");
+            zkPathOpt.setRequired(true);
+
+            options.addOption(ipOpt);
+            options.addOption(zkPathOpt);
+            options.addOption(zkListOpt);
+            options.addOption("p", true, "Target for produced data. Optional");
+            options.addOption("help", false, "show help");
+
+            CommandLineParser parser = new DefaultParser();
+            CommandLine cmd = parser.parse( options, args);
+
+            if(cmd.hasOption("help")) {
+                HelpFormatter formatter = new HelpFormatter();
+                formatter.printHelp("main-app", options);
+                return;
+            }
+
+            if (!cmd.getOptionValue("zkpath").startsWith("/")) {
+                System.out.println("Zk path have to starts with '/'");
+            }
+
+            new MainApp(
+                    cmd.getOptionValue("ip"),
+                    cmd.getOptionValue("zkpath"),
+                    cmd.getOptionValue("zklist"),
+                    cmd.getOptionValue("p")
+            );
+
+        } catch (ParseException e) {
+            if (e instanceof MissingOptionException) {
+                System.out.println("Missing cmd options: " + ((MissingOptionException) e).getMissingOptions());
+                return;
+            }
+            logger.error("Parameters parsing crashed " + e);
+        }
     }
 
 }
