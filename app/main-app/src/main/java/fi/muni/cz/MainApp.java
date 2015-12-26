@@ -113,6 +113,7 @@ public class MainApp {
             options.addOption(ipOpt);
             options.addOption(zkPathOpt);
             options.addOption(zkListOpt);
+            options.addOption(modeOpt);
             options.addOption("p", true, "Target for produced data. Optional");
             options.addOption("help", false, "show help");
 
