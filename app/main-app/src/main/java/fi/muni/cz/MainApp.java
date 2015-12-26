@@ -88,9 +88,11 @@ public class MainApp {
     }
 
     private void createNodeAndRegisterWatcher(String path, String ip) throws Exception {
-        curatorFramework.create()
-                .withMode(CreateMode.PERSISTENT)
-                .forPath(path, "init".getBytes());
+        if (curatorFramework.checkExists().forPath(path) == null) {
+            curatorFramework.create().creatingParentsIfNeeded()
+                    .withMode(CreateMode.PERSISTENT)
+                    .forPath(path, "init".getBytes());
+        }
 
         // register watcher
         NodeCache dataCache = new NodeCache(curatorFramework, path);
