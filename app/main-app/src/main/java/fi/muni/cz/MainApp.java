@@ -39,17 +39,6 @@ public class MainApp {
             );
             curatorFramework.start();
 
-            /*
-            if (curatorFramework.checkExists().forPath("/root") != null) {
-                logger.info("clear");
-                curatorFramework.delete()
-                        .guaranteed()
-                        .deletingChildrenIfNeeded()
-                        .withVersion(-1)
-                        .forPath("/root");
-            }
-            */
-
             if (curatorFramework.checkExists().forPath(ZK_ROOT) == null) {
                 logger.info("Root znode is not created. Lets create it.");
                 curatorFramework.create()
@@ -88,7 +77,7 @@ public class MainApp {
     }
 
     private void createNodeAndRegisterWatcher(String path, String ip) throws Exception {
-        if (curatorFramework.checkExists().forPath(path) == null) {
+        if (curatorFramework.checkExists().forPath(path ) == null) {
             curatorFramework.create().creatingParentsIfNeeded()
                     .withMode(CreateMode.PERSISTENT)
                     .forPath(path, "init".getBytes());

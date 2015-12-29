@@ -18,6 +18,7 @@
         <module>producer</module>
         <module>consumer</module>
         <module>main-app</module>
+        <module>cleaner</module>
     </modules>
 
     <dependencies>
