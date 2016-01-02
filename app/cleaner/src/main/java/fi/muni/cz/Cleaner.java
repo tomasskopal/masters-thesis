@@ -9,13 +9,15 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
  */
 public class Cleaner {
 
+    private static final String DEFAULT_SERVER_LIST = "147.251.43.129:2181,147.251.43.130:2181";
+
     public static void main(String[] args) {
         try {
             CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(
-                    args[0],                                  //   server list
-                    5000,                                    //   session timeout time
-                    3000,                                    //   connection create timeout time
-                    new ExponentialBackoffRetry(1000, 3)     //   retry strategy
+                    args.length < 1 ? DEFAULT_SERVER_LIST : args[0], //   server list
+                    5000,                                            //   session timeout time
+                    3000,                                            //   connection create timeout time
+                    new ExponentialBackoffRetry(1000, 3)             //   retry strategy
             );
             curatorFramework.start();
 
@@ -27,6 +29,7 @@ public class Cleaner {
                         .withVersion(-1)
                         .forPath("/root");
             }
+            System.out.println("done");
         } catch (Exception ex) {
             System.out.println("Fail: " + ex);
         }
