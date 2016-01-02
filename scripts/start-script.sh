@@ -1,13 +1,12 @@
-ssh tomas@147.251.43.129 << ZK1
+#!/bin/bash
+for server in 147.251.43.129 147.251.43.130
+do
+ssh tomas@${server} << ZK
 echo 'starting zookeeper'
 masters-thesis/tools/zookeeper-cli/bin/zkServer.sh start
 echo 'zookeeper started'
-ZK1
-ssh tomas@147.251.43.130 << ZK2
-echo 'starting zookeeper'
-masters-thesis/tools/zookeeper-cli/bin/zkServer.sh start
-echo 'zookeeper started'
-ZK2
+ZK
+done
 sleep 5s
 ssh tomas@147.251.43.129 << KAFKA
 echo 'starting kafka'

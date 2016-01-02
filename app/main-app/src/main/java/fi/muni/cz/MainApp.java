@@ -30,6 +30,7 @@ public class MainApp {
     private CuratorFramework curatorFramework;
 
     public MainApp(String ip, String zkPath, String zkList, AppMode appMode, String parentIp) {
+        zkPath = zkPath.equals("/") ? "" : zkPath;
         try {
             curatorFramework = CuratorFrameworkFactory.newClient(
                     zkList,                                  //   server list
@@ -46,27 +47,21 @@ public class MainApp {
                         .forPath(ZK_ROOT);
             }
 
+            // prepare data object
             JSONObject data = new JSONObject();
-
-            if (appMode == AppMode.COMBINED) {
-                // create node
-                createNodeAndRegisterWatcher(ZK_ROOT + "/" + ip, ip);
-                Thread.sleep(1000);
-
-                // dispatch action - consumer
-                data.put("action", ActionType.CREATE.toString());
-                curatorFramework.setData().forPath(ZK_ROOT + "/" + ip, data.toString().getBytes());
-                Thread.sleep(1000);
-            }
+            data.put("action", ActionType.CREATE.toString());
 
             // create node
             createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip, ip);
             Thread.sleep(1000);
 
-            // dispatch action - producer
-            data = new JSONObject();
-            data.put("action", ActionType.CREATE.toString());
-            data.put("parent", parentIp);
+            switch (appMode) {
+                case CONSUMER:
+                    break;
+                case PRODUCER:
+                    data.put("parent", parentIp);
+                    break;
+            }
             curatorFramework.setData().forPath(ZK_ROOT + zkPath + "/" + ip, data.toString().getBytes());
 
             while (true){}

@@ -5,5 +5,5 @@ package fi.muni.cz;
  */
 public enum AppMode {
     PRODUCER,
-    COMBINED
+    CONSUMER
 }
