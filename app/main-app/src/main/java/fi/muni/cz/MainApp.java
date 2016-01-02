@@ -63,6 +63,8 @@ public class MainApp {
                 case PRODUCER:
                     data.put("parent", parentIp);
                     break;
+                default:
+                    logger.error("Undefined app mode.");
             }
             curatorFramework.setData().forPath(ZK_ROOT + zkPath + "/" + ip, data.toString().getBytes());
 

@@ -6,6 +6,6 @@ export JAVA_HOME=/home/tomas/Downloads/jdk1.8.0_65
 cd masters-thesis
 git pull
 cd app
-mvn clean install
+mvn clean install -DskipTests
 EOF
 done
