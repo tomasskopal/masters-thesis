@@ -13,6 +13,6 @@ public class EventListener implements UpdateListener {
     private static final Logger logger = LoggerFactory.getLogger(EventListener.class);
 
     public void update(EventBean[] newData, EventBean[] oldData) {
-        logger.info("Event received: " + newData[0].getUnderlying());
+        //logger.info("Event received: " + newData[0].getUnderlying());
     }
 }
