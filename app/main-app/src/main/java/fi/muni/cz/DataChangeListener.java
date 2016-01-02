@@ -7,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.App;
 
 import java.nio.charset.StandardCharsets;
 
@@ -18,11 +19,9 @@ public class DataChangeListener implements NodeCacheListener {
     private static final Logger logger = LoggerFactory.getLogger(DataChangeListener.class);
 
     private NodeCache dataCache;
-    private String ip;
 
-    public DataChangeListener(NodeCache dataCache, String ip) {
+    public DataChangeListener(NodeCache dataCache) {
         this.dataCache = dataCache;
-        this.ip = ip;
     }
 
     @Override
@@ -54,13 +53,13 @@ public class DataChangeListener implements NodeCacheListener {
     }
 
     private void createConsumer() {
-        Consumer consumer = new Consumer(null, "group-id", ip, null);
+        Consumer consumer = new Consumer(AppData.instance().getZkList(), "group-id", AppData.instance().getIp(), null);
         consumer.run(1);
     }
 
     private void createProducer(String parent) {
         Thread producer = new Thread(
-                new DataProducer(parent, parent, ip)
+                new DataProducer(parent, parent, AppData.instance().getIp())
         );
         producer.start();
     }

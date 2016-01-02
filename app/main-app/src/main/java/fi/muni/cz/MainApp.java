@@ -29,14 +29,16 @@ public class MainApp {
 
     private CuratorFramework curatorFramework;
 
-    public MainApp(String ip, String zkPath, String zkList, AppMode appMode, String parentIp) {
-        zkPath = zkPath.equals("/") ? "" : zkPath;
+    public MainApp(String zkPathAttr, AppMode appMode, String parentIp) {
+        String zkPath = zkPathAttr.equals("/") ? "" : zkPathAttr;
+        String ip = AppData.instance().getIp();
+
         try {
             curatorFramework = CuratorFrameworkFactory.newClient(
-                    zkList,                                  //   server list
-                    5000,                                    //   session timeout time
-                    3000,                                    //   connection create timeout time
-                    new ExponentialBackoffRetry(1000, 3)     //   retry strategy
+                    AppData.instance().getZkList(),          //  server list
+                    5000,                                    //  session timeout time
+                    3000,                                    //  connection create timeout time
+                    new ExponentialBackoffRetry(1000, 3)     //  retry strategy
             );
             curatorFramework.start();
 
@@ -52,7 +54,7 @@ public class MainApp {
             data.put("action", ActionType.CREATE.toString());
 
             // create node
-            createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip, ip);
+            createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip);
             Thread.sleep(1000);
 
             switch (appMode) {
@@ -71,7 +73,7 @@ public class MainApp {
         }
     }
 
-    private void createNodeAndRegisterWatcher(String path, String ip) throws Exception {
+    private void createNodeAndRegisterWatcher(String path) throws Exception {
         if (curatorFramework.checkExists().forPath(path ) == null) {
             curatorFramework.create().creatingParentsIfNeeded()
                     .withMode(CreateMode.PERSISTENT)
@@ -80,7 +82,7 @@ public class MainApp {
 
         // register watcher
         NodeCache dataCache = new NodeCache(curatorFramework, path);
-        dataCache.getListenable().addListener(new DataChangeListener(dataCache, ip));
+        dataCache.getListenable().addListener(new DataChangeListener(dataCache));
         dataCache.start();
     }
 
@@ -104,7 +106,7 @@ public class MainApp {
             options.addOption("help", false, "show help");
 
             CommandLineParser parser = new DefaultParser();
-            CommandLine cmd = parser.parse( options, args);
+            CommandLine cmd = parser.parse(options, args);
 
             if(cmd.hasOption("help")) {
                 HelpFormatter formatter = new HelpFormatter();
@@ -116,10 +118,11 @@ public class MainApp {
                 System.out.println("Zk path have to starts with '/'");
             }
 
+            AppData.instance().setIp(cmd.getOptionValue("ip"));
+            AppData.instance().setZkList(cmd.getOptionValue("zklist"));
+
             new MainApp(
-                    cmd.getOptionValue("ip"),
                     cmd.getOptionValue("zkpath"),
-                    cmd.getOptionValue("zklist"),
                     AppMode.valueOf(cmd.getOptionValue("m").toUpperCase()),
                     cmd.getOptionValue("p")
             );
