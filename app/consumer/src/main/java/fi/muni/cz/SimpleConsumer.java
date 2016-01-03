@@ -4,15 +4,14 @@ import com.espertech.esper.client.EPRuntime;
 import fi.muni.cz.esper.IncommingEvent;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 /**
  * Created by tomasskopal on 27.09.15.
  */
 public class SimpleConsumer implements Runnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleConsumer.class);
+    private static final Logger logger = Logger.getLogger("consumer");
 
     private KafkaStream m_stream;
     private String topic;

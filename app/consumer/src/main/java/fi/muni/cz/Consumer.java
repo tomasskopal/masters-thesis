@@ -9,8 +9,7 @@ import fi.muni.cz.esper.Utils;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.concurrent.Executors;
  */
 public class Consumer {
 
-    private static final Logger logger = LoggerFactory.getLogger(Consumer.class);
+    private static final Logger logger = Logger.getLogger("consumer");
 
     private static final String LOCALHOST_ZK = "localhost:2181";
 

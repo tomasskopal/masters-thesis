@@ -3,8 +3,7 @@ package fi.muni.cz;
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import java.util.Properties;
 
@@ -13,7 +12,7 @@ import java.util.Properties;
  */
 public class DataProducer implements Runnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(DataProducer.class);
+    private static final Logger logger = Logger.getLogger("producer");
 
     private String host;
     private String topic;

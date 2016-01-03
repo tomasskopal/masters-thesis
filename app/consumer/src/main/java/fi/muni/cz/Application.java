@@ -17,9 +17,9 @@ import java.util.List;
 public class Application {
 
     private static final int LOCALHOST_THREATS = 1;
-    private static final String LOCALHOST_GROUP = "group1";
+    private static final String LOCALHOST_GROUP = "group-id";
 
-    private static final List<String> topics = Arrays.asList("topic1", "topic2");
+    private static final List<String> topics = Arrays.asList("147.251.43.129");
 
 
     public static void main(String[] args) {
@@ -27,7 +27,7 @@ public class Application {
         int threads = LOCALHOST_THREATS;
 
         topics.forEach((topic) -> {
-            Consumer example = new Consumer(null, groupId, topic, null);
+            Consumer example = new Consumer("147.251.43.129:2181,147.251.43.130:2181", groupId, topic, null);
             example.run(threads);
         });
     }

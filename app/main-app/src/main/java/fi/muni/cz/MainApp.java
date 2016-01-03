@@ -13,10 +13,9 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -24,12 +23,14 @@ import org.slf4j.LoggerFactory;
  */
 public class MainApp {
 
-    private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
+    private static Logger logger = Logger.getLogger("producer"); // default value
     private static final String ZK_ROOT = "/root";
 
     private CuratorFramework curatorFramework;
 
     public MainApp(String zkPathAttr, AppMode appMode, String parentIp) {
+        logger.info("Input arguments: ZKPath: " + zkPathAttr + ", appMode: " + appMode + ", parentIP: " + parentIp);
+
         String zkPath = zkPathAttr.equals("/") ? "" : zkPathAttr;
         String ip = AppData.instance().getIp();
 
@@ -119,9 +120,12 @@ public class MainApp {
             if (!cmd.getOptionValue("zkpath").startsWith("/")) {
                 System.out.println("Zk path have to starts with '/'");
             }
+            logger = Logger.getLogger(cmd.getOptionValue("m").toLowerCase());
+            logger.info("Input arguments: " + args);
 
             AppData.instance().setIp(cmd.getOptionValue("ip"));
             AppData.instance().setZkList(cmd.getOptionValue("zklist"));
+            AppData.instance().setLogger(logger);
 
             new MainApp(
                     cmd.getOptionValue("zkpath"),

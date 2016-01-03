@@ -8,4 +8,5 @@ done
 ssh tomas@147.251.43.129 << 'CONSUMER'
 kill -9 `cat ~/consumer.pid`
 echo "consumer killed"
+~/Downloads/jdk1.8.0_65/bin/java -jar masters-thesis/app/cleaner/target/cleaner.jar
 CONSUMER

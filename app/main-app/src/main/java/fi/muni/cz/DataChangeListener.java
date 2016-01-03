@@ -2,12 +2,11 @@ package fi.muni.cz;
 
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import scala.App;
+
 
 import java.nio.charset.StandardCharsets;
 
@@ -16,11 +15,12 @@ import java.nio.charset.StandardCharsets;
  */
 public class DataChangeListener implements NodeCacheListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(DataChangeListener.class);
+    private static Logger logger;
 
     private NodeCache dataCache;
 
     public DataChangeListener(NodeCache dataCache) {
+        logger = AppData.instance().getLogger();
         this.dataCache = dataCache;
     }
 
@@ -31,13 +31,14 @@ public class DataChangeListener implements NodeCacheListener {
 
         try{
             JSONObject json = (JSONObject) parser.parse(data);
+            logger.info("Incoming parsed data: " + json.toJSONString());
+
             createWorker(json);
         }
         catch(ParseException pe){
             logger.error("Unable to parse data. Position: " + pe.getPosition() + ". Data: " + data);
             return;
         }
-        logger.info(dataCache.getCurrentData().getPath());
         logger.info("------------------------------");
     }
 
@@ -55,6 +56,7 @@ public class DataChangeListener implements NodeCacheListener {
     private void createConsumer() {
         Consumer consumer = new Consumer(AppData.instance().getZkList(), "group-id", AppData.instance().getIp(), null);
         consumer.run(1);
+        logger.info("Consumer was created from incoming z-node data");
     }
 
     private void createProducer(String parent) {
@@ -62,5 +64,6 @@ public class DataChangeListener implements NodeCacheListener {
                 new DataProducer(parent, parent, AppData.instance().getIp())
         );
         producer.start();
+        logger.info("Producer was created from incoming z-node data");
     }
 }
