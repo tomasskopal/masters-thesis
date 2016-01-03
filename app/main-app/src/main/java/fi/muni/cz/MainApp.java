@@ -17,6 +17,9 @@ import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.json.simple.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 /**
  * Created by tomasskopal on 13.12.15.
@@ -72,7 +75,7 @@ public class MainApp {
             while (true){}
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Main app fails. Error: ", e);
         }
     }
 
@@ -121,7 +124,7 @@ public class MainApp {
                 System.out.println("Zk path have to starts with '/'");
             }
             logger = Logger.getLogger(cmd.getOptionValue("m").toLowerCase());
-            logger.info("Input arguments: " + args);
+            logger.info("Input arguments: " + Arrays.asList(args).toString());
 
             AppData.instance().setIp(cmd.getOptionValue("ip"));
             AppData.instance().setZkList(cmd.getOptionValue("zklist"));
