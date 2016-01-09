@@ -1,4 +1,4 @@
-for server in 147.251.43.129 147.251.43.130
+for server in 147.251.43.129 147.251.43.130 147.251.43.150 147.251.43.138
 do
 ssh tomas@${server} << 'PRODUCER'
 kill -9 `cat ~/producer.pid`
