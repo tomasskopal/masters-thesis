@@ -36,6 +36,13 @@ public class DataProducer implements Runnable {
         ProducerConfig config = new ProducerConfig(props);
         Producer<String, String> producer = new Producer<>(config);
 
+        // TODO : remove whitelist
+        boolean getRandomNumber = true;
+        if (identifier.equals("147.251.43.150") || identifier.equals("147.251.43.138")) {
+            getRandomNumber = false;
+        }
+        final boolean getRandom = getRandomNumber;
+
         try {
             logger.info("Start sending data to topic: " + topic);
 
@@ -46,7 +53,7 @@ public class DataProducer implements Runnable {
                             for (int i=0; i<10; i++) {
                                 JSONObject dataMsg = new JSONObject();
                                 dataMsg.put("msg", "Some random text with message");
-                                dataMsg.put("level", String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)));
+                                dataMsg.put("level", getRandom ? String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)) : "2");
                                 dataMsg.put("source", identifier);
 
                                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
@@ -63,7 +70,7 @@ public class DataProducer implements Runnable {
             while (counter < 50) {
                 JSONObject dataMsg = new JSONObject();
                 dataMsg.put("msg", "Some random text with message");
-                dataMsg.put("level", String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)));
+                dataMsg.put("level", getRandom ? String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)) : "2");
                 dataMsg.put("source", identifier);
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
@@ -88,4 +95,7 @@ public class DataProducer implements Runnable {
         }
     }
 
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 }

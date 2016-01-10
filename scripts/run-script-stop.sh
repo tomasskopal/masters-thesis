@@ -1,12 +1,7 @@
-for server in 147.251.43.129 147.251.43.130 147.251.43.150 147.251.43.138
+for server in 147.251.43.130 147.251.43.150 147.251.43.138 147.251.43.129
 do
-ssh tomas@${server} << 'PRODUCER'
-kill -9 `cat ~/producer.pid`
-echo "producer killed"
-PRODUCER
+ssh tomas@${server} << 'APP'
+kill -9 `cat ~/app.pid`
+echo "app killed"
+APP
 done
-ssh tomas@147.251.43.129 << 'CONSUMER'
-kill -9 `cat ~/consumer.pid`
-echo "consumer killed"
-~/Downloads/jdk1.8.0_65/bin/java -jar masters-thesis/app/cleaner/target/cleaner.jar
-CONSUMER

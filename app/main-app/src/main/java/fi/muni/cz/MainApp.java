@@ -16,8 +16,8 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.json.simple.JSONObject;
+import scala.App;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -31,11 +31,10 @@ public class MainApp {
 
     private CuratorFramework curatorFramework;
 
-    public MainApp(String zkPathAttr, AppMode appMode, String parentIp) {
-        logger.info("Input arguments: ZKPath: " + zkPathAttr + ", appMode: " + appMode + ", parentIP: " + parentIp);
-
-        String zkPath = zkPathAttr.equals("/") ? "" : zkPathAttr;
+    public MainApp(String appMode, String parentIp) {
         String ip = AppData.instance().getIp();
+
+        logger.info("Input arguments: IP: " + ip + ", appMode: " + appMode + ", parentIP: " + parentIp);
 
         try {
             curatorFramework = CuratorFrameworkFactory.newClient(
@@ -56,21 +55,14 @@ public class MainApp {
             // prepare data object
             JSONObject data = new JSONObject();
             data.put("action", ActionType.CREATE.toString());
+            data.put("parent", parentIp);
+            data.put("appMode", appMode);
 
             // create node
-            createNodeAndRegisterWatcher(ZK_ROOT + zkPath + "/" + ip);
+            createNodeAndRegisterWatcher(ZK_ROOT + "/" + ip);
             Thread.sleep(1000);
 
-            switch (appMode) {
-                case CONSUMER:
-                    break;
-                case PRODUCER:
-                    data.put("parent", parentIp);
-                    break;
-                default:
-                    logger.error("Undefined app mode.");
-            }
-            curatorFramework.setData().forPath(ZK_ROOT + zkPath + "/" + ip, data.toString().getBytes());
+            curatorFramework.setData().forPath(ZK_ROOT + "/" + ip, data.toString().getBytes());
 
             while (true){}
 
@@ -97,18 +89,17 @@ public class MainApp {
             Options options = new Options();
             Option ipOpt = new Option("ip", true, "PC ip address. Required.");
             ipOpt.setRequired(true);
-            Option zkPathOpt = new Option("zkpath", true, "Place at zk-tree where pc have to include in. Required.");
-            zkPathOpt.setRequired(true);
             Option zkListOpt = new Option("zklist", true, "All zk servers. Required.");
-            zkPathOpt.setRequired(true);
+            zkListOpt.setRequired(true);
             Option modeOpt = new Option("m", true, "Mode of app. Required.");
             modeOpt.setRequired(true);
+            Option parentIpOpt = new Option("p", true, "Target for produced data. Required.");
+            parentIpOpt.setRequired(true);
 
             options.addOption(ipOpt);
-            options.addOption(zkPathOpt);
             options.addOption(zkListOpt);
             options.addOption(modeOpt);
-            options.addOption("p", true, "Target for produced data. Optional");
+            options.addOption(parentIpOpt);
             options.addOption("help", false, "show help");
 
             CommandLineParser parser = new DefaultParser();
@@ -120,10 +111,11 @@ public class MainApp {
                 return;
             }
 
-            if (!cmd.getOptionValue("zkpath").startsWith("/")) {
-                System.out.println("Zk path have to starts with '/'");
+            if (!(cmd.getOptionValue("m").equals("producer") || cmd.getOptionValue("m").equals("combined"))) {
+                logger.error("Unknown app mode: " + cmd.getOptionValue("m"));
+                return;
             }
-            logger = Logger.getLogger(cmd.getOptionValue("m").toLowerCase());
+
             logger.info("Input arguments: " + Arrays.asList(args).toString());
 
             AppData.instance().setIp(cmd.getOptionValue("ip"));
@@ -131,8 +123,7 @@ public class MainApp {
             AppData.instance().setLogger(logger);
 
             new MainApp(
-                    cmd.getOptionValue("zkpath"),
-                    AppMode.valueOf(cmd.getOptionValue("m").toUpperCase()),
+                    cmd.getOptionValue("m"),
                     cmd.getOptionValue("p")
             );
 

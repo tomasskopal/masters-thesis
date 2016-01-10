@@ -5,6 +5,5 @@ package fi.muni.cz;
  */
 public enum ActionType {
     CREATE,
-    MOVE,
-    DELETE
+    MOVE
 }

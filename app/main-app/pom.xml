@@ -61,10 +61,14 @@
             <artifactId>consumer</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>producer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>data-store</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

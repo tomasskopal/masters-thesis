@@ -58,6 +58,11 @@ public class Consumer {
         logger.info(threadNumber + " threads is running. On topic: " + topic);
     }
 
+    public void stop() {
+        executor.shutdownNow();
+        logger.info("Consumer was terminated. Topic: " + topic);
+    }
+
     private ConsumerConfig createConsumerConfig(String a_groupId) {
         Properties props = new Properties();
         props.put("zookeeper.connect", LOCALHOST_ZK);

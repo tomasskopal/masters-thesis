@@ -13,7 +13,10 @@ public class EventListener implements UpdateListener {
     private static final Logger logger = LoggerFactory.getLogger(EventListener.class);
 
     public void update(EventBean[] newData, EventBean[] oldData) {
-        logger.info(String.valueOf(newData.length));
+        if (newData.length < 2) {
+            logger.info("There is just one PC with error. This is not an attack.");
+            return;
+        }
         for (EventBean bean : newData) {
             logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
         }

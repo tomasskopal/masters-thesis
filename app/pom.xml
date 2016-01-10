@@ -19,6 +19,7 @@
         <module>consumer</module>
         <module>main-app</module>
         <module>cleaner</module>
+        <module>data-store</module>
     </modules>
 
     <dependencies>

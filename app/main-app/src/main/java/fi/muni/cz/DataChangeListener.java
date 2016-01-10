@@ -18,6 +18,8 @@ public class DataChangeListener implements NodeCacheListener {
     private static Logger logger;
 
     private NodeCache dataCache;
+    private DataProducer dataProducer = null;
+    private Consumer dataConsumer = null;
 
     public DataChangeListener(NodeCache dataCache) {
         logger = AppData.instance().getLogger();
@@ -33,7 +35,7 @@ public class DataChangeListener implements NodeCacheListener {
             JSONObject json = (JSONObject) parser.parse(data);
             logger.info("Incoming parsed data: " + json.toJSONString());
 
-            createWorker(json);
+            evaluateData(json);
         }
         catch(ParseException pe){
             logger.error("Unable to parse data. Position: " + pe.getPosition() + ". Data: " + data);
@@ -42,26 +44,27 @@ public class DataChangeListener implements NodeCacheListener {
         logger.info("------------------------------");
     }
 
-    private void createWorker(JSONObject json) {
+    private void evaluateData(JSONObject json) {
         switch (ActionType.valueOf((String) json.get("action"))) {
             case CREATE:
-                if (json.get("parent") != null) {
-                    createProducer((String)json.get("parent"));
-                } else {
+                createProducer((String)json.get("parent"));
+                if (json.get("appMode").equals("combined")) {
                     createConsumer();
                 }
+                break;
         }
     }
 
     private void createConsumer() {
-        Consumer consumer = new Consumer("group-id", AppData.instance().getIp(), null);
-        consumer.run(1);
+        dataConsumer = new Consumer("group-id", AppData.instance().getIp(), null);
+        dataConsumer.run(1);
         logger.info("Consumer was created from incoming z-node data");
     }
 
     private void createProducer(String parent) {
+        dataProducer = new DataProducer(parent, parent, AppData.instance().getIp());
         Thread producer = new Thread(
-                new DataProducer(parent, parent, AppData.instance().getIp())
+            dataProducer
         );
         producer.start();
         logger.info("Producer was created from incoming z-node data");

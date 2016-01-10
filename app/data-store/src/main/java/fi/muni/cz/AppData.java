@@ -45,4 +45,5 @@ public class AppData {
     public void setLogger(Logger logger) {
         this.logger = logger;
     }
+
 }
