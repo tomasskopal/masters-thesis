@@ -32,9 +32,9 @@ public class Consumer {
     private  ExecutorService executor;
     private EPRuntime epRuntime; // should be as singelton somewhere //TODO: make it
 
-    public Consumer(String a_zookeeper, String a_groupId, String a_topic, EPRuntime epRuntime) {
+    public Consumer(String a_groupId, String a_topic, EPRuntime epRuntime) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
-                createConsumerConfig(a_zookeeper, a_groupId));
+                createConsumerConfig(a_groupId));
         this.topic = a_topic;
         this.epRuntime = epRuntime != null ? epRuntime : getEsperRuntime();
     }
@@ -52,15 +52,15 @@ public class Consumer {
         // now create an object to consume the messages
         int threadNumber = 0;
         for (final KafkaStream stream : streams) {
-            executor.submit(new SimpleConsumer(stream, topic, epRuntime));
+            executor.submit(new SimpleConsumer(stream, epRuntime));
             threadNumber++;
         }
         logger.info(threadNumber + " threads is running. On topic: " + topic);
     }
 
-    private ConsumerConfig createConsumerConfig(String a_zookeeper, String a_groupId) {
+    private ConsumerConfig createConsumerConfig(String a_groupId) {
         Properties props = new Properties();
-        props.put("zookeeper.connect", a_zookeeper != null ? a_zookeeper : LOCALHOST_ZK);
+        props.put("zookeeper.connect", LOCALHOST_ZK);
         props.put("group.id", a_groupId);
         props.put("zookeeper.session.timeout.ms", "400");
         props.put("zookeeper.sync.time.ms", "200");
@@ -72,8 +72,8 @@ public class Consumer {
     private EPRuntime getEsperRuntime() {
         EPServiceProvider cep = Utils.getServiceProvider();
         EPAdministrator cepAdm = cep.getEPAdministrator();
-        EPStatement cepStatement = cepAdm.createEPL("select *, count(*) from "
-                + "IncommingEvent(severity='Level1').win:time_batch(5) having count(*) > 3");
+        EPStatement cepStatement = cepAdm.createEPL("select source, count(*) as cnt from "
+                + "IncommingEvent(level='1').win:time_batch(5 sec) group by source having count(*) > 10");
         cepStatement.addListener(new EventListener());
         return cep.getEPRuntime();
     }

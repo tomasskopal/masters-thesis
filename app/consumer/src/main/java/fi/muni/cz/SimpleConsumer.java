@@ -14,11 +14,9 @@ public class SimpleConsumer implements Runnable {
     private static final Logger logger = Logger.getLogger("consumer");
 
     private KafkaStream m_stream;
-    private String topic;
     private EPRuntime epRuntime;
 
-    public SimpleConsumer(KafkaStream a_stream, String topic, EPRuntime epRuntime) {
-        this.topic = topic;
+    public SimpleConsumer(KafkaStream a_stream, EPRuntime epRuntime) {
         this.m_stream = a_stream;
         this.epRuntime = epRuntime;
     }
@@ -27,9 +25,8 @@ public class SimpleConsumer implements Runnable {
         ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
         while (it.hasNext()) {
             String msg = new String(it.next().message());
-            //System.out.println("Topic " + topic + ": " + msg);
+            logger.info("Message received: " + msg);
             IncommingEvent event = new IncommingEvent(msg);
-            logger.info(event.toString());
             epRuntime.sendEvent(event);
         }
     }

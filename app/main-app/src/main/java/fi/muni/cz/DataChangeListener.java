@@ -54,7 +54,7 @@ public class DataChangeListener implements NodeCacheListener {
     }
 
     private void createConsumer() {
-        Consumer consumer = new Consumer(null, "group-id", AppData.instance().getIp(), null);
+        Consumer consumer = new Consumer("group-id", AppData.instance().getIp(), null);
         consumer.run(1);
         logger.info("Consumer was created from incoming z-node data");
     }

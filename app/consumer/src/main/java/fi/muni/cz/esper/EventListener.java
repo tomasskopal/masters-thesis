@@ -13,6 +13,9 @@ public class EventListener implements UpdateListener {
     private static final Logger logger = LoggerFactory.getLogger(EventListener.class);
 
     public void update(EventBean[] newData, EventBean[] oldData) {
-        //logger.info("Event received: " + newData[0].getUnderlying());
+        logger.info(String.valueOf(newData.length));
+        for (EventBean bean : newData) {
+            logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
+        }
     }
 }

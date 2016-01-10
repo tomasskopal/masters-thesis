@@ -1,38 +1,40 @@
 package fi.muni.cz.esper;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Created by tomasskopal on 24.10.15.
  */
 public class IncommingEvent {
 
+    private static final Logger logger = LoggerFactory.getLogger(IncommingEvent.class);
+
     private String msg;
-    private String identifier;
-    private String severity;
+    private String source;
+    private String level;
 
-    public IncommingEvent(String msg) {
-        this.msg = msg;
-        //parseMsg(msg);
-    }
+    public IncommingEvent(String data) {
+        JSONParser parser = new JSONParser();
 
-    private void parseMsg(String msg) { // TODO: better parsing please. Use regex
-        if (msg.contains("Level1")) {
-            this.severity = "Level1";
-        } else if (msg.contains("Level2")) {
-            this.severity = "Level2";
+        try{
+            JSONObject json = (JSONObject) parser.parse(data);
+            this.msg = (String)json.get("msg");
+            this.source = (String)json.get("source");
+            this.level = (String)json.get("level");
         }
-
-        if (msg.contains("PC1")) {
-            this.identifier = "PC1";
-        } else if (msg.contains("PC2")) {
-            this.identifier = "PC2";
+        catch(ParseException pe){
+            logger.error("Unable to parse data. Position: " + pe.getPosition() + ". Data: " + data);
+            return;
         }
     }
 
     @Override
     public String toString() {
-        return "IncommingEvent{" +
-                "msg='" + msg + '\'' +
-                '}';
+        return "IncommingEvent{" + source + ", " + level + "}";
     }
 
     public String getMsg() {
@@ -43,19 +45,19 @@ public class IncommingEvent {
         this.msg = msg;
     }
 
-    public String getIdentifier() {
-        return identifier;
+    public String getSource() {
+        return source;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public String getSeverity() {
-        return severity;
+    public String getLevel() {
+        return level;
     }
 
-    public void setSeverity(String severity) {
-        this.severity = severity;
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

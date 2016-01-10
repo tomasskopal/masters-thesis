@@ -4,8 +4,10 @@ import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
 
 import java.util.Properties;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * https://cwiki.apache.org/confluence/display/KAFKA/0.8.0+Producer+Example
@@ -37,19 +39,36 @@ public class DataProducer implements Runnable {
         try {
             logger.info("Start sending data to topic: " + topic);
 
-            int counter = 0;
-            while (counter < 10) {
-                String msg = "Severity:Level1, identifier:" + identifier;
-                KeyedMessage<String, String> data = new KeyedMessage<>(topic, msg);
-                producer.send(data);
-                logger.info("MSG: " + msg);
+            new java.util.Timer().scheduleAtFixedRate( // send  more 10 random messages every 10 seconds
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            for (int i=0; i<10; i++) {
+                                JSONObject dataMsg = new JSONObject();
+                                dataMsg.put("msg", "Some random text with message");
+                                dataMsg.put("level", String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)));
+                                dataMsg.put("source", identifier);
 
-                if (counter % 2 == 0) {
-                    msg = "Severity:Level2, identifier:" + identifier;
-                    data = new KeyedMessage<>(topic, msg);
-                    producer.send(data);
-                    logger.info("MSG: " + msg);
-                }
+                                KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
+                                producer.send(data);
+                            }
+                            logger.info("Bunch of errors send.");
+                        }
+                    },
+                    0, // delay for run at the first time
+                    10000 // period
+            );
+
+            int counter = 0;
+            while (counter < 100) {
+                JSONObject dataMsg = new JSONObject();
+                dataMsg.put("msg", "Some random text with message");
+                dataMsg.put("level", String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)));
+                dataMsg.put("source", identifier);
+
+                KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
+                producer.send(data);
+                logger.info("MSG: " + dataMsg.toString());
 
                 counter++;
 
