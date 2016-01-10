@@ -60,7 +60,7 @@ public class DataProducer implements Runnable {
             );
 
             int counter = 0;
-            while (counter < 100) {
+            while (counter < 50) {
                 JSONObject dataMsg = new JSONObject();
                 dataMsg.put("msg", "Some random text with message");
                 dataMsg.put("level", String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)));
@@ -73,7 +73,7 @@ public class DataProducer implements Runnable {
                 counter++;
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
