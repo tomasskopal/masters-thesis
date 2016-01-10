@@ -30,7 +30,7 @@ public class Consumer {
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
-    private EPRuntime epRuntime; // should be as singelton somewhere //TODO: make it
+    private EPRuntime epRuntime;
 
     public Consumer(String a_groupId, String a_topic, EPRuntime epRuntime) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
@@ -78,7 +78,7 @@ public class Consumer {
         EPServiceProvider cep = Utils.getServiceProvider();
         EPAdministrator cepAdm = cep.getEPAdministrator();
         EPStatement cepStatement = cepAdm.createEPL("select source, count(*) as cnt from "
-                + "IncommingEvent(level='1').win:time_batch(5 sec) group by source having count(*) > 10");
+                + "IncommingEvent(level='1').win:time_batch(5 sec) group by source having count(*) > 5");
         cepStatement.addListener(new EventListener());
         return cep.getEPRuntime();
     }
