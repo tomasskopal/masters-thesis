@@ -58,7 +58,9 @@ public class DataChangeListener implements NodeCacheListener {
                 dataProducer.setTopic((String)json.get("parent"));
                 if (json.get("appMode").equals("combined")) {
                     logger.info("Stopping old consumer and creating new one.");
-                    dataConsumer.stop();
+                    if (dataConsumer != null) {
+                        dataConsumer.stop();
+                    }
                     createConsumer(false, AnalyzingLevel.LEVEL2);
                 }
                 break;

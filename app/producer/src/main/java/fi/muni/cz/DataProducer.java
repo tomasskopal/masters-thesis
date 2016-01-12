@@ -75,7 +75,7 @@ public class DataProducer implements Runnable {
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
                 producer.send(data);
-                logger.info("MSG: " + dataMsg.toString());
+                logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic);
 
                 counter++;
 
