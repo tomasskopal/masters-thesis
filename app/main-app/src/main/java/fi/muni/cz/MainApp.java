@@ -101,6 +101,7 @@ public class MainApp {
             options.addOption(zkListOpt);
             options.addOption(modeOpt);
             options.addOption(parentIpOpt);
+            options.addOption("isbasic", false, "Means if this consumer is basic one. Optional");
             options.addOption("help", false, "show help");
 
             CommandLineParser parser = new DefaultParser();
