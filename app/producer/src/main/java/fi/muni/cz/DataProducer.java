@@ -28,6 +28,10 @@ public class DataProducer implements Runnable {
 
     @Override
     public void run() {
+        sendData();
+    }
+
+    private void sendData() {
         Properties props = new Properties();
         props.put("metadata.broker.list", host + ":9092");
         props.put("serializer.class", "kafka.serializer.StringEncoder");
@@ -90,12 +94,13 @@ public class DataProducer implements Runnable {
         } catch (Exception ex) {
             logger.error("Sending data fails", ex);
         } finally {
-            producer.close();
-            Thread.currentThread().interrupt();
+            //producer.close();
+            //Thread.currentThread().interrupt();
         }
     }
 
     public void setTopic(String topic) {
         this.topic = topic;
+        sendData(); // TODO: if it will be endless stream this call is useless
     }
 }
