@@ -11,6 +11,7 @@ import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 import org.apache.log4j.Logger;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class Consumer {
     private EPRuntime epRuntime;
 
     public static AnalyzingLevel analyzingLevel;
+    public static LocalDateTime consumerCreated = LocalDateTime.now();
 
     public Consumer(String a_topic, EPRuntime epRuntime, AnalyzingLevel analyzingLevel) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(

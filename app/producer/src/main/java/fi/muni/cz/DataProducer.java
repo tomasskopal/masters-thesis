@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 
 import java.util.Properties;
+import java.util.Timer;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -50,28 +51,28 @@ public class DataProducer implements Runnable {
         try {
             logger.info("Start sending data to topic: " + topic);
 
-            new java.util.Timer().scheduleAtFixedRate( // send  more 10 random messages every 10 seconds
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            for (int i=0; i<10; i++) {
-                                JSONObject dataMsg = new JSONObject();
-                                dataMsg.put("msg", "Some random text with message");
-                                dataMsg.put("level", getRandom ? String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)) : "2");
-                                dataMsg.put("source", identifier);
+            Timer timer = new java.util.Timer();
+            timer.scheduleAtFixedRate( // send  more 10 random messages every 10 seconds
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        for (int i=0; i<10; i++) {
+                            JSONObject dataMsg = new JSONObject();
+                            dataMsg.put("msg", "Some random text with message");
+                            dataMsg.put("level", getRandom ? String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)) : "2");
+                            dataMsg.put("source", identifier);
 
-                                KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
-                                producer.send(data);
-                            }
-                            logger.info("Bunch of errors send.");
+                            KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
+                            producer.send(data);
                         }
-                    },
-                    0, // delay for run at the first time
-                    10000 // period
+                        logger.info("Bunch of errors send.");
+                    }
+                },
+                0, // delay for run at the first time
+                10000 // period
             );
 
-            int counter = 0;
-            while (counter < 50) {
+            while (true) {
                 JSONObject dataMsg = new JSONObject();
                 dataMsg.put("msg", "Some random text with message");
                 dataMsg.put("level", getRandom ? String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)) : "2");
@@ -81,26 +82,19 @@ public class DataProducer implements Runnable {
                 producer.send(data);
                 logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic);
 
-                counter++;
-
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            logger.info("Producer Ends");
 
         } catch (Exception ex) {
             logger.error("Sending data fails", ex);
-        } finally {
-            //producer.close();
-            //Thread.currentThread().interrupt();
         }
     }
 
     public void setTopic(String topic) {
         this.topic = topic;
-        sendData(); // TODO: if it will be endless stream this call is useless
     }
 }

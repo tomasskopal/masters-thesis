@@ -24,7 +24,7 @@ public class EventListener implements UpdateListener {
         logger.info("Event received.");
 
         if (Consumer.analyzingLevel.equals(AnalyzingLevel.LEVEL2)) { // TODO : remove this if
-            logger.info("Event received with level 2. Do nothing for now");
+            logger.info("Event received with level 2. Do nothing for now. PC count: " + newData.length);
             return;
         }
 
