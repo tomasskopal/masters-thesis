@@ -52,11 +52,13 @@ public class DataChangeListener implements NodeCacheListener {
                     createConsumer();
                 }
                 break;
+            case MOVE:
+                logger.info("Watcher received data: " + json.toString());
         }
     }
 
     private void createConsumer() {
-        dataConsumer = new Consumer("group-id", AppData.instance().getIp(), null);
+        dataConsumer = new Consumer("group-id", AppData.instance().getIp(), null, AnalyzingLevel.LEVEL1);
         dataConsumer.run(1);
         logger.info("Consumer was created from incoming z-node data");
     }

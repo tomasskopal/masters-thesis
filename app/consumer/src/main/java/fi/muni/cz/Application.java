@@ -27,7 +27,7 @@ public class Application {
         int threads = LOCALHOST_THREATS;
 
         topics.forEach((topic) -> {
-            Consumer example = new Consumer(groupId, topic, null);
+            Consumer example = new Consumer(groupId, topic, null, AnalyzingLevel.LEVEL1);
             example.run(threads);
         });
     }

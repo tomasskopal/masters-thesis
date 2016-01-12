@@ -32,11 +32,14 @@ public class Consumer {
     private  ExecutorService executor;
     private EPRuntime epRuntime;
 
-    public Consumer(String a_groupId, String a_topic, EPRuntime epRuntime) {
+    public static AnalyzingLevel analyzingLevel;
+
+    public Consumer(String a_groupId, String a_topic, EPRuntime epRuntime, AnalyzingLevel analyzingLevel) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
                 createConsumerConfig(a_groupId));
         this.topic = a_topic;
         this.epRuntime = epRuntime != null ? epRuntime : getEsperRuntime();
+        this.analyzingLevel = analyzingLevel;
     }
 
 

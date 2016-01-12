@@ -1,5 +1,6 @@
 package fi.muni.cz;
 
+import org.apache.curator.framework.CuratorFramework;
 import org.apache.log4j.Logger;
 
 /**
@@ -7,10 +8,12 @@ import org.apache.log4j.Logger;
  */
 public class AppData {
 
+    public static final String ZK_ROOT = "/root";
+
     private static AppData instance;
 
     private String ip;
-    private String zkList;
+    private CuratorFramework zkSession;
     private Logger logger;
 
     private AppData() {}
@@ -30,12 +33,12 @@ public class AppData {
         this.ip = ip;
     }
 
-    public String getZkList() {
-        return zkList;
+    public CuratorFramework getZkSession() {
+        return zkSession;
     }
 
-    public void setZkList(String zkList) {
-        this.zkList = zkList;
+    public void setZkSession(CuratorFramework zkSession) {
+        this.zkSession = zkSession;
     }
 
     public Logger getLogger() {

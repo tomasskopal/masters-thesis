@@ -27,29 +27,29 @@ import java.util.Arrays;
 public class MainApp {
 
     private static Logger logger = Logger.getLogger("producer"); // default value
-    private static final String ZK_ROOT = "/root";
 
     private CuratorFramework curatorFramework;
 
-    public MainApp(String appMode, String parentIp) {
+    public MainApp(String appMode, String parentIp, String zkList) {
         String ip = AppData.instance().getIp();
 
         logger.info("Input arguments: IP: " + ip + ", appMode: " + appMode + ", parentIP: " + parentIp);
 
         try {
             curatorFramework = CuratorFrameworkFactory.newClient(
-                    AppData.instance().getZkList(),          //  server list
+                    zkList,                                  //  server list
                     5000,                                    //  session timeout time
                     3000,                                    //  connection create timeout time
                     new ExponentialBackoffRetry(1000, 3)     //  retry strategy
             );
             curatorFramework.start();
+            AppData.instance().setZkSession(curatorFramework);
 
-            if (curatorFramework.checkExists().forPath(ZK_ROOT) == null) {
+            if (curatorFramework.checkExists().forPath(AppData.ZK_ROOT) == null) {
                 logger.info("Root znode is not created. Lets create it.");
                 curatorFramework.create()
                         .withMode(CreateMode.PERSISTENT)
-                        .forPath(ZK_ROOT);
+                        .forPath(AppData.ZK_ROOT);
             }
 
             // prepare data object
@@ -59,12 +59,12 @@ public class MainApp {
             data.put("appMode", appMode);
 
             // create node
-            createNodeAndRegisterWatcher(ZK_ROOT + "/" + ip);
+            createNodeAndRegisterWatcher(AppData.ZK_ROOT + "/" + ip);
             Thread.sleep(1000);
 
-            curatorFramework.setData().forPath(ZK_ROOT + "/" + ip, data.toString().getBytes());
+            curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
 
-            while (true){}
+            while (true){} // TODO: move to the separate thread and remove this endless loop
 
         } catch (Exception e) {
             logger.error("Main app fails. Error: ", e);
@@ -119,12 +119,12 @@ public class MainApp {
             logger.info("Input arguments: " + Arrays.asList(args).toString());
 
             AppData.instance().setIp(cmd.getOptionValue("ip"));
-            AppData.instance().setZkList(cmd.getOptionValue("zklist"));
             AppData.instance().setLogger(logger);
 
             new MainApp(
                     cmd.getOptionValue("m"),
-                    cmd.getOptionValue("p")
+                    cmd.getOptionValue("p"),
+                    cmd.getOptionValue("zklist")
             );
 
         } catch (ParseException e) {

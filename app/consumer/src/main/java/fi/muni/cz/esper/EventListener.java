@@ -2,6 +2,10 @@ package fi.muni.cz.esper;
 
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
+import fi.muni.cz.ActionType;
+import fi.muni.cz.AppData;
+import org.apache.curator.framework.CuratorFramework;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,13 +16,33 @@ public class EventListener implements UpdateListener {
 
     private static final Logger logger = LoggerFactory.getLogger(EventListener.class);
 
+    private CuratorFramework zkSession = AppData.instance().getZkSession();
+
     public void update(EventBean[] newData, EventBean[] oldData) {
+        logger.info("Event received.");
         if (newData.length < 2) {
             logger.info("There is just one PC with error. This is not an attack.");
             return;
         }
-        for (EventBean bean : newData) {
+        for (int i = 0; i < newData.length; i++) {
+            EventBean bean = newData[i];
             logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
+
+            JSONObject data = new JSONObject();
+            data.put("action", ActionType.MOVE.toString());
+            data.put("parent", newData[0].get("source").toString());
+            if (i == 0) {
+                data.put("appMode", "combined");
+            } else {
+                data.put("appMode", "producer");
+            }
+
+            try {
+                zkSession.setData().forPath(AppData.ZK_ROOT + "/" + bean.get("source").toString(), data.toString().getBytes());
+            } catch (Exception e) {
+                logger.error("Sending data failed in Esper event handler.", e);
+                return;
+            }
         }
     }
 }
