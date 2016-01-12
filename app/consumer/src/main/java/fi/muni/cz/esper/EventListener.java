@@ -3,7 +3,9 @@ package fi.muni.cz.esper;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import fi.muni.cz.ActionType;
+import fi.muni.cz.AnalyzingLevel;
 import fi.muni.cz.AppData;
+import fi.muni.cz.Consumer;
 import org.apache.curator.framework.CuratorFramework;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -20,6 +22,12 @@ public class EventListener implements UpdateListener {
 
     public void update(EventBean[] newData, EventBean[] oldData) {
         logger.info("Event received.");
+        
+        if (Consumer.analyzingLevel.equals(AnalyzingLevel.LEVEL2)) { // TODO : remove this if
+            logger.info("Event received with level 2. Do nothing for now");
+            return;
+        }
+
         if (newData.length < 2) {
             logger.info("There is just one PC with error. This is not an attack.");
             return;

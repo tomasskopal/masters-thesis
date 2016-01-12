@@ -20,6 +20,7 @@ public class DataChangeListener implements NodeCacheListener {
     private NodeCache dataCache;
     private DataProducer dataProducer = null;
     private Consumer dataConsumer = null;
+    private Consumer basicDataConsumer = null;
 
     public DataChangeListener(NodeCache dataCache) {
         logger = AppData.instance().getLogger();
@@ -45,21 +46,33 @@ public class DataChangeListener implements NodeCacheListener {
     }
 
     private void evaluateData(JSONObject json) {
+        logger.info("Evaluated action will be: " + json.get("action"));
         switch (ActionType.valueOf((String) json.get("action"))) {
             case CREATE:
                 createProducer((String)json.get("parent"));
                 if (json.get("appMode").equals("combined")) {
-                    createConsumer();
+                    createConsumer(Boolean.valueOf((String)json.get("isBasic")), AnalyzingLevel.LEVEL1);
                 }
                 break;
             case MOVE:
-                logger.info("Watcher received data: " + json.toString());
+                dataProducer.setTopic((String)json.get("parent"));
+                if (json.get("appMode").equals("combined")) {
+                    logger.info("Stopping old consumer and creating new one.");
+                    dataConsumer.stop();
+                    createConsumer(false, AnalyzingLevel.LEVEL2);
+                }
+                break;
         }
     }
 
-    private void createConsumer() {
-        dataConsumer = new Consumer("group-id", AppData.instance().getIp(), null, AnalyzingLevel.LEVEL1);
-        dataConsumer.run(1);
+    private void createConsumer(boolean isBasic, AnalyzingLevel analyzingLevel) {
+        Consumer consumer = new Consumer(AppData.instance().getIp(), null, analyzingLevel);
+        consumer.run(1);
+        if (isBasic) {
+            basicDataConsumer = consumer;
+        } else {
+            dataConsumer = consumer;
+        }
         logger.info("Consumer was created from incoming z-node data");
     }
 

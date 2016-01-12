@@ -30,7 +30,7 @@ public class MainApp {
 
     private CuratorFramework curatorFramework;
 
-    public MainApp(String appMode, String parentIp, String zkList) {
+    public MainApp(String appMode, String parentIp, String zkList, boolean isBasic) {
         String ip = AppData.instance().getIp();
 
         logger.info("Input arguments: IP: " + ip + ", appMode: " + appMode + ", parentIP: " + parentIp);
@@ -57,6 +57,7 @@ public class MainApp {
             data.put("action", ActionType.CREATE.toString());
             data.put("parent", parentIp);
             data.put("appMode", appMode);
+            data.put("isBasic", String.valueOf(isBasic));
 
             // create node
             createNodeAndRegisterWatcher(AppData.ZK_ROOT + "/" + ip);
@@ -111,6 +112,11 @@ public class MainApp {
                 return;
             }
 
+            boolean isBasic = false;
+            if (cmd.hasOption("isbasic")) {
+                isBasic = true;
+            }
+
             if (!(cmd.getOptionValue("m").equals("producer") || cmd.getOptionValue("m").equals("combined"))) {
                 logger.error("Unknown app mode: " + cmd.getOptionValue("m"));
                 return;
@@ -124,7 +130,8 @@ public class MainApp {
             new MainApp(
                     cmd.getOptionValue("m"),
                     cmd.getOptionValue("p"),
-                    cmd.getOptionValue("zklist")
+                    cmd.getOptionValue("zklist"),
+                    isBasic
             );
 
         } catch (ParseException e) {

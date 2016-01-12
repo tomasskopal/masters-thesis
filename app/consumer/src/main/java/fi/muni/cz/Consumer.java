@@ -26,6 +26,7 @@ public class Consumer {
     private static final Logger logger = Logger.getLogger("consumer");
 
     private static final String LOCALHOST_ZK = "localhost:2181";
+    private static final String GROUP_ID = "group-id";
 
     private final ConsumerConnector consumer;
     private final String topic;
@@ -34,9 +35,9 @@ public class Consumer {
 
     public static AnalyzingLevel analyzingLevel;
 
-    public Consumer(String a_groupId, String a_topic, EPRuntime epRuntime, AnalyzingLevel analyzingLevel) {
+    public Consumer(String a_topic, EPRuntime epRuntime, AnalyzingLevel analyzingLevel) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
-                createConsumerConfig(a_groupId));
+                createConsumerConfig());
         this.topic = a_topic;
         this.epRuntime = epRuntime != null ? epRuntime : getEsperRuntime();
         this.analyzingLevel = analyzingLevel;
@@ -66,10 +67,10 @@ public class Consumer {
         logger.info("Consumer was terminated. Topic: " + topic);
     }
 
-    private ConsumerConfig createConsumerConfig(String a_groupId) {
+    private ConsumerConfig createConsumerConfig() {
         Properties props = new Properties();
         props.put("zookeeper.connect", LOCALHOST_ZK);
-        props.put("group.id", a_groupId);
+        props.put("group.id", GROUP_ID);
         props.put("zookeeper.session.timeout.ms", "400");
         props.put("zookeeper.sync.time.ms", "200");
         props.put("auto.commit.interval.ms", "1000");
