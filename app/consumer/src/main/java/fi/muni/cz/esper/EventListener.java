@@ -22,7 +22,7 @@ public class EventListener implements UpdateListener {
 
     public void update(EventBean[] newData, EventBean[] oldData) {
         logger.info("Event received.");
-/*
+
         if (Consumer.analyzingLevel.equals(AnalyzingLevel.LEVEL2)) { // TODO : remove this if
             logger.info("Event received with level 2. Do nothing for now. PC count: " + newData.length);
             return;
@@ -32,26 +32,40 @@ public class EventListener implements UpdateListener {
             logger.info("There is just one PC with error. This is not an attack.");
             return;
         }
+
+        String newParent = null;
         for (int i = 0; i < newData.length; i++) {
-            EventBean bean = newData[i];
-            logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
-
-            JSONObject data = new JSONObject();
-            data.put("action", ActionType.MOVE.toString());
-            data.put("parent", newData[0].get("source").toString());
-            if (i == 0) {
-                data.put("appMode", "combined");
-            } else {
-                data.put("appMode", "producer");
+            String source = newData[i].get("source").toString();
+            if (!source.contains(AppData.instance().getIp())) {
+                newParent = source.substring(0, source.lastIndexOf("/"));
             }
+        }
 
+        for (int i = 0; i < newData.length; i++) {
             try {
-                zkSession.setData().forPath(AppData.ZK_ROOT + "/" + bean.get("source").toString(), data.toString().getBytes());
+                EventBean bean = newData[i];
+                String source = bean.get("source").toString();
+
+                logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
+
+                JSONObject data = new JSONObject();
+                data.put("action", ActionType.CREATE.toString());
+                data.put("appMode", "consumer");
+                data.put("level", "LEVEL2");
+
+                zkSession.setData().forPath(newParent, data.toString().getBytes());
+
+                data.put("action", ActionType.MOVE.toString());
+                data.put("appMode", "producer");
+                data.put("parent", newParent);
+                data.put("path", source.substring(source.lastIndexOf("/") + 1, source.length()));
+
+                zkSession.setData().forPath(source, data.toString().getBytes());
             } catch (Exception e) {
                 logger.error("Sending data failed in Esper event handler.", e);
                 return;
             }
         }
-*/
+
     }
 }

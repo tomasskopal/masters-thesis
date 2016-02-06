@@ -28,15 +28,13 @@ public class MainApp {
 
     private static Logger logger = Logger.getLogger("producer"); // default value
 
-    private CuratorFramework curatorFramework;
-
     public MainApp(String appMode, String parentIp, String zkList, boolean isBasic) {
         String ip = AppData.instance().getIp();
 
         logger.info("Input arguments: IP: " + ip + ", appMode: " + appMode + ", parentIP: " + parentIp);
 
         try {
-            curatorFramework = CuratorFrameworkFactory.newClient(
+            CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(
                     zkList,                                  //  server list
                     5000,                                    //  session timeout time
                     3000,                                    //  connection create timeout time
@@ -64,6 +62,7 @@ public class MainApp {
 
             if (appMode.equals("combined")) {
                 data.put("appMode", "consumer");
+                data.put("level", "LEVEL1");
                 curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
                 Thread.sleep(1000);
             }
@@ -74,6 +73,7 @@ public class MainApp {
 
             data.put("appMode", "producer");
             data.put("isBasic", String.valueOf(false));
+            data.put("path", AppData.ZK_ROOT + "/" + parentIp + "/" + ip);
             curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + parentIp + "/" + ip, data.toString().getBytes());
 
             while (true){} // TODO: move to the separate thread and remove this endless loop
@@ -83,12 +83,13 @@ public class MainApp {
         }
     }
 
-    private void createNodeAndRegisterWatcher(String path) throws Exception {
+    public static void createNodeAndRegisterWatcher(String path) throws Exception {
+        CuratorFramework curatorFramework = AppData.instance().getZkSession();
         if (curatorFramework.checkExists().forPath(path ) != null) {
             logger.info("Node: " + path + " already exists.");
             return;
         }
-        curatorFramework.create().creatingParentsIfNeeded()
+        curatorFramework.create()
                 .withMode(CreateMode.PERSISTENT)
                 .forPath(path, "init".getBytes());
 

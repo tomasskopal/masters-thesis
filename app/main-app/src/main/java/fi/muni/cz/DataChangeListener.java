@@ -1,5 +1,6 @@
 package fi.muni.cz;
 
+import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
 import org.apache.log4j.Logger;
@@ -45,26 +46,35 @@ public class DataChangeListener implements NodeCacheListener {
         logger.info("------------------------------");
     }
 
-    private void evaluateData(JSONObject json) {
+    private void evaluateData(JSONObject json) throws Exception {
         logger.info("Evaluated action will be: " + json.get("action"));
         switch (ActionType.valueOf((String) json.get("action"))) {
             case CREATE:
                 if (json.get("appMode").equals("producer")) {
-                    createProducer((String) json.get("parent"));
+                    createProducer((String) json.get("parent"), (String) json.get("path"));
                 }
                 if (json.get("appMode").equals("consumer")) {
-                    createConsumer(Boolean.valueOf((String)json.get("isBasic")), AnalyzingLevel.LEVEL1);
+                    createConsumer(
+                            Boolean.valueOf((String)json.get("isBasic")),
+                            AnalyzingLevel.valueOf((String) json.get("level"))
+                    );
                 }
                 break;
             case MOVE:
-                dataProducer.setTopic((String)json.get("parent"));
-                if (json.get("appMode").equals("combined")) {
-                    logger.info("Stopping old consumer and creating new one.");
-                    if (dataConsumer != null) {
-                        dataConsumer.stop();
-                    }
-                    createConsumer(false, AnalyzingLevel.LEVEL2);
-                }
+                CuratorFramework curatorFramework = AppData.instance().getZkSession();
+                JSONObject data = new JSONObject();
+                data.put("action", ActionType.CREATE.toString());
+                data.put("appMode", "producer");
+                data.put("isBasic", String.valueOf(false));
+                data.put("path", json.get("path"));
+                data.put("parent", json.get("parent"));
+
+                MainApp.createNodeAndRegisterWatcher((String) json.get("path"));
+                Thread.sleep(1000);
+                curatorFramework.setData().forPath((String) json.get("path"), data.toString().getBytes());
+
+                dataProducer.stop();
+                curatorFramework.delete().forPath(dataCache.getCurrentData().getPath());
                 break;
         }
     }
@@ -80,8 +90,8 @@ public class DataChangeListener implements NodeCacheListener {
         logger.info("Consumer was created from incoming z-node data");
     }
 
-    private void createProducer(String parent) {
-        dataProducer = new DataProducer(parent, parent, AppData.instance().getIp());
+    private void createProducer(String parent, String path) {
+        dataProducer = new DataProducer(parent, parent, path);
         Thread producer = new Thread(
             dataProducer
         );

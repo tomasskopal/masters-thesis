@@ -15,7 +15,10 @@ public class Application {
      * Just for testing. TODO: delete this class
      */
     public static void main(String[] args) {
-        while (true) {
+        String source = "root/192.168.1.1/192.168.1.1";
+        System.out.println(source.substring(0, source.lastIndexOf("/")));
+        System.out.println(source.substring(source.lastIndexOf("/") + 1, source.length()));
+       /* while (true) {
             logger.info(LocalTime.now().toString());
             try {
                 Thread.sleep(300);
@@ -23,5 +26,6 @@ public class Application {
                 e.printStackTrace();
             }
         }
+        */
     }
 }

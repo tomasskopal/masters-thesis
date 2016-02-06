@@ -17,6 +17,8 @@ public class DataProducer implements Runnable {
 
     private static final Logger logger = Logger.getLogger("producer");
 
+    volatile boolean shutdown = false;
+
     private String host;
     private String topic;
     private String identifier;
@@ -43,7 +45,7 @@ public class DataProducer implements Runnable {
 
         // TODO : remove whitelist
         boolean getRandomNumber = true;
-        if (identifier.equals("147.251.43.150") || identifier.equals("147.251.43.138")) {
+        if (identifier.contains("147.251.43.150") || identifier.contains("147.251.43.138")) {
             getRandomNumber = false;
         }
         final boolean getRandom = getRandomNumber;
@@ -72,7 +74,7 @@ public class DataProducer implements Runnable {
                 10000 // period
             );
 
-            while (true) {
+            while (!shutdown) {
                 JSONObject dataMsg = new JSONObject();
                 dataMsg.put("msg", "Some random text with message");
                 dataMsg.put("level", getRandom ? String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)) : "2");
@@ -94,7 +96,7 @@ public class DataProducer implements Runnable {
         }
     }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void stop() {
+        this.shutdown = true;
     }
 }
