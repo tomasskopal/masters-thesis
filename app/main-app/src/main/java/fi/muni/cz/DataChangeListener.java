@@ -69,6 +69,8 @@ public class DataChangeListener implements NodeCacheListener {
                 data.put("path", json.get("path"));
                 data.put("parent", json.get("parent"));
 
+                logger.info(data.toJSONString());
+
                 MainApp.createNodeAndRegisterWatcher((String) json.get("path"));
                 Thread.sleep(1000);
                 curatorFramework.setData().forPath((String) json.get("path"), data.toString().getBytes());
