@@ -69,8 +69,6 @@ public class DataChangeListener implements NodeCacheListener {
                 data.put("path", json.get("path"));
                 data.put("parent", json.get("parent"));
 
-                logger.info(data.toJSONString());
-
                 MainApp.createNodeAndRegisterWatcher((String) json.get("path"));
                 Thread.sleep(1000);
                 curatorFramework.setData().forPath((String) json.get("path"), data.toString().getBytes());
@@ -93,7 +91,7 @@ public class DataChangeListener implements NodeCacheListener {
     }
 
     private void createProducer(String parent, String path) {
-        dataProducer = new DataProducer(parent, parent, path);
+        dataProducer = new DataProducer(null, parent, path);
         Thread producer = new Thread(
             dataProducer
         );

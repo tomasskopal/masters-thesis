@@ -24,7 +24,7 @@ public class DataProducer implements Runnable {
     private String identifier;
 
     public DataProducer(String host, String topic, String identifier) {
-        this.host = host;
+        this.host = host != null ? host : "147.251.43.129";
         this.topic = topic;
         this.identifier = identifier;
     }
