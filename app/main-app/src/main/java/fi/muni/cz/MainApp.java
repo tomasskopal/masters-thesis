@@ -64,7 +64,7 @@ public class MainApp {
 
             if (appMode.equals("combined")) {
                 data.put("appMode", "consumer");
-                //curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
+                curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
                 Thread.sleep(1000);
             }
 
@@ -74,7 +74,7 @@ public class MainApp {
 
             data.put("appMode", "producer");
             data.put("isBasic", String.valueOf(false));
-            //curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + parentIp + "/" + ip, data.toString().getBytes());
+            curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + parentIp + "/" + ip, data.toString().getBytes());
 
             while (true){} // TODO: move to the separate thread and remove this endless loop
 
