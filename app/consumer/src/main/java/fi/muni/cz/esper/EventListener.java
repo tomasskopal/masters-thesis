@@ -36,10 +36,7 @@ public class EventListener implements UpdateListener {
         String newParent = null;
         for (int i = 0; i < newData.length; i++) {
             String source = newData[i].get("source").toString();
-            logger.info("tmp_source: " + source);
-            logger.info("tmp_ip: " + AppData.instance().getIp());
-            logger.info("tmp_boolean: " + !source.contains(AppData.instance().getIp()));
-            if (!source.contains(AppData.instance().getIp())) {
+            if (!source.endsWith(AppData.instance().getIp())) {
                 newParent = source.substring(0, source.lastIndexOf("/"));
             }
         }
