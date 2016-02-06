@@ -10,6 +10,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.App;
 
 /**
  * Created by tomasskopal on 24.10.15.
@@ -37,7 +38,8 @@ public class EventListener implements UpdateListener {
         for (int i = 0; i < newData.length; i++) {
             String source = newData[i].get("source").toString();
             if (!source.endsWith(AppData.instance().getIp())) {
-                newParent = source.substring(0, source.lastIndexOf("/"));
+                newParent = source.substring(source.lastIndexOf("/") + 1, source.length());
+                break;
             }
         }
         logger.info("New Parent: " + newParent);
@@ -54,7 +56,7 @@ public class EventListener implements UpdateListener {
                 data.put("appMode", "consumer");
                 data.put("level", "LEVEL2");
 
-                zkSession.setData().forPath(newParent, data.toString().getBytes());
+                zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
 
                 data.put("action", ActionType.MOVE.toString());
                 data.put("appMode", "producer");
