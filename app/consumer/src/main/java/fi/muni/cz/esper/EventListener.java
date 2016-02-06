@@ -59,7 +59,7 @@ public class EventListener implements UpdateListener {
                 data.put("action", ActionType.MOVE.toString());
                 data.put("appMode", "producer");
                 data.put("parent", newParent);
-                data.put("path", source.substring(source.lastIndexOf("/") + 1, source.length()));
+                data.put("path", source.substring(source.lastIndexOf("/"), source.length()));
 
                 zkSession.setData().forPath(source, data.toString().getBytes());
             } catch (Exception e) {
