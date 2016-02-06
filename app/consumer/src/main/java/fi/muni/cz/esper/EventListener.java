@@ -40,6 +40,7 @@ public class EventListener implements UpdateListener {
                 newParent = source.substring(0, source.lastIndexOf("/"));
             }
         }
+        logger.info("New Parent: " + newParent);
 
         for (int i = 0; i < newData.length; i++) {
             try {
