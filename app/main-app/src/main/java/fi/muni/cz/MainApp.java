@@ -56,14 +56,25 @@ public class MainApp {
             JSONObject data = new JSONObject();
             data.put("action", ActionType.CREATE.toString());
             data.put("parent", parentIp);
-            data.put("appMode", appMode);
             data.put("isBasic", String.valueOf(isBasic));
 
-            // create node
+            // create main node
             createNodeAndRegisterWatcher(AppData.ZK_ROOT + "/" + ip);
             Thread.sleep(1000);
 
-            curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
+            if (appMode.equals("combined")) {
+                data.put("appMode", "consumer");
+                //curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
+                Thread.sleep(1000);
+            }
+
+            // create producer node
+            createNodeAndRegisterWatcher(AppData.ZK_ROOT + "/" + parentIp + "/" + ip);
+            Thread.sleep(1000);
+
+            data.put("appMode", "producer");
+            data.put("isBasic", String.valueOf(false));
+            //curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + parentIp + "/" + ip, data.toString().getBytes());
 
             while (true){} // TODO: move to the separate thread and remove this endless loop
 
@@ -73,11 +84,13 @@ public class MainApp {
     }
 
     private void createNodeAndRegisterWatcher(String path) throws Exception {
-        if (curatorFramework.checkExists().forPath(path ) == null) {
-            curatorFramework.create().creatingParentsIfNeeded()
-                    .withMode(CreateMode.PERSISTENT)
-                    .forPath(path, "init".getBytes());
+        if (curatorFramework.checkExists().forPath(path ) != null) {
+            logger.info("Node: " + path + " already exists.");
+            return;
         }
+        curatorFramework.create().creatingParentsIfNeeded()
+                .withMode(CreateMode.PERSISTENT)
+                .forPath(path, "init".getBytes());
 
         // register watcher
         NodeCache dataCache = new NodeCache(curatorFramework, path);

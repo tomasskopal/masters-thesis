@@ -49,8 +49,10 @@ public class DataChangeListener implements NodeCacheListener {
         logger.info("Evaluated action will be: " + json.get("action"));
         switch (ActionType.valueOf((String) json.get("action"))) {
             case CREATE:
-                createProducer((String)json.get("parent"));
-                if (json.get("appMode").equals("combined")) {
+                if (json.get("appMode").equals("producer")) {
+                    createProducer((String) json.get("parent"));
+                }
+                if (json.get("appMode").equals("consumer")) {
                     createConsumer(Boolean.valueOf((String)json.get("isBasic")), AnalyzingLevel.LEVEL1);
                 }
                 break;
