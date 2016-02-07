@@ -85,7 +85,7 @@ public class DataProducer implements Runnable {
                 //logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic);
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
