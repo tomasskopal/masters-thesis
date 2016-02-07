@@ -24,10 +24,12 @@ public class EventListener implements UpdateListener {
     public void update(EventBean[] newData, EventBean[] oldData) {
         logger.info("Event received.");
 
+        /*
         if (Consumer.analyzingLevel.equals(AnalyzingLevel.LEVEL2)) { // TODO : remove this if
             logger.info("Event received with level 2. Do nothing for now. PC count: " + newData.length);
             return;
         }
+        */
 
         if (newData.length < 2) {
             logger.info("There is just one PC with error. This is not an attack.");

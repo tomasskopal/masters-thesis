@@ -43,12 +43,15 @@ public class DataProducer implements Runnable {
         ProducerConfig config = new ProducerConfig(props);
         Producer<String, String> producer = new Producer<>(config);
 
+        /*
         // TODO : remove whitelist
         boolean getRandomNumber = true;
         if (identifier.contains("147.251.43.150") || identifier.contains("147.251.43.138")) {
             getRandomNumber = false;
         }
-        final boolean getRandom = getRandomNumber;
+        */
+
+        final boolean getRandom = true;
 
         try {
             logger.info("Start sending data to topic: " + topic);
