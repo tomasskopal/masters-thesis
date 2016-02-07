@@ -58,6 +58,7 @@ public class DataChangeListener implements NodeCacheListener {
                             Boolean.valueOf((String)json.get("isBasic")),
                             AnalyzingLevel.valueOf((String) json.get("level"))
                     );
+                    MainApp.registerChildrenWatcher((String) json.get("path"));
                 }
                 break;
             case MOVE:

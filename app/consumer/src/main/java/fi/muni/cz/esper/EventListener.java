@@ -22,57 +22,60 @@ public class EventListener implements UpdateListener {
     private CuratorFramework zkSession = AppData.instance().getZkSession();
 
     public void update(EventBean[] newData, EventBean[] oldData) {
-        logger.info("Event received.");
+        try {
+            logger.info("Event received.");
 
-        /*
-        if (Consumer.analyzingLevel.equals(AnalyzingLevel.LEVEL2)) { // TODO : remove this if
-            logger.info("Event received with level 2. Do nothing for now. PC count: " + newData.length);
-            return;
-        }
-        */
-
-        if (newData.length < 2) {
-            logger.info("There is just one PC with error. This is not an attack.");
-            return;
-        }
-
-        String newParent = null;
-        for (int i = 0; i < newData.length; i++) {
-            String source = newData[i].get("source").toString();
-            if (!source.endsWith(AppData.instance().getIp())) {
-                newParent = source.substring(source.lastIndexOf("/") + 1, source.length());
-                break;
+            /*
+            if (Consumer.analyzingLevel.equals(AnalyzingLevel.LEVEL2)) { // TODO : remove this if
+                logger.info("Event received with level 2. Do nothing for now. PC count: " + newData.length);
+                return;
             }
-        }
-        logger.info("New Parent: " + newParent);
+            */
 
-        for (int i = 0; i < newData.length; i++) {
-            try {
+            if (newData.length < 2) {
+                logger.info("There is just one PC with error. This is not an attack.");
+                return;
+            }
+
+            String newParent = null;
+            for (int i = 0; i < newData.length; i++) {
+                String source = newData[i].get("source").toString();
+                if (!source.endsWith(AppData.instance().getIp())) {
+                    newParent = source.substring(source.lastIndexOf("/") + 1, source.length());
+                    break;
+                }
+            }
+            logger.info("New Parent: " + newParent);
+
+            if (newParent == null) {
+                logger.warn("Finding new parent failed for data: " + newData);
+                return;
+            }
+
+            // create new consumer
+            JSONObject data = new JSONObject();
+            data.put("action", ActionType.CREATE.toString());
+            data.put("appMode", "consumer");
+            data.put("level", "LEVEL2");
+            data.put("path", AppData.ZK_ROOT + "/" + newParent);
+            zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
+
+            for (int i = 0; i < newData.length; i++) {
                 EventBean bean = newData[i];
                 String source = bean.get("source").toString();
 
                 logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
 
-                JSONObject data = new JSONObject();
-                data.put("action", ActionType.CREATE.toString());
-                data.put("appMode", "consumer");
-                data.put("level", "LEVEL2");
-
-                zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
-
                 data.put("action", ActionType.MOVE.toString());
                 data.put("appMode", "producer");
                 data.put("parent", newParent);
                 data.put("path", AppData.ZK_ROOT + "/" + newParent + source.substring(source.lastIndexOf("/"), source.length()));
-                logger.info("Epath data: " + AppData.ZK_ROOT + "/" + newParent + source.substring(source.lastIndexOf("/"), source.length()));
-                logger.info("EventListener data: " + data.toString());
 
                 zkSession.setData().forPath(source, data.toString().getBytes());
-            } catch (Exception e) {
-                logger.error("Sending data failed in Esper event handler.", e);
-                return;
             }
+        } catch (Exception e) {
+            logger.error("Sending data failed in Esper event handler.", e);
+            return;
         }
-
     }
 }

@@ -12,6 +12,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.NodeCache;
+import org.apache.curator.framework.recipes.cache.PathChildrenCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
@@ -63,6 +64,7 @@ public class MainApp {
             if (appMode.equals("combined")) {
                 data.put("appMode", "consumer");
                 data.put("level", "LEVEL1");
+                data.put("path", AppData.ZK_ROOT + "/" + ip);
                 curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
                 Thread.sleep(1000);
             }
@@ -97,6 +99,17 @@ public class MainApp {
         NodeCache dataCache = new NodeCache(curatorFramework, path);
         dataCache.getListenable().addListener(new DataChangeListener(dataCache));
         dataCache.start();
+    }
+
+    public static void registerChildrenWatcher(String path) throws Exception {
+        CuratorFramework curatorFramework = AppData.instance().getZkSession();
+
+        // register watcher
+        PathChildrenCache cache = new PathChildrenCache(curatorFramework, path, true);
+        cache.getListenable().addListener(new ChildrenChangeListener());
+        cache.start();
+
+        logger.info("Children change watcher was registered for path: " + path);
     }
 
     public static void main(String[] args) {
