@@ -86,6 +86,7 @@ public class MainApp {
                 data.put("appMode", "consumer");
                 data.put("level", "LEVEL1");
                 data.put("path", AppData.ZK_ROOT + "/147.251.43.129");
+                AppData.instance().setIp("147.251.43.129");
                 curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
             }
 
