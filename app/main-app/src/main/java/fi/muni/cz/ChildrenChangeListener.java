@@ -37,6 +37,5 @@ public class ChildrenChangeListener implements PathChildrenCacheListener {
             default:
                 break;
         }
-        logger.info("Node added: " + event.getData().toString());
     }
 }
