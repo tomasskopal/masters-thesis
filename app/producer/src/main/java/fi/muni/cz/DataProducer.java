@@ -43,14 +43,6 @@ public class DataProducer implements Runnable {
         ProducerConfig config = new ProducerConfig(props);
         Producer<String, String> producer = new Producer<>(config);
 
-        /*
-        // TODO : remove whitelist
-        boolean getRandomNumber = true;
-        if (identifier.contains("147.251.43.150") || identifier.contains("147.251.43.138")) {
-            getRandomNumber = false;
-        }
-        */
-
         final boolean getRandom = true;
 
         try {
@@ -70,12 +62,14 @@ public class DataProducer implements Runnable {
                             KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
                             producer.send(data);
                         }
-                        logger.info("Bunch of errors send.");
+                        logger.info("Bunch of errors send. To topic: " + topic + ", from: " + identifier);
                     }
                 },
                 0, // delay for run at the first time
                 10000 // period
             );
+
+            long counter = 0;
 
             while (!shutdown) {
                 JSONObject dataMsg = new JSONObject();
@@ -85,13 +79,17 @@ public class DataProducer implements Runnable {
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
                 producer.send(data);
-                //logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic);
+
+                if (counter % 10 == 0) {
+                    logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic + ", from: " + identifier);
+                }
 
                 try {
                     Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                counter++;
             }
 
         } catch (Exception ex) {
@@ -100,6 +98,7 @@ public class DataProducer implements Runnable {
     }
 
     public void stop() {
+        logger.info("Stopping producer for topic: " + topic);
         this.shutdown = true;
     }
 }
