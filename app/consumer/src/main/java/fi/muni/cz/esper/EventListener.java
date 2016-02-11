@@ -12,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.App;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by tomasskopal on 24.10.15.
  */
@@ -36,9 +39,16 @@ public class EventListener implements UpdateListener {
                 return;
             }
 
+            List<EventBean> livingNodes = new ArrayList<>();
             String newParent = null;
             for (int i = 0; i < newData.length; i++) {
                 String source = newData[i].get("source").toString();
+
+                if (zkSession.checkExists().forPath(source) == null) {
+                    logger.warn("Node was already moved. Path: " + source);
+                    continue;
+                }
+                livingNodes.add(newData[i]);
                 if (!source.endsWith(AppData.instance().getIp())) {
                     newParent = source.substring(source.lastIndexOf("/") + 1, source.length());
                     break;
@@ -50,6 +60,10 @@ public class EventListener implements UpdateListener {
                 logger.warn("Finding new parent failed for data: " + newData);
                 return;
             }
+            if (livingNodes.size() <= 1) {
+                logger.warn("There left only one or zero nodes. Nothing to do. " + livingNodes.toString());
+                return;
+            }
 
             // create new consumer
             JSONObject data = new JSONObject();
@@ -59,8 +73,7 @@ public class EventListener implements UpdateListener {
             data.put("path", AppData.ZK_ROOT + "/" + newParent);
             zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
 
-            for (int i = 0; i < newData.length; i++) {
-                EventBean bean = newData[i];
+            for (EventBean bean : livingNodes) {
                 String source = bean.get("source").toString();
 
                 logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));

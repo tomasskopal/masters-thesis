@@ -25,9 +25,9 @@ public class SimpleConsumer implements Runnable {
         ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
         while (it.hasNext()) {
             String msg = new String(it.next().message());
-            logger.info("Message received: " + msg);
+            //logger.info("Message received: " + msg);
             IncommingEvent event = new IncommingEvent(msg);
-            //epRuntime.sendEvent(event);
+            epRuntime.sendEvent(event);
         }
     }
 }
