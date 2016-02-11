@@ -39,8 +39,10 @@ public class EventListener implements UpdateListener {
                 return;
             }
 
+            // --------------------- CHECK LIVING NODES -----------------------------------
+
             List<EventBean> livingNodes = new ArrayList<>();
-            String newParent = null;
+
             for (int i = 0; i < newData.length; i++) {
                 String source = newData[i].get("source").toString();
 
@@ -49,21 +51,31 @@ public class EventListener implements UpdateListener {
                     continue;
                 }
                 livingNodes.add(newData[i]);
+            }
+
+            if (livingNodes.size() <= 1) {
+                logger.warn("There left only one or zero nodes. Nothing to do. " + livingNodes.toString());
+                return;
+            }
+
+            // --------------------- NEW PARENT -----------------------------------
+            String newParent = null;
+            for (EventBean bean : livingNodes) {
+                String source = bean.get("source").toString();
                 if (!source.endsWith(AppData.instance().getIp())) {
                     newParent = source.substring(source.lastIndexOf("/") + 1, source.length());
                     break;
                 }
             }
+
             logger.info("New Parent: " + newParent);
 
             if (newParent == null) {
                 logger.warn("Finding new parent failed for data: " + newData);
                 return;
             }
-            if (livingNodes.size() <= 1) {
-                logger.warn("There left only one or zero nodes. Nothing to do. " + livingNodes.toString());
-                return;
-            }
+
+            // --------------------- NEW CONSUMENT -----------------------------------
 
             // create new consumer
             JSONObject data = new JSONObject();
@@ -72,6 +84,8 @@ public class EventListener implements UpdateListener {
             data.put("level", "LEVEL2");
             data.put("path", AppData.ZK_ROOT + "/" + newParent);
             zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
+
+            // --------------------- NEW PRODUCERS -----------------------------------
 
             for (EventBean bean : livingNodes) {
                 String source = bean.get("source").toString();
