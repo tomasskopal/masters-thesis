@@ -10,7 +10,7 @@ done
 sleep 5s
 ssh tomas@147.251.43.129 << KAFKA
 echo 'starting kafka'
-masters-thesis/tools/kafka/bin/kafka-server-start.sh masters-thesis/tools/kafka/config/server.properties > /dev/null &
+JMX_PORT=9998 masters-thesis/tools/kafka/bin/kafka-server-start.sh masters-thesis/tools/kafka/config/server.properties > /dev/null &
 echo 'kafka started'
 KAFKA
 sleep 5s
