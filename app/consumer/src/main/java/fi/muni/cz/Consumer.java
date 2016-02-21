@@ -84,7 +84,7 @@ public class Consumer {
         EPServiceProvider cep = Utils.getServiceProvider();
         EPAdministrator cepAdm = cep.getEPAdministrator();
         EPStatement cepStatement = cepAdm.createEPL("select source, count(*) as cnt from "
-                + "IncommingEvent(level='1').win:time_batch(5 sec) group by source having count(*) > 5");
+                + "IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE flag = 'ACK' group by source having count(*) > 3");
         cepStatement.addListener(new EventListener());
         return cep.getEPRuntime();
     }

@@ -74,7 +74,7 @@ public class EventListener implements UpdateListener {
                 logger.warn("Finding new parent failed for data: " + newData);
                 return;
             }
-
+/*
             // --------------------- NEW CONSUMENT -----------------------------------
 
             // create new consumer
@@ -99,6 +99,7 @@ public class EventListener implements UpdateListener {
 
                 zkSession.setData().forPath(source, data.toString().getBytes());
             }
+*/
         } catch (Exception e) {
             logger.error("Sending data failed in Esper event handler.", e);
             return;

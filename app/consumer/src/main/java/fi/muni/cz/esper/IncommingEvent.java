@@ -17,6 +17,10 @@ public class IncommingEvent {
     private String source;
     private String level;
 
+    private String flag;
+    private String port;
+    private String size;
+
     public IncommingEvent(String data) {
         JSONParser parser = new JSONParser();
 
@@ -25,6 +29,9 @@ public class IncommingEvent {
             this.msg = (String)json.get("msg");
             this.source = (String)json.get("source");
             this.level = (String)json.get("level");
+            this.flag = (String)json.get("flag");
+            this.port = (String)json.get("port");
+            this.size = (String)json.get("size");
         }
         catch(ParseException pe){
             logger.error("Unable to parse data. Position: " + pe.getPosition() + ". Data: " + data);
@@ -59,5 +66,29 @@ public class IncommingEvent {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }
