@@ -44,7 +44,6 @@ public class MainApp {
             curatorFramework.start();
             AppData.instance().setZkSession(curatorFramework);
 
-            curatorFramework.getChildren().forPath("");
             if (curatorFramework.checkExists().forPath(AppData.ZK_ROOT) == null) {
                 logger.info("Root znode is not created. Lets create it.");
                 curatorFramework.create()
