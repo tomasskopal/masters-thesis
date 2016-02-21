@@ -10,7 +10,6 @@ import org.apache.curator.framework.CuratorFramework;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scala.App;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class EventListener implements UpdateListener {
                 String source = newData[i].get("source").toString();
 
                 if (zkSession.checkExists().forPath(source) == null) {
-                    logger.warn("Node was already moved. Path: " + source);
+                    logger.warn("Node already exists. Path: " + source);
                     continue;
                 }
                 livingNodes.add(newData[i]);
@@ -74,7 +73,7 @@ public class EventListener implements UpdateListener {
                 logger.warn("Finding new parent failed for data: " + newData);
                 return;
             }
-/*
+
             // --------------------- NEW CONSUMENT -----------------------------------
 
             // create new consumer
@@ -92,17 +91,20 @@ public class EventListener implements UpdateListener {
 
                 logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
 
-                data.put("action", ActionType.MOVE.toString());
+                data.put("action", ActionType.CREATE_CHILDREN.toString());
                 data.put("appMode", "producer");
                 data.put("parent", newParent);
                 data.put("path", AppData.ZK_ROOT + "/" + newParent + source.substring(source.lastIndexOf("/"), source.length()));
 
-                zkSession.setData().forPath(source, data.toString().getBytes());
+                zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
             }
-*/
+
+            logger.info("Childrens: " + zkSession.getChildren().forPath(AppData.ZK_ROOT + "/" + newParent).toString());
+
         } catch (Exception e) {
             logger.error("Sending data failed in Esper event handler.", e);
             return;
         }
     }
+
 }

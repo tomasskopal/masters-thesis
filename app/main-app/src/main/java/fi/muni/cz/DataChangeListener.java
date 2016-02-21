@@ -61,7 +61,7 @@ public class DataChangeListener implements NodeCacheListener {
                     MainApp.registerChildrenWatcher((String) json.get("path"));
                 }
                 break;
-            case MOVE:
+            case CREATE_CHILDREN:
                 CuratorFramework curatorFramework = AppData.instance().getZkSession();
                 JSONObject data = new JSONObject();
                 data.put("action", ActionType.CREATE.toString());
@@ -74,8 +74,6 @@ public class DataChangeListener implements NodeCacheListener {
                 Thread.sleep(1000);
                 curatorFramework.setData().forPath((String) json.get("path"), data.toString().getBytes());
 
-                dataProducer.stop();
-                curatorFramework.delete().forPath(dataCache.getCurrentData().getPath());
                 break;
         }
     }
