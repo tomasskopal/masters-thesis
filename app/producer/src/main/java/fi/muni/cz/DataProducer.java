@@ -19,12 +19,13 @@ public class DataProducer implements Runnable {
 
     volatile boolean shutdown = false;
 
-    private String host;
+    private String host = "147.251.43.129";
+    private AnalyzingLevel level;
     private String topic;
     private String identifier;
 
-    public DataProducer(String host, String topic, String identifier) {
-        this.host = host != null ? host : "147.251.43.129";
+    public DataProducer(String level, String topic, String identifier) {
+        this.level = AnalyzingLevel.valueOf(level);
         this.topic = topic;
         this.identifier = identifier;
     }
@@ -48,34 +49,11 @@ public class DataProducer implements Runnable {
         try {
             logger.info("Start sending data to topic: " + topic);
 
-            Timer timer = new java.util.Timer();
-            timer.scheduleAtFixedRate( // send  more 10 random messages every 10 seconds
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        for (int i=0; i<10; i++) {
-                            JSONObject dataMsg = new JSONObject();
-                            dataMsg.put("msg", "Some random text with message");
-                            dataMsg.put("level", getRandom ? String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)) : "2");
-                            dataMsg.put("source", identifier);
-
-                            KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
-                            producer.send(data);
-                        }
-                        logger.info("Bunch of errors send. To topic: " + topic + ", from: " + identifier);
-                    }
-                },
-                0, // delay for run at the first time
-                10000 // period
-            );
 
             long counter = 0;
 
             while (!shutdown) {
-                JSONObject dataMsg = new JSONObject();
-                dataMsg.put("msg", "Some random text with message");
-                dataMsg.put("level", getRandom ? String.valueOf(ThreadLocalRandom.current().nextInt(1, 3)) : "2");
-                dataMsg.put("source", identifier);
+                JSONObject dataMsg = getData();
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
                 producer.send(data);
@@ -85,7 +63,7 @@ public class DataProducer implements Runnable {
                 }
 
                 try {
-                    Thread.sleep(300);
+                    Thread.sleep(this.level.equals(AnalyzingLevel.LEVEL1) ? 1000 : 300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -95,6 +73,33 @@ public class DataProducer implements Runnable {
         } catch (Exception ex) {
             logger.error("Sending data fails", ex);
         }
+    }
+
+    private JSONObject getData() {
+        JSONObject dataMsg = new JSONObject();
+        dataMsg.put("msg", "Message from the data producer.");
+        dataMsg.put("level", this.level.toString());
+        dataMsg.put("source", this.identifier);
+
+        switch (this.identifier.substring(this.identifier.length() - 3)) {
+            case "129":
+            case "130":
+                dataMsg.put("flag", "SYN");
+                dataMsg.put("port", "11");
+                dataMsg.put("size", "10");
+                break;
+            case "138":
+                dataMsg.put("flag", "ACK");
+                dataMsg.put("port", "11");
+                dataMsg.put("size", "100");
+                break;
+            case "150":
+                dataMsg.put("flag", "ACK");
+                dataMsg.put("port", "80");
+                dataMsg.put("size", "100");
+                break;
+        }
+        return dataMsg;
     }
 
     public void stop() {

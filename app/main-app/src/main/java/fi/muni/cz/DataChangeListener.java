@@ -51,7 +51,7 @@ public class DataChangeListener implements NodeCacheListener {
         switch (ActionType.valueOf((String) json.get("action"))) {
             case CREATE:
                 if (json.get("appMode").equals("producer")) {
-                    createProducer((String) json.get("parent"), (String) json.get("path"));
+                    createProducer((String) json.get("level"), (String) json.get("parent"), (String) json.get("path"));
                 }
                 if (json.get("appMode").equals("consumer")) {
                     createConsumer(
@@ -91,8 +91,8 @@ public class DataChangeListener implements NodeCacheListener {
         logger.info("Consumer was created from incoming z-node data");
     }
 
-    private void createProducer(String parent, String path) {
-        dataProducer = new DataProducer(null, parent, path);
+    private void createProducer(String level, String parent, String path) {
+        dataProducer = new DataProducer(level, parent, path);
         Thread producer = new Thread(
             dataProducer
         );
