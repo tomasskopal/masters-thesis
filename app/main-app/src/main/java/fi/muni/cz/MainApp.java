@@ -56,6 +56,7 @@ public class MainApp {
             data.put("action", ActionType.CREATE.toString());
             data.put("parent", parentIp);
             data.put("isBasic", String.valueOf(isBasic));
+            data.put("level", "LEVEL1");
 
             // create main node
             createNodeAndRegisterWatcher(AppData.ZK_ROOT + "/" + ip);
@@ -63,7 +64,6 @@ public class MainApp {
 
             if (appMode.equals("combined")) {
                 data.put("appMode", "consumer");
-                data.put("level", "LEVEL1");
                 data.put("path", AppData.ZK_ROOT + "/" + ip);
                 curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
                 Thread.sleep(1000);
