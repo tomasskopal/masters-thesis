@@ -38,32 +38,13 @@ public class EventListener implements UpdateListener {
                 return;
             }
 
-            // --------------------- CHECK LIVING NODES -----------------------------------
-
-            List<EventBean> livingNodes = new ArrayList<>();
-
-            for (int i = 0; i < newData.length; i++) {
-                String source = newData[i].get("source").toString();
-
-                if (zkSession.checkExists().forPath(source) == null) {
-                    logger.warn("Node already exists. Path: " + source);
-                    continue;
-                }
-                livingNodes.add(newData[i]);
-            }
-
-            if (livingNodes.size() <= 1) {
-                logger.warn("There left only one or zero nodes. Nothing to do. " + livingNodes.toString());
-                return;
-            }
-
             // --------------------- NEW PARENT -----------------------------------
             String newParent = null;
-            for (EventBean bean : livingNodes) {
-                String source = bean.get("source").toString();
-                if (!source.endsWith(AppData.instance().getIp())) {
-                    newParent = source.substring(source.lastIndexOf("/") + 1, source.length());
-                    break;
+            for (int i = 0; i < newData.length; i++) {
+                String source = newData[i].get("source").toString();
+                String newParentCandidate = source.substring(source.lastIndexOf("/") + 1, source.length());
+                if (zkSession.getChildren().forPath(AppData.ZK_ROOT + "/" + newParentCandidate).size() == 0) {
+                    newParent = newParentCandidate;
                 }
             }
 
@@ -86,10 +67,10 @@ public class EventListener implements UpdateListener {
 
             // --------------------- NEW PRODUCERS -----------------------------------
 
-            for (EventBean bean : livingNodes) {
-                String source = bean.get("source").toString();
+            for (int i = 0; i < newData.length; i++) {
+                String source = newData[i].get("source").toString();
 
-                logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
+                logger.info("Event data. Source: " + newData[i].get("source") + ", count: " + newData[i].get("cnt"));
 
                 data.put("action", ActionType.CREATE_CHILDREN.toString());
                 data.put("appMode", "producer");
