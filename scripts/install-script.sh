@@ -7,6 +7,6 @@ export MAVEN_OPTS="-Xmx512m"
 cd masters-thesis
 git pull
 cd app
-mvn clean install -DskipTests
+mvn install -DskipTests
 EOF
 done

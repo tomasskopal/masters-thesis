@@ -64,13 +64,12 @@ public class EventListener implements UpdateListener {
             data.put("level", "LEVEL2");
             data.put("path", AppData.ZK_ROOT + "/" + newParent);
             zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
+            logger.info("Create new consumer at: " + AppData.ZK_ROOT + "/" + newParent + ". Data: " + data.toString());
 
             // --------------------- NEW PRODUCERS -----------------------------------
 
             for (int i = 0; i < newData.length; i++) {
                 String source = newData[i].get("source").toString();
-
-                logger.info("Event data. Source: " + newData[i].get("source") + ", count: " + newData[i].get("cnt"));
 
                 data.put("action", ActionType.CREATE_CHILDREN.toString());
                 data.put("appMode", "producer");
@@ -78,9 +77,9 @@ public class EventListener implements UpdateListener {
                 data.put("path", AppData.ZK_ROOT + "/" + newParent + source.substring(source.lastIndexOf("/"), source.length()));
 
                 zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
+                logger.info("Set data at node: " + AppData.ZK_ROOT + "/" + newParent + ". Data: " + data.toString());
+                Thread.sleep(1000);
             }
-
-            logger.info("Childrens: " + zkSession.getChildren().forPath(AppData.ZK_ROOT + "/" + newParent).toString());
 
         } catch (Exception e) {
             logger.error("Sending data failed in Esper event handler.", e);
