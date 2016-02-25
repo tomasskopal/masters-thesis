@@ -5,7 +5,7 @@ kill -9 `cat ~/app.pid`
 echo "app killed"
 PRODUCER
 done
-ssh tomas@147.251.43.129 << 'CONSUMER'
+ssh tomas@147.251.43.181 << 'CONSUMER'
 kill -9 `cat ~/app.pid`
 echo "app killed"
 CONSUMER

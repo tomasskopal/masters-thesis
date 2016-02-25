@@ -19,7 +19,7 @@ public class DataProducer implements Runnable {
 
     volatile boolean shutdown = false;
 
-    private String host = "147.251.43.129";
+    private String host = "147.251.43.181";
     private AnalyzingLevel level;
     private String topic;
     private String identifier;

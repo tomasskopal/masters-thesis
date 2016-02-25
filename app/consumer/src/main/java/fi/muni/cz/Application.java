@@ -18,7 +18,7 @@ public class Application {
 
     private static final int LOCALHOST_THREATS = 1;
 
-    private static final List<String> topics = Arrays.asList("147.251.43.129");
+    private static final List<String> topics = Arrays.asList("147.251.43.181");
 
 
     public static void main(String[] args) {
