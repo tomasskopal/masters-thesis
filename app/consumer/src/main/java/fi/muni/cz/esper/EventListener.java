@@ -64,6 +64,7 @@ public class EventListener implements UpdateListener {
             data.put("level", "LEVEL2");
             data.put("path", AppData.ZK_ROOT + "/" + newParent);
             zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
+            Thread.sleep(1000);
             logger.info("Create new consumer at: " + AppData.ZK_ROOT + "/" + newParent + ". Data: " + data.toString());
 
             // --------------------- NEW PRODUCERS -----------------------------------
