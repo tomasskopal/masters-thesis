@@ -74,7 +74,6 @@ public class DataChangeListener implements NodeCacheListener {
                 MainApp.createNodeAndRegisterWatcher((String) json.get("path"));
                 Thread.sleep(1000);
                 curatorFramework.setData().forPath((String) json.get("path"), data.toString().getBytes());
-
                 break;
         }
     }
@@ -87,15 +86,15 @@ public class DataChangeListener implements NodeCacheListener {
         } else {
             dataConsumer = consumer;
         }
-        logger.info("Consumer was created from incoming z-node data");
+        logger.info("------------- Consumer was created from incoming z-node data ------------- ");
     }
 
     private void createProducer(String level, String parent, String path) {
-        dataProducer = new DataProducer(level, parent, path);
+        DataProducer dataProducer = new DataProducer(level, parent, path);
         Thread producer = new Thread(
             dataProducer
         );
         producer.start();
-        logger.info("Producer was created from incoming z-node data");
+        logger.info("------------- Producer was created from incoming z-node data -------------------- ");
     }
 }
