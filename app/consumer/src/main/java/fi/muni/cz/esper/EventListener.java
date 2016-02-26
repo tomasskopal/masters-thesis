@@ -71,16 +71,17 @@ public class EventListener implements UpdateListener {
 
             for (int i = 0; i < newData.length; i++) {
                 String source = newData[i].get("source").toString();
+                String source_ip = source.substring(source.lastIndexOf("/") + 1, source.length());
 
                 data = new JSONObject();
                 data.put("action", ActionType.CREATE_CHILDREN.toString());
                 data.put("appMode", "producer");
                 data.put("parent", newParent);
                 data.put("level", "LEVEL2");
-                data.put("path", AppData.ZK_ROOT + "/" + newParent + source.substring(source.lastIndexOf("/"), source.length()));
+                data.put("path", AppData.ZK_ROOT + "/" + newParent + "/" + source_ip);
 
-                zkSession.setData().forPath(AppData.ZK_ROOT + "/" + newParent, data.toString().getBytes());
-                logger.info("Set data at node: " + AppData.ZK_ROOT + "/" + newParent + ". Data: " + data.toString());
+                zkSession.setData().forPath(AppData.ZK_ROOT + "/" + source_ip, data.toString().getBytes());
+                logger.info("Set data at node: " + AppData.ZK_ROOT + "/" + source_ip + ". Data: " + data.toString());
                 Thread.sleep(1000);
             }
 
