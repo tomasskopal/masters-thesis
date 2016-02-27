@@ -33,7 +33,6 @@ public class Consumer {
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
-    private List<KafkaStream<byte[], byte[]>> streams;
     private String epRule;
 
     private static List<SimpleConsumer> consumerThreads = new ArrayList<>();
@@ -51,7 +50,7 @@ public class Consumer {
         Map<String, Integer> topicCountMap = new HashMap<>();
         topicCountMap.put(topic, new Integer(a_numThreads));
         Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumer.createMessageStreams(topicCountMap);
-        streams = consumerMap.get(topic);
+        List<KafkaStream<byte[], byte[]>> streams = consumerMap.get(topic);
 
         // now launch all the threads
         executor = Executors.newFixedThreadPool(a_numThreads);

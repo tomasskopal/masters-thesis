@@ -60,7 +60,8 @@ public class DataChangeListener implements NodeCacheListener {
                     createConsumer(
                             AnalyzingLevel.valueOf((String) json.get("level")),
                             json.get("ttl"),
-                            (String) json.get("path")
+                            (String) json.get("path"),
+                            null
                     );
                     MainApp.registerChildrenWatcher((String) json.get("path"));
                 }
@@ -93,20 +94,29 @@ public class DataChangeListener implements NodeCacheListener {
                 dataConsumer.inactive();
                 break;
             case SET_EP_RULE:
-                dataConsumer.setEpRule(EpRules.instance().getRule((String) json.get("rule")));
+                dataConsumer.stop();
+                dataConsumer = null;
+                createConsumer(
+                        AnalyzingLevel.LEVEL1,
+                        null,
+                        null,
+                        (String) json.get("rule")
+                );
                 break;
         }
     }
 
-    private void createConsumer(AnalyzingLevel analyzingLevel, Object ttl, final String path) {
-        String epRule = null;
-        switch (analyzingLevel) {
-            case LEVEL1:
-                epRule = EpRules.instance().getRule("SYN_FLOOD");
-                break;
-            case LEVEL2:
-                epRule = EpRules.instance().getRule("LEVEL2");
-                break;
+    private void createConsumer(AnalyzingLevel analyzingLevel, Object ttl, final String path, String rule) {
+        String epRule = rule;
+        if (epRule == null) {
+            switch (analyzingLevel) {
+                case LEVEL1:
+                    epRule = EpRules.instance().getRule("SYN_FLOOD");
+                    break;
+                case LEVEL2:
+                    epRule = EpRules.instance().getRule("LEVEL2");
+                    break;
+            }
         }
         Consumer consumer = new Consumer(AppData.instance().getIp(), epRule);
         consumer.run(1);
