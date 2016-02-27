@@ -63,7 +63,7 @@ public class DataProducer implements Runnable {
                 }
 
                 try {
-                    Thread.sleep(this.level.equals(AnalyzingLevel.LEVEL1) ? 1000 : 300);
+                    Thread.sleep(this.level.equals(AnalyzingLevel.LEVEL1) ? 1000 : (ThreadLocalRandom.current().nextInt(3, 10) * 100));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

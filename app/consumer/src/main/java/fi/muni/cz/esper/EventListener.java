@@ -27,21 +27,23 @@ public class EventListener implements UpdateListener {
         try {
             logger.info("Event received.");
 
-            if (Consumer.analyzingLevel.equals(AnalyzingLevel.LEVEL2)) { // TODO : remove this if
-                logger.info("Event received with level 2. Do nothing for now. PC count: " + newData.length);
-                return;
-            }
-
-
             if (newData.length < 2) {
                 logger.info("There is just one PC with error. This is not an attack.");
                 return;
             }
 
+            if (newData[0].get("level").toString().equals("LEVEL2")) {
+                logger.info("Event received with level 2. Printing info. PC count: " + newData.length);
+                for (EventBean bean : newData) {
+                    logger.info("Event data. Source: " + bean.get("source") + ", count: " + bean.get("cnt"));
+                }
+                return;
+            }
+
             // --------------------- NEW PARENT -----------------------------------
             String newParent = null;
-            for (int i = 0; i < newData.length; i++) {
-                String source = newData[i].get("source").toString();
+            for (EventBean bean : newData) {
+                String source = bean.get("source").toString();
                 String newParentCandidate = source.substring(source.lastIndexOf("/") + 1, source.length());
                 if (zkSession.getChildren().forPath(AppData.ZK_ROOT + "/" + newParentCandidate).size() == 0) {
                     newParent = newParentCandidate;
@@ -69,8 +71,8 @@ public class EventListener implements UpdateListener {
 
             // --------------------- NEW PRODUCERS -----------------------------------
 
-            for (int i = 0; i < newData.length; i++) {
-                String source = newData[i].get("source").toString();
+            for (EventBean bean : newData) {
+                String source = bean.get("source").toString();
                 String source_ip = source.substring(source.lastIndexOf("/") + 1, source.length());
 
                 data = new JSONObject();

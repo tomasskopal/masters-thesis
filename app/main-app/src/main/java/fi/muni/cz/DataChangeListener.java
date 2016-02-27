@@ -79,7 +79,16 @@ public class DataChangeListener implements NodeCacheListener {
     }
 
     private void createConsumer(boolean isBasic, AnalyzingLevel analyzingLevel) {
-        Consumer consumer = new Consumer(AppData.instance().getIp(), null, analyzingLevel);
+        String epRule = null;
+        switch (analyzingLevel) {
+            case LEVEL1:
+                epRule = EpRules.instance().getRule("SYN_FLOOD");
+                break;
+            case LEVEL2:
+                epRule = EpRules.instance().getRule("LEVEL2");
+                break;
+        }
+        Consumer consumer = new Consumer(AppData.instance().getIp(), epRule);
         consumer.run(1);
         if (isBasic) {
             basicDataConsumer = consumer;

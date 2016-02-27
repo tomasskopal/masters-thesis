@@ -12,6 +12,7 @@ import kafka.javaapi.consumer.ConsumerConnector;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,17 +33,16 @@ public class Consumer {
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
-    private EPRuntime epRuntime;
+    private String epRule;
 
-    public static AnalyzingLevel analyzingLevel;
-    public static LocalDateTime consumerCreated = LocalDateTime.now();
+    public static List<SimpleConsumer> consumerThreads = new ArrayList<>();
 
-    public Consumer(String a_topic, EPRuntime epRuntime, AnalyzingLevel analyzingLevel) {
+    public Consumer(String a_topic, String epRule) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
                 createConsumerConfig());
         this.topic = a_topic;
-        this.epRuntime = epRuntime != null ? epRuntime : getEsperRuntime();
-        this.analyzingLevel = analyzingLevel;
+        this.epRule = epRule;
+        logger.info("Creating consumer for topic: " + topic + " and rule: " + epRule);
     }
 
 
@@ -54,11 +54,14 @@ public class Consumer {
 
         // now launch all the threads
         executor = Executors.newFixedThreadPool(a_numThreads);
+        EPRuntime epRuntime = this.getEsperRuntime();
 
         // now create an object to consume the messages
         int threadNumber = 0;
         for (final KafkaStream stream : streams) {
-            executor.submit(new SimpleConsumer(stream, epRuntime));
+            SimpleConsumer consumerThread = new SimpleConsumer(stream, epRuntime);
+            this.consumerThreads.add(consumerThread);
+            executor.submit(consumerThread);
             threadNumber++;
         }
         logger.info(threadNumber + " threads is running. On topic: " + topic);
@@ -83,8 +86,7 @@ public class Consumer {
     private EPRuntime getEsperRuntime() {
         EPServiceProvider cep = Utils.getServiceProvider();
         EPAdministrator cepAdm = cep.getEPAdministrator();
-        EPStatement cepStatement = cepAdm.createEPL("select source, count(*) as cnt from "
-                + "IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE flag = 'SYN' group by source having count(*) > 3");
+        EPStatement cepStatement = cepAdm.createEPL(epRule);
         cepStatement.addListener(new EventListener());
         return cep.getEPRuntime();
     }
