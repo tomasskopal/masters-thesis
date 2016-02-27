@@ -74,8 +74,8 @@ public class Consumer {
 
     public void setEpRule(String epRule) {
         this.epRule = epRule;
-        final EPRuntime epRuntime = getEsperRuntime();
-        consumerThreads.forEach((thread) -> thread.setEpRuntime(epRuntime));
+        stop();
+        run(1);
         logger.info("New esper rule was set. Rule: " + epRule + " Topic: " + topic);
     }
 
