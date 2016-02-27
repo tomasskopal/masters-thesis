@@ -83,6 +83,9 @@ public class DataProducer implements Runnable {
 
         switch (this.identifier.substring(this.identifier.length() - 3)) {
             case "181":
+                dataMsg.put("flag", "SYN");
+                dataMsg.put("size", "10");
+                break;
             case "130":
                 dataMsg.put("flag", "SYN");
                 dataMsg.put("port", "11");
