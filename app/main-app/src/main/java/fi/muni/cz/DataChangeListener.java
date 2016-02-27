@@ -10,6 +10,9 @@ import org.json.simple.parser.ParseException;
 
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by tomasskopal on 19.12.15.
@@ -19,9 +22,8 @@ public class DataChangeListener implements NodeCacheListener {
     private static Logger logger;
 
     private NodeCache dataCache;
-    private DataProducer dataProducer = null;
+    private Map<String, DataProducer> dataProducers = new HashMap<>();
     private Consumer dataConsumer = null;
-    private Consumer basicDataConsumer = null;
 
     public DataChangeListener(NodeCache dataCache) {
         logger = AppData.instance().getLogger();
@@ -55,8 +57,9 @@ public class DataChangeListener implements NodeCacheListener {
                 }
                 if (json.get("appMode").equals("consumer")) {
                     createConsumer(
-                            Boolean.valueOf((String)json.get("isBasic")),
-                            AnalyzingLevel.valueOf((String) json.get("level"))
+                            AnalyzingLevel.valueOf((String) json.get("level")),
+                            json.get("ttl"),
+                            (String) json.get("path")
                     );
                     MainApp.registerChildrenWatcher((String) json.get("path"));
                 }
@@ -78,7 +81,7 @@ public class DataChangeListener implements NodeCacheListener {
         }
     }
 
-    private void createConsumer(boolean isBasic, AnalyzingLevel analyzingLevel) {
+    private void createConsumer(AnalyzingLevel analyzingLevel, Object ttl, final String path) {
         String epRule = null;
         switch (analyzingLevel) {
             case LEVEL1:
@@ -90,12 +93,26 @@ public class DataChangeListener implements NodeCacheListener {
         }
         Consumer consumer = new Consumer(AppData.instance().getIp(), epRule);
         consumer.run(1);
-        if (isBasic) {
-            basicDataConsumer = consumer;
-        } else {
-            dataConsumer = consumer;
-        }
+        dataConsumer = consumer;
         logger.info("------------- Consumer was created from incoming z-node data ------------- ");
+
+        if (ttl != null) {
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            try {
+                                for (String children : AppData.instance().getZkSession().getChildren().forPath(path)) {
+                                    logger.info("Our children is: " + children);
+                                }
+                            } catch (Exception e) {
+                                logger.error("Something in the tim failed", e);
+                            }
+                        }
+                    },
+                    Integer.valueOf((String) ttl)
+            );
+        }
     }
 
     private void createProducer(String level, String parent, String path) {
@@ -104,6 +121,7 @@ public class DataChangeListener implements NodeCacheListener {
             dataProducer
         );
         producer.start();
+        dataProducers.put(path, dataProducer);
         logger.info("------------- Producer was created from incoming z-node data -------------------- ");
     }
 }

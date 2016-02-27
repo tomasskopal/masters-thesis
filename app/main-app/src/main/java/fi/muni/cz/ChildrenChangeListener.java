@@ -22,6 +22,7 @@ public class ChildrenChangeListener implements PathChildrenCacheListener {
         switch (event.getType()) {
             case CHILD_ADDED: {
                 logger.info("Node added: " + ZKPaths.getNodeFromPath(event.getData().getPath()));
+                logger.info("Node added: " + event.getData().getPath());
                 break;
             }
 
