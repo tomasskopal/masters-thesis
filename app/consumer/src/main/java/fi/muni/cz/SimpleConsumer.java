@@ -34,7 +34,7 @@ public class SimpleConsumer implements Runnable {
     public void run() {
         ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
         while (it.hasNext()) {
-            if (!inactive) {
+            if (inactive) {
                 continue;
             }
             String msg = new String(it.next().message());
