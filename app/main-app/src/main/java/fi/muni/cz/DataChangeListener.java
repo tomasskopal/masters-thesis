@@ -21,13 +21,13 @@ public class DataChangeListener implements NodeCacheListener {
 
     private static Logger logger;
 
-    private static NodeCache dataCache;
+    private NodeCache dataCache;
     private static final Map<String, DataProducer> dataProducers = new HashMap<>();
     private static Consumer dataConsumer = null;
 
     public DataChangeListener(NodeCache cache) {
         logger = AppData.instance().getLogger();
-        dataCache = cache;
+        this.dataCache = cache;
     }
 
     @Override
