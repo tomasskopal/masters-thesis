@@ -79,6 +79,7 @@ public class Consumer {
             executor.shutdownNow();
             Thread.sleep(1000);
 
+            executor = Executors.newFixedThreadPool(1);
             EPRuntime epRuntime = this.getEsperRuntime();
 
             for (final KafkaStream stream : streams) {
