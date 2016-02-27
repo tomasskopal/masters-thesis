@@ -17,7 +17,7 @@ public class EpRules {
                 + "IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE flag = 'SYN' group by source, level having count(*) > 3");
 
         rules.put("PORT_SCAN", "select source, count(*) as cnt, level from "
-                + "IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE port = '11' group by source, level having count(*) > 5");
+                + "IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE port = '11' group by source, level having count(*) > 3");
 
         rules.put("LEVEL2", "select source, count(*) as cnt, level from "
                 + "IncommingEvent(level='LEVEL2').win:time_batch(5 sec) group by source, level having count(*) > 7");
