@@ -22,8 +22,8 @@ public class DataChangeListener implements NodeCacheListener {
     private static Logger logger;
 
     private NodeCache dataCache;
-    private Map<String, DataProducer> dataProducers = new HashMap<>();
-    private Consumer dataConsumer = null;
+    private static final Map<String, DataProducer> dataProducers = new HashMap<>();
+    private static Consumer dataConsumer = null;
 
     public DataChangeListener(NodeCache dataCache) {
         logger = AppData.instance().getLogger();
@@ -138,6 +138,7 @@ public class DataChangeListener implements NodeCacheListener {
         );
         producer.start();
         dataProducers.put(path, dataProducer);
+        logger.info(dataProducers.keySet());
         logger.info("------------- Producer was created from incoming z-node data. With path: " + path + "-------------------- ");
     }
 }
