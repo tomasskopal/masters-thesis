@@ -34,14 +34,15 @@ public class SimpleConsumer implements Runnable {
     public void run() {
         ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
         while (it.hasNext()) {
+            if (!inactive) {
+                continue;
+            }
             String msg = new String(it.next().message());
             //if (AppData.instance().getIp().endsWith("130")) {
                 logger.info("Message received: " + msg);
             //}
             IncommingEvent event = new IncommingEvent(msg);
-            if (!inactive) {
-                epRuntime.sendEvent(event);
-            }
+            epRuntime.sendEvent(event);
         }
     }
 }
