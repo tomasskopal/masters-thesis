@@ -34,7 +34,7 @@ public class SimpleConsumer implements Runnable {
     public void run() {
         ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
         while (it.hasNext()) {
-            if (inactive) {
+            if (this.inactive) {
                 continue;
             }
             String msg = new String(it.next().message());
@@ -42,7 +42,7 @@ public class SimpleConsumer implements Runnable {
                 logger.info("Message received: " + msg);
             //}
             IncommingEvent event = new IncommingEvent(msg);
-            epRuntime.sendEvent(event);
+            this.epRuntime.sendEvent(event);
         }
     }
 }

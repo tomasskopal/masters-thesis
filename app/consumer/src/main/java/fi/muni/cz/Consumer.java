@@ -55,7 +55,7 @@ public class Consumer {
 
         // now launch all the threads
         executor = Executors.newFixedThreadPool(a_numThreads);
-        EPRuntime epRuntime = this.getEsperRuntime();
+        EPRuntime epRuntime = this.getEsperRuntime(null);
 
         // now create an object to consume the messages
         int threadNumber = 0;
@@ -75,22 +75,9 @@ public class Consumer {
 
     public void setEpRule(String epRule) {
         this.epRule = epRule;
-        try {
-            stop();
-            Thread.sleep(1000);
-
-            executor = Executors.newFixedThreadPool(1);
-            EPRuntime epRuntime = this.getEsperRuntime();
-
-            for (final KafkaStream stream : streams) {
-                SimpleConsumer consumerThread = new SimpleConsumer(stream, epRuntime);
-                this.consumerThreads.add(consumerThread);
-                executor.submit(consumerThread);
-            }
-            logger.info("New esper rule was set. Rule: " + epRule + " Topic: " + topic);
-        } catch (InterruptedException e) {
-            logger.error("Something happend in setting new rule", e);
-        }
+        EPRuntime epRuntime = this.getEsperRuntime(epRule);
+        consumerThreads.forEach((thread) -> thread.setEpRuntime(epRuntime));
+        logger.info("New esper rule was set. Rule: " + epRule + " Topic: " + topic);
     }
 
     public void stop() {
@@ -109,10 +96,10 @@ public class Consumer {
         return new ConsumerConfig(props);
     }
 
-    private EPRuntime getEsperRuntime() {
+    private EPRuntime getEsperRuntime(String epRule) {
         EPServiceProvider cep = Utils.getServiceProvider();
         EPAdministrator cepAdm = cep.getEPAdministrator();
-        EPStatement cepStatement = cepAdm.createEPL(epRule);
+        EPStatement cepStatement = cepAdm.createEPL(epRule == null ? this.epRule : epRule);
         cepStatement.addListener(new EventListener());
         return cep.getEPRuntime();
     }
