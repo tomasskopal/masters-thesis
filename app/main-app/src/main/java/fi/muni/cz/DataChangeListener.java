@@ -81,6 +81,7 @@ public class DataChangeListener implements NodeCacheListener {
                 break;
             case STOP_PRODUCER:
                 String path = (String) json.get("path");
+                logger.info(dataProducers.keySet());
                 dataProducers.get(path).stop();
                 dataProducers.remove(path);
                 curatorFramework.delete().guaranteed().forPath(path);
@@ -137,6 +138,6 @@ public class DataChangeListener implements NodeCacheListener {
         );
         producer.start();
         dataProducers.put(path, dataProducer);
-        logger.info("------------- Producer was created from incoming z-node data -------------------- ");
+        logger.info("------------- Producer was created from incoming z-node data. With path: " + path + "-------------------- ");
     }
 }
