@@ -50,6 +50,8 @@ public class DataChangeListener implements NodeCacheListener {
 
     private void evaluateData(JSONObject json) throws Exception {
         logger.info("Evaluated action will be: " + json.get("action"));
+        CuratorFramework curatorFramework = AppData.instance().getZkSession();
+
         switch (ActionType.valueOf((String) json.get("action"))) {
             case CREATE:
                 if (json.get("appMode").equals("producer")) {
@@ -65,7 +67,6 @@ public class DataChangeListener implements NodeCacheListener {
                 }
                 break;
             case CREATE_CHILDREN:
-                CuratorFramework curatorFramework = AppData.instance().getZkSession();
                 JSONObject data = new JSONObject();
                 data.put("action", ActionType.CREATE.toString());
                 data.put("appMode", "producer");
@@ -78,6 +79,11 @@ public class DataChangeListener implements NodeCacheListener {
                 Thread.sleep(1000);
                 curatorFramework.setData().forPath((String) json.get("path"), data.toString().getBytes());
                 break;
+            case STOP_PRODUCER:
+                String path = (String) json.get("path");
+                dataProducers.get(path).stop();
+                dataProducers.remove(path);
+                curatorFramework.delete().guaranteed().forPath(path);
         }
     }
 
@@ -98,12 +104,21 @@ public class DataChangeListener implements NodeCacheListener {
 
         if (ttl != null) {
             new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
+                    new java.util.TimerTask() { // TODO create new class GroupTimeToLive
                         @Override
                         public void run() {
+                            CuratorFramework curatorFramework = AppData.instance().getZkSession();
                             try {
-                                for (String children : AppData.instance().getZkSession().getChildren().forPath(path)) {
-                                    logger.info("Our children is: " + children);
+                                for (String children : curatorFramework.getChildren().forPath(path)) {
+                                    String children_path = path + "/" + children;
+                                    logger.info("Time is up. Stopping producer: " + children_path);
+
+                                    JSONObject data = new JSONObject();
+                                    data.put("action", ActionType.STOP_PRODUCER.toString());
+                                    data.put("path", children_path);
+                                    curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + children, data.toString().getBytes());
+                                    logger.info("Event about stopping producer was send to the node: " + AppData.ZK_ROOT + "/" + children);
+                                    Thread.sleep(1000);
                                 }
                             } catch (Exception e) {
                                 logger.error("Something in the tim failed", e);
