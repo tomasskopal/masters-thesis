@@ -7,5 +7,7 @@ public enum ActionType {
     CREATE,
     CREATE_CHILDREN,
     STOP_PRODUCER,
-    STOP_RECEIVING
+    STOP_CONSUMER,
+    INACTIVE_CONSUMER,
+    SET_EP_RULE
 }

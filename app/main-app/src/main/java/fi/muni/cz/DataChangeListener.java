@@ -12,7 +12,6 @@ import org.json.simple.parser.ParseException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by tomasskopal on 19.12.15.
@@ -86,8 +85,16 @@ public class DataChangeListener implements NodeCacheListener {
                 dataProducers.remove(path);
                 curatorFramework.delete().guaranteed().forPath(path);
                 break;
-            case STOP_RECEIVING:
+            case STOP_CONSUMER:
+                dataConsumer.stop();
+                dataConsumer = null;
+                break;
+            case INACTIVE_CONSUMER:
                 dataConsumer.inactive();
+                break;
+            case SET_EP_RULE:
+                dataConsumer.setEpRule(EpRules.instance().getRule((String) json.get("rule")));
+                break;
         }
     }
 

@@ -88,6 +88,12 @@ public class EventListener implements UpdateListener {
                 Thread.sleep(1000);
             }
 
+            if (newData[0].get("level").toString().equals("LEVEL1")) { // TODO : this if is just for the testing
+                data = new JSONObject();
+                data.put("action", ActionType.INACTIVE_CONSUMER.toString());
+                zkSession.setData().forPath(AppData.ZK_ROOT + "/147.251.43.181", data.toString().getBytes());
+            }
+
         } catch (Exception e) {
             logger.error("Sending data failed in Esper event handler.", e);
             return;

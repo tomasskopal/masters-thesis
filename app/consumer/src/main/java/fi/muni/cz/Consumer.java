@@ -72,6 +72,13 @@ public class Consumer {
         logger.info("Setting consumer inactive. Topic: " + topic);
     }
 
+    public void setEpRule(String epRule) {
+        this.epRule = epRule;
+        final EPRuntime epRuntime = getEsperRuntime();
+        consumerThreads.forEach((thread) -> thread.setEpRuntime(epRuntime));
+        logger.info("New esper rule was set. Rule: " + epRule + " Topic: " + topic);
+    }
+
     public void stop() {
         executor.shutdownNow();
         logger.info("Consumer was terminated. Topic: " + topic);

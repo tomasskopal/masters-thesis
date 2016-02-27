@@ -26,6 +26,11 @@ public class SimpleConsumer implements Runnable {
         this.inactive = true;
     }
 
+    public void setEpRuntime(EPRuntime epRuntime) {
+        this.inactive = false;
+        this.epRuntime = epRuntime;
+    }
+
     public void run() {
         ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
         while (it.hasNext()) {
