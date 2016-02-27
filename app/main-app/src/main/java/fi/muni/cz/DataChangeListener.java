@@ -104,7 +104,7 @@ public class DataChangeListener implements NodeCacheListener {
                         AnalyzingLevel.LEVEL1,
                         null,
                         null,
-                        (String) json.get("rule")
+                        EpRules.instance().getRule((String) json.get("rule"))
                 );
                 break;
         }
