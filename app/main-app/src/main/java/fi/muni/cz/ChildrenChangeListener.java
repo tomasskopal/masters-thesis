@@ -38,10 +38,10 @@ public class ChildrenChangeListener implements PathChildrenCacheListener {
 
                 if (childrens.isEmpty()) {
                     String[] pathSplit = path.split("/");
-                    if (pathSplit.length != 3) {
+                    if (pathSplit.length != 4) { // it starts with /
                         logger.warn("Path has no 3 parts. path: " + path);
                     }
-                    terminateConsumer(pathSplit[1]);
+                    terminateConsumer(pathSplit[2]);
                 }
                 break;
             }

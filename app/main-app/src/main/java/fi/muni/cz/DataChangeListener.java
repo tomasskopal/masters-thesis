@@ -21,13 +21,13 @@ public class DataChangeListener implements NodeCacheListener {
 
     private static Logger logger;
 
-    private NodeCache dataCache;
+    private static NodeCache dataCache;
     private static final Map<String, DataProducer> dataProducers = new HashMap<>();
     private static Consumer dataConsumer = null;
 
-    public DataChangeListener(NodeCache dataCache) {
+    public DataChangeListener(NodeCache cache) {
         logger = AppData.instance().getLogger();
-        this.dataCache = dataCache;
+        dataCache = cache;
     }
 
     @Override
@@ -85,6 +85,9 @@ public class DataChangeListener implements NodeCacheListener {
                 dataProducers.get(path).stop();
                 dataProducers.remove(path);
                 curatorFramework.delete().guaranteed().forPath(path);
+                break;
+            case STOP_RECEIVING:
+                dataConsumer.inactive();
         }
     }
 

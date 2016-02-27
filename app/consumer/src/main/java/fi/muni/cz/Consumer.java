@@ -35,7 +35,7 @@ public class Consumer {
     private  ExecutorService executor;
     private String epRule;
 
-    public static List<SimpleConsumer> consumerThreads = new ArrayList<>();
+    private static List<SimpleConsumer> consumerThreads = new ArrayList<>();
 
     public Consumer(String a_topic, String epRule) {
         consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
@@ -65,6 +65,11 @@ public class Consumer {
             threadNumber++;
         }
         logger.info(threadNumber + " threads is running. On topic: " + topic);
+    }
+
+    public void inactive() {
+        consumerThreads.forEach((thread) -> thread.inactive());
+        logger.info("Setting consumer inactive. Topic: " + topic);
     }
 
     public void stop() {

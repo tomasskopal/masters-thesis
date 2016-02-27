@@ -15,10 +15,15 @@ public class SimpleConsumer implements Runnable {
 
     private KafkaStream m_stream;
     private EPRuntime epRuntime;
+    private boolean inactive = false;
 
     public SimpleConsumer(KafkaStream a_stream, EPRuntime epRuntime) {
         this.m_stream = a_stream;
         this.epRuntime = epRuntime;
+    }
+
+    public void inactive() {
+        this.inactive = true;
     }
 
     public void run() {
@@ -29,7 +34,9 @@ public class SimpleConsumer implements Runnable {
                 logger.info("Message received: " + msg);
             }
             IncommingEvent event = new IncommingEvent(msg);
-            epRuntime.sendEvent(event);
+            if (!inactive) {
+                epRuntime.sendEvent(event);
+            }
         }
     }
 }

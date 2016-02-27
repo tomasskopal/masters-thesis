@@ -6,5 +6,6 @@ package fi.muni.cz;
 public enum ActionType {
     CREATE,
     CREATE_CHILDREN,
-    STOP_PRODUCER
+    STOP_PRODUCER,
+    STOP_RECEIVING
 }
