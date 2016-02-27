@@ -76,7 +76,7 @@ public class Consumer {
     public void setEpRule(String epRule) {
         this.epRule = epRule;
         try {
-            executor.shutdownNow();
+            stop();
             Thread.sleep(1000);
 
             executor = Executors.newFixedThreadPool(1);
@@ -89,7 +89,7 @@ public class Consumer {
             }
             logger.info("New esper rule was set. Rule: " + epRule + " Topic: " + topic);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("Something happend in setting new rule", e);
         }
     }
 
