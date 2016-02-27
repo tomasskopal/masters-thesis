@@ -33,6 +33,7 @@ public class Consumer {
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
+    private List<KafkaStream<byte[], byte[]>> streams;
     private String epRule;
 
     private static List<SimpleConsumer> consumerThreads = new ArrayList<>();
@@ -50,7 +51,7 @@ public class Consumer {
         Map<String, Integer> topicCountMap = new HashMap<>();
         topicCountMap.put(topic, new Integer(a_numThreads));
         Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumer.createMessageStreams(topicCountMap);
-        List<KafkaStream<byte[], byte[]>> streams = consumerMap.get(topic);
+        streams = consumerMap.get(topic);
 
         // now launch all the threads
         executor = Executors.newFixedThreadPool(a_numThreads);
@@ -74,9 +75,21 @@ public class Consumer {
 
     public void setEpRule(String epRule) {
         this.epRule = epRule;
-        stop();
-        run(1);
-        logger.info("New esper rule was set. Rule: " + epRule + " Topic: " + topic);
+        try {
+            executor.shutdownNow();
+            Thread.sleep(1000);
+
+            EPRuntime epRuntime = this.getEsperRuntime();
+
+            for (final KafkaStream stream : streams) {
+                SimpleConsumer consumerThread = new SimpleConsumer(stream, epRuntime);
+                this.consumerThreads.add(consumerThread);
+                executor.submit(consumerThread);
+            }
+            logger.info("New esper rule was set. Rule: " + epRule + " Topic: " + topic);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void stop() {
