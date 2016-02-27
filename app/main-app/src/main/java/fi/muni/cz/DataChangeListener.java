@@ -10,7 +10,9 @@ import org.json.simple.parser.ParseException;
 
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ public class DataChangeListener implements NodeCacheListener {
 
     private NodeCache dataCache;
     private static final Map<String, DataProducer> dataProducers = new HashMap<>();
-    private static Consumer dataConsumer = null;
+    private static List<Consumer> dataConsumers = new ArrayList<>();
 
     public DataChangeListener(NodeCache cache) {
         logger = AppData.instance().getLogger();
@@ -87,15 +89,17 @@ public class DataChangeListener implements NodeCacheListener {
                 curatorFramework.delete().guaranteed().forPath(path);
                 break;
             case STOP_CONSUMER:
-                dataConsumer.stop();
-                dataConsumer = null;
+                logger.info("Try to stop consumer. At PC (ip): " + AppData.instance().getIp());
+                dataConsumers.get(0).stop();
+                dataConsumers.clear();
                 break;
             case INACTIVE_CONSUMER:
-                dataConsumer.inactive();
+                dataConsumers.get(0).inactive();
                 break;
             case SET_EP_RULE:
-                dataConsumer.stop();
-                dataConsumer = null;
+                logger.info("Try to replace consumer. Old: " + dataConsumers + " at PC (ip): " + AppData.instance().getIp());
+                dataConsumers.get(0).stop();
+                dataConsumers.clear();
                 createConsumer(
                         AnalyzingLevel.LEVEL1,
                         null,
@@ -120,7 +124,7 @@ public class DataChangeListener implements NodeCacheListener {
         }
         Consumer consumer = new Consumer(AppData.instance().getIp(), epRule);
         consumer.run(1);
-        dataConsumer = consumer;
+        dataConsumers.add(consumer);
         logger.info("------------- Consumer was created from incoming z-node data ------------- ");
 
         if (ttl != null) {
