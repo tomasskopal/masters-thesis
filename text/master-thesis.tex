@@ -1,0 +1,129 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% I, the copyright holder of this work, release this work into the
+%% public domain. This applies worldwide. In some countries this may
+%% not be legally possible; if so: I grant anyone the right to use
+%% this work for any purpose, without any conditions, unless such
+%% conditions are required by law.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+  digital, %% This option enables the default options for the
+           %% digital version of a document. Replace with `printed`
+           %% to enable the default options for the printed version
+           %% of a document.
+  table,   %% Causes the coloring of tables. Replace with `notable`
+           %% to restore plain tables.
+  nolof,     %% Prints the List of Figures. Replace with `nolof` to
+           %% hide the List of Figures.
+  nolot,     %% Prints the List of Tables. Replace with `nolot` to
+           %% hide the List of Tables.
+  twoside,
+  nocover,
+  monochrome,
+  12pt
+  %% More options are listed in the user guide at
+  %% <http://mirrors.ctan.org/macros/latex/contrib/fithesis/guide/mu/fi.pdf>.
+]{fithesis3}
+%% The following section sets up the locales used in the thesis.
+\usepackage[resetfonts]{cmap} %% We need to load the T2A font encoding
+\usepackage[T1,T2A]{fontenc}  %% to use the Cyrillic fonts with Russian texts.
+\usepackage[
+  main=czech, %% By using `czech` or `slovak` as the main locale
+                %% instead of `english`, you can typeset the thesis
+                %% in either Czech or Slovak, respectively.
+  english, german, russian, slovak %% The additional keys allow
+]{babel}        %% foreign texts to be typeset as follows:
+%%
+%%   \begin{otherlanguage}{german}  ... \end{otherlanguage}
+%%   \begin{otherlanguage}{russian} ... \end{otherlanguage}
+%%   \begin{otherlanguage}{czech}   ... \end{otherlanguage}
+%%   \begin{otherlanguage}{slovak}  ... \end{otherlanguage}
+%%
+%% For non-Latin scripts, it may be necessary to load additional
+%% fonts:
+\usepackage{paratype}
+\def\textrussian#1{{\usefont{T2A}{PTSerif-TLF}{m}{rm}#1}}
+%%
+%% The following section sets up the metadata of the thesis.
+\thesissetup{
+    university    = mu,
+    faculty       = fi,
+    type          = mgr,
+    author        = Bc. Tomáš Skopal,
+    gender        = m,
+    advisor       = RNDr. Filip Nguyen,
+    title         = {Distributed Complex Event Processing},
+    TeXtitle      = {Distributed Complex Event Processing},
+    keywords      = {keyword1, keyword2, ...},
+    TeXkeywords   = {keyword1, keyword2, \ldots},
+    date			 =	2016/05/30
+}
+\thesislong{abstract}{
+    Goal of this thesis is to develop a Peer to Peer algorithm for distributed Event Pattern matching.. The application should be able to run any number of processing nodes. For the needs of this thesis, example of 4 nodes will be sufficient.
+}
+
+%% The following section sets up the bibliography.
+\usepackage{csquotes}
+\usepackage[              %% When typesetting the bibliography, the
+  backend=biber,          %% `numeric` style will be used for the
+  style=numeric,          %% entries and the `numeric-comp` style
+  citestyle=numeric-comp, %% for the references to the entries. The
+  sorting=none,           %% entries will be sorted in cite order.
+  sortlocale=auto         %% For more unformation about the available
+]{biblatex}               %% `style`s and `citestyles`, see:
+%% <http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf>.
+\addbibresource{example.bib} %% The bibliograpic database within
+                          %% the file `example.bib` will be used.
+\usepackage{makeidx}      %% The `makeidx` package contains
+\makeindex                %% helper commands for index typesetting.
+%% These additional packages are used within the document:
+\usepackage{paralist}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{url}
+\usepackage{menukeys}
+\begin{document}
+\chapter{Úvod}
+Cílem této práce je vytvoření  ...
+
+\chapter{Zpracování událostí}
+Se zvyšujícím se počtem zařízení, která jsou schopna produkovat data, se zvyšuje potřeba tato data analyzovat. Běžně rozšířeným způsobem je zpracování dat dávkově. Tedy, data se uloží a ve vhodnou dobu, typicky v noci, se analyzují.
+
+Pokud však uvažujeme reálný provoz na síti, který se dnes v centrálních uzlech pohybuje okolo $1 Tb/s$ 
+%%[https://is.muni.cz/do/rect/habilitace/1433/44368572/44368651/HP_kor.-verejna.pdf]
+, je dávkové zpracování nereálné. Potřebujeme data analyzovat za běhu (angl. real time).
+
+Jednotkou zpracování dat je událost (angl. event). Událost je základním pojmem používaným v oblasti zpracování událostí. Je definována jako objekt, který reprezentuje záznam o aktivitě v daném systému. Událost může mít vlastnosti. Typickým příkladem takové vlastnosti je čas vzniku události. [\ref{bib_1}] Jednoduchým příkladem události může být paket. Je to datová schránka, která obsahuje informace, které můžeme analyzovat. Samostatný paket nemá téměř žádnou vypovídající hodnotu, kdežto proud paketů je základem Internetu.
+
+Takový proud událostí skrývá množství dat, která je možné získat až při komplexní analýze, která zohledňuje více událostí v řadě. To nazýváme \textit{komplexní zpracování dat (angl. complex event processing (CEP))}
+
+\section{CEP}
+
+TODO updavit:
+What is Complex Event Processing? It is hard to capture all the fundamentals
+of CEP in a single definition. At the beginning of his book David Luckham
+defines CEP as just a set of techniques and tools which help to understand
+and control an event-driven information system.
+
+Jedná se o detekci a kontrolu v reálném čase na obrovských proudech dat. Jako problém se ale
+začíná jevit přílišná roztříštěnost jednotlivých implementací i odlišné vnímání událostí v
+nich. Aktuálně probíhají snahy o sjednocení [10]. Příkladem může být vznik Event
+processing technical society (EPTS), která se zabývá rozvíjením základů CEP.
+\section{Událost v CEP}
+\section{Distribuované CEP}
+
+
+\chapter{Závěr}
+Here you can insert the appendices of your thesis.
+
+\begin{thebibliography}{99}
+\bibitem
+LLUCKHAM, David. \textit{The Power of Events: An Introduction to Complex
+Event Processing in Distributed Enterprise Systems.} Pearson
+Education, Inc., 2002, ISBN 9780201727890 \label{bib_1}
+\end{thebibliography}
+
+\appendix %% Start the appendices.
+
+\end{document}
