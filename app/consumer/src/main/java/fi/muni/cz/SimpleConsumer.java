@@ -44,13 +44,14 @@ public class SimpleConsumer implements Runnable {
             if (isExit) {
                 break;
             }
-            if (this.inactive) {
-                continue;
-            }
+
             String msg = new String(it.next().message());
             //if (AppData.instance().getIp().endsWith("130")) {
                 logger.info("Message received: " + msg);
             //}
+            if (this.inactive) {
+                continue;
+            }
             IncommingEvent event = new IncommingEvent(msg);
             this.epRuntime.sendEvent(event);
         }
