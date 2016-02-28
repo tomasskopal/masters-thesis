@@ -96,26 +96,64 @@ Pokud však uvažujeme reálný provoz na síti, který se dnes v centrálních 
 
 Jednotkou zpracování dat je událost (angl. event). Událost je základním pojmem používaným v oblasti zpracování událostí. Je definována jako objekt, který reprezentuje záznam o aktivitě v daném systému. Událost může mít vlastnosti. Typickým příkladem takové vlastnosti je čas vzniku události. [\ref{bib_1}] Jednoduchým příkladem události může být paket. Je to datová schránka, která obsahuje informace, které můžeme analyzovat. Samostatný paket nemá téměř žádnou vypovídající hodnotu, kdežto proud paketů je základem Internetu.
 
-Takový proud událostí skrývá množství dat, která je možné získat až při komplexní analýze, která zohledňuje více událostí v řadě. To nazýváme \textit{komplexní zpracování dat (angl. complex event processing (CEP))}
+Takový proud událostí skrývá množství dat, která je možné získat až při komplexní analýze, která zohledňuje více událostí v řadě. To nazýváme \textit{komplexní zpracování dat (angl. complex event processing neboli CEP)}
 
 \section{CEP}
 
-TODO updavit:
-What is Complex Event Processing? It is hard to capture all the fundamentals
-of CEP in a single definition. At the beginning of his book David Luckham
-defines CEP as just a set of techniques and tools which help to understand
-and control an event-driven information system.
+Je těžké shrnout celý vědní obor pod jednu všeobjímající definici. David Luckham ve své knize  THE POWER OF EVENTS: AN INTRODUCTION TO COMPLEX EVENT PROCESSING IN DISTRIBUTED ENTERPRISE SYSTEMS [\ref{bib_1}] říká, že CEP je soubor technik a nástrojů, které pomáhají k pochopení a kontrole událostmi řízených systémů.
 
-Jedná se o detekci a kontrolu v reálném čase na obrovských proudech dat. Jako problém se ale
-začíná jevit přílišná roztříštěnost jednotlivých implementací i odlišné vnímání událostí v
-nich. Aktuálně probíhají snahy o sjednocení [10]. Příkladem může být vznik Event
-processing technical society (EPTS), která se zabývá rozvíjením základů CEP.
+
 \section{Událost v CEP}
 \section{Distribuované CEP}
+Zde chci popsat co to je distribuované zpracování dat. V další kapitole pak navážu, tím jaké nástroje v současnosti pro zpracování dat máme (Samsa, Storm)
+\chapter{Nástroje pro distribuované zpracování událostí}
+\section{Apache Samsa}
+\section{Apache Storm}
+\section{CAVE}
+http://dl.acm.org/citation.cfm?doid=2675743.2771834
+\chapter{Vytvoření clusteru v rámci sítě}
+\section{Motivace}
+\section{Technologie}
+Tato kapitola popisuje jednotlivé technologie, které jsou použity při implementaci algoritmu. Na konci každé subsekce bude popis toho jak konkrétně je technologie použita v mém řešení.
+\subsection{Apache Maven}
+\subsection{Apache Kafka}
+\subsection{Apache ZooKeeper}
+Popis technologie podle dokumentace
 
+Konkrétní použití: Jak se sestavuje strom a k čemu slouží (je důležité zmínit, že jde pouze o virtuální stav a je nutné myslet na to, že aplikace běží na daném uzlu pouze jednou). Jaké má zookeeper tree výhody (dá se zjistit jestli a jaké má uzel potomky, dá se kterýkoli uzel modifikovat, což způsobí příslušnou změnu v aplikaci).
+
+CuratorFramework
+\subsection{Esper}
+\section{Události v systému}
+Kapitola popisující hlavní myšlenku povahy dat, která bude algoritmus vyhodnocovat. Také zde budou ukázky používaných dat.
+\subsection{Hrubozrnné}
+\subsection{Jemnozrnné}
+\section{Konfigurace}
+\section{Implementace}
+Pro implementaci byla zvolena Java (konkrétně ve verzi 1.8), protože všechny použité technologie mají dobrá API pro Javu a většina příkladů je právě v Javě. Dalším důvodem je také to, že Java se dobře hodí pro běh aplikací tohoto druhu, protože má dobrou práci s vlákny. Posledním, méně důležitým, důvodem je popularita Javy a snadná čitelnost kódu.
+\subsection{Architektura aplikace}
+Popis jednotlivých maven modulů. K čemu který slouží
+\subsection{Iniciální spuštění}
+\subsection{Přechody mezi stavy}
+Jedna z nejdůležitějších kapitol, která ukazuje co způsobí, že aplikace začne vyhodnocovat jemnozrnné události. Počínaje tím, že Esper vyhodnotí proud událostí a emituje ep-událost. Dále přes zpracování ep-události, nastavení příslušných dat jednotlivým zk-uzlům v zk-stromě, či modifikaci zk-stromu. Až po ukončení zpracovávání jemnozrnný událostí a návrat k iniciálnímu stavu.
+
+Bude zde také zmíněno dynamické nasazování nových ep pravidel. To by se dalo shrnout pod nadpis "ovládání clusteru z venčí" - řešeno přes nastavování dat jednotlivým uzlům v zookeeperu.
+
+\subsection{Esper pravidla}
+Mini kapitola, kterou bych věnoval 
+
+\section{Známá omezení}
+Diskuse nedostatků nebo možných vylepšení výše navrženého řešení. 
+\begin{itemize}
+	\item Momentální nemožnost spustit více consumerů na jednom stroji.
+	\item Velmi náročný monitoring a spouštění jednotlivých uzlů.
+	\item Zatím nevím jak je to s dynamickým přidáváním nových uzlů do hierarchie.
+	\item Nejsou vůbec otestovány výpadky některých uzlů. Zookeeper to zvládne, kafka také, ale co se stane s virtuálním zk-tree v aplikaci?
+\end{itemize}
 
 \chapter{Závěr}
-Here you can insert the appendices of your thesis.
+Závěr bude v tomto případě obsahovat obšírnější zhodnocení toho jak se povedlo splnit zadání. Že výsledkem práce je navržené řešení za použití kafky, zk, esperu, Javy.
+
 
 \begin{thebibliography}{99}
 \bibitem

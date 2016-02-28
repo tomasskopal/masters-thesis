@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  23 FEB 2016 22:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  28 FEB 2016 16:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1939,7 +1939,7 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/qpl/m/sc/17.28'.
 (microtype)             Ignoring protrusion settings for this character.
 
-<fithesis/logo/mu/fithesis-fi.pdf, id=57, 291.0875pt x 292.09125pt>
+<fithesis/logo/mu/fithesis-fi.pdf, id=141, 291.0875pt x 292.09125pt>
 File: fithesis/logo/mu/fithesis-fi.pdf Graphic file (type pdf)
 
 <use fithesis/logo/mu/fithesis-fi.pdf>
@@ -2101,6 +2101,48 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
 ] [6
 color push 0 g 0 G
 color pop
@@ -2157,7 +2199,69 @@ color pop
 
 color push 0 g 0 G
 color pop
-] [7
+]
+Kapitola 4.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+]
+Underfull \vbox (badness 1132) has occurred while \output is active []
+
+ [8
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+]
+LaTeX Font Info:    Try loading font information for OMS+qpl on input line 148.
+
+LaTeX Font Info:    No file OMSqpl.fd. on input line 148.
+
+
+LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 148.
+
+[9
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] [10
+color push 0 g 0 G
+color pop
+
+
+color push 0 g 0 G
+color pop
+]
+Kapitola 5.
+[11
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] [12
+color push 0 g 0 G
+color pop
+
+
+color push 0 g 0 G
+color pop
+] [13
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2171,37 +2275,42 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 129.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 129.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 167.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 167.
 (./master-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 129.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 129.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 167.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 167.
 Package rerunfilecheck Info: File `master-thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 04322E0CA24517359892AA693BBE528B;383.
+(rerunfilecheck)             Checksum: E39A03947D12DBF0F6913C698F262C60;2245.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
 Package logreq Info: Writing requests to 'master-thesis.run.xml'.
 \openout1 = `master-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 38966 strings out of 493089
- 703695 string characters out of 6134842
- 1153194 words of memory out of 5000000
- 41706 multiletter control sequences out of 15000+600000
- 61108 words of font info for 75 fonts, out of 8000000 for 9000
+ 39046 strings out of 493089
+ 704709 string characters out of 6134842
+ 1155196 words of memory out of 5000000
+ 41742 multiletter control sequences out of 15000+600000
+ 62163 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,7n,84p,10405b,1644s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
 exlive/2015/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}{/usr/local/texlive/20
 15/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec-sc.enc}</usr/local/texlive/2015/tex
-mf-dist/fonts/type1/public/tex-gyre/qplb.pfb></usr/local/texlive/2015/texmf-dis
-t/fonts/type1/public/tex-gyre/qplr.pfb></usr/local/texlive/2015/texmf-dist/font
-s/type1/public/tex-gyre/qplri.pfb></usr/local/texlive/2015/texmf-dist/fonts/typ
-e1/urw/palatino/uplr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/
-palatino/uplri8a.pfb>
-Output written on master-thesis.pdf (17 pages, 130644 bytes).
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/tex-gyre/qplb.pfb></usr/local/texlive/2015/texmf-dist
+/fonts/type1/public/tex-gyre/qplr.pfb></usr/local/texlive/2015/texmf-dist/fonts
+/type1/public/tex-gyre/qplri.pfb></usr/local/texlive/2015/texmf-dist/fonts/type
+1/urw/palatino/uplr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/p
+alatino/uplri8a.pfb>
+Output written on master-thesis.pdf (23 pages, 149728 bytes).
 PDF statistics:
- 182 PDF objects out of 1000 (max. 8388607)
- 133 compressed objects within 2 object streams
- 27 named destinations out of 1000 (max. 500000)
- 14522 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 324 PDF objects out of 1000 (max. 8388607)
+ 267 compressed objects within 3 object streams
+ 54 named destinations out of 1000 (max. 500000)
+ 14690 words of extra memory for PDF output out of 17280 (max. 10000000)
 
