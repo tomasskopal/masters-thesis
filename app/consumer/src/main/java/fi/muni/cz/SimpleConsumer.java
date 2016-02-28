@@ -20,6 +20,7 @@ public class SimpleConsumer implements Runnable {
     public SimpleConsumer(KafkaStream a_stream, EPRuntime epRuntime) {
         this.m_stream = a_stream;
         this.epRuntime = epRuntime;
+        logger.info("Simple consumer was created and inactive is " + inactive);
     }
 
     public void inactive() {
