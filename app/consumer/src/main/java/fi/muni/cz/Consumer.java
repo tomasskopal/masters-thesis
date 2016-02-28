@@ -66,6 +66,7 @@ public class Consumer {
             threadNumber++;
         }
         logger.info(threadNumber + " threads is running. On topic: " + topic);
+        logger.info("For sure, test if it is terminated: " + isTerminated());
     }
 
     public void inactive() {
