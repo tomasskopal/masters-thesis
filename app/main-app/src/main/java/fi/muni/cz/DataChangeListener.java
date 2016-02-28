@@ -100,6 +100,7 @@ public class DataChangeListener implements NodeCacheListener {
                 logger.info("Try to replace consumer. Old: " + dataConsumers + " at PC (ip): " + AppData.instance().getIp());
                 dataConsumers.get(0).stop();
                 dataConsumers.clear();
+                Thread.sleep(1000);
                 createConsumer(
                         AnalyzingLevel.LEVEL1,
                         null,
