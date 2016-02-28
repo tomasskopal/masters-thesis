@@ -84,6 +84,10 @@ public class Consumer {
         logger.info("Consumer was terminated. Topic: " + topic);
     }
 
+    public boolean isTerminated() {
+        return executor.isTerminated();
+    }
+
     private ConsumerConfig createConsumerConfig() {
         Properties props = new Properties();
         props.put("zookeeper.connect", LOCALHOST_ZK);

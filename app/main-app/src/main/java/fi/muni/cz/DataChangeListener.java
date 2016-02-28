@@ -99,8 +99,11 @@ public class DataChangeListener implements NodeCacheListener {
             case SET_EP_RULE:
                 logger.info("Try to replace consumer. Old: " + dataConsumers + " at PC (ip): " + AppData.instance().getIp());
                 dataConsumers.get(0).stop();
+                while (!dataConsumers.get(0).isTerminated()) {
+                    logger.info("Data consumer is still not terminated");
+                    Thread.sleep(500);
+                }
                 dataConsumers.clear();
-                Thread.sleep(1000);
                 createConsumer(
                         AnalyzingLevel.LEVEL1,
                         null,
