@@ -84,6 +84,7 @@ public class Consumer {
     public void stop() {
         consumerThreads.forEach((thread) -> thread.shouldExit());
         executor.shutdownNow();
+        consumer.shutdown();
         logger.info("Consumer was terminated. Topic: " + topic);
     }
 
