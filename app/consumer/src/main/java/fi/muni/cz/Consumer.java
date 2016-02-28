@@ -42,6 +42,7 @@ public class Consumer {
                 createConsumerConfig());
         this.topic = a_topic;
         this.epRule = epRule;
+        consumerThreads = new ArrayList<>();
         logger.info("Creating consumer for topic: " + topic + " and rule: " + epRule);
     }
 
@@ -80,6 +81,7 @@ public class Consumer {
     }
 
     public void stop() {
+        consumerThreads.forEach((thread) -> thread.shouldExit());
         executor.shutdownNow();
         logger.info("Consumer was terminated. Topic: " + topic);
     }

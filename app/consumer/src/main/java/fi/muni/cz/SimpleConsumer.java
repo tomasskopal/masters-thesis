@@ -16,6 +16,7 @@ public class SimpleConsumer implements Runnable {
     private KafkaStream m_stream;
     private EPRuntime epRuntime;
     private boolean inactive = false;
+    private boolean isExit = false;
 
     public SimpleConsumer(KafkaStream a_stream, EPRuntime epRuntime) {
         this.m_stream = a_stream;
@@ -27,6 +28,11 @@ public class SimpleConsumer implements Runnable {
         this.inactive = true;
     }
 
+    public void shouldExit() {
+        this.isExit = true;
+    }
+
+
     public void setEpRuntime(EPRuntime epRuntime) {
         this.inactive = false;
         this.epRuntime = epRuntime;
@@ -35,6 +41,9 @@ public class SimpleConsumer implements Runnable {
     public void run() {
         ConsumerIterator<byte[], byte[]> it = m_stream.iterator();
         while (it.hasNext()) {
+            if (isExit) {
+                break;
+            }
             if (this.inactive) {
                 continue;
             }
