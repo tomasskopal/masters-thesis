@@ -17,7 +17,7 @@ public class DataProducer implements Runnable {
 
     private static final Logger logger = Logger.getLogger("producer");
 
-    volatile boolean shutdown = false;
+    boolean shutdown = false;
 
     private String host = "147.251.43.181";
     private AnalyzingLevel level;
