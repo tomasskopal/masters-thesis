@@ -33,6 +33,10 @@ public class DataChangeListener implements NodeCacheListener {
 
     @Override
     public void nodeChanged() throws Exception {
+        if (dataCache == null) {
+            logger.warn("Data cache is null");
+            return;
+        }
         String data = new String(dataCache.getCurrentData().getData(), StandardCharsets.UTF_8);
         JSONParser parser = new JSONParser();
 
