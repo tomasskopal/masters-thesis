@@ -33,8 +33,8 @@ public class DataChangeListener implements NodeCacheListener {
 
     @Override
     public void nodeChanged() throws Exception {
-        if (dataCache == null) {
-            logger.warn("Data cache is null");
+        if (dataCache.getCurrentData() == null) {
+            logger.info("--------------- Node was deleted --------------------");
             return;
         }
         String data = new String(dataCache.getCurrentData().getData(), StandardCharsets.UTF_8);
