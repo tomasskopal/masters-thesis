@@ -31,7 +31,7 @@ public class EventListener implements UpdateListener {
 
     public void update(EventBean[] newData, EventBean[] oldData) {
         try {
-            logger.info("Event received.");
+            logger.info("Event received. " + this.epRule);
 
             if (newData.length < 20) {
                 //logger.info("There is just one PC with error. This is not an attack.");
