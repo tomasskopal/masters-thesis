@@ -1,11 +1,13 @@
 package fi.muni.cz;
 
+import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPAdministrator;
 import com.espertech.esper.client.EPRuntime;
 import com.espertech.esper.client.EPServiceProvider;
+import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import fi.muni.cz.esper.EventListener;
-import fi.muni.cz.esper.Utils;
+import fi.muni.cz.esper.IncommingEvent;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
@@ -33,6 +35,7 @@ public class Consumer {
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
+    EPServiceProvider cep;
     private String epRule;
 
     private static List<SimpleConsumer> consumerThreads = new ArrayList<>();
@@ -43,6 +46,11 @@ public class Consumer {
         this.topic = a_topic;
         this.epRule = epRule;
         consumerThreads = new ArrayList<>();
+
+        Configuration cepConfig = new Configuration();
+        cepConfig.addEventType(IncommingEvent.class);
+        cep = EPServiceProviderManager.getProvider("myCEPEngine", cepConfig);
+
         logger.info("Creating consumer for topic: " + topic + " and rule: " + epRule);
     }
 
@@ -83,6 +91,7 @@ public class Consumer {
 
     public void stop() {
         consumerThreads.forEach((thread) -> thread.shouldExit());
+        cep.destroy();
         executor.shutdownNow();
         consumer.shutdown();
         logger.info("Consumer was terminated. Topic: " + topic);
@@ -104,7 +113,6 @@ public class Consumer {
     }
 
     private EPRuntime getEsperRuntime(String epRule) {
-        EPServiceProvider cep = Utils.getServiceProvider();
         EPAdministrator cepAdm = cep.getEPAdministrator();
         EPStatement cepStatement = cepAdm.createEPL(epRule == null ? this.epRule : epRule);
         cepStatement.addListener(new EventListener(this.epRule));
