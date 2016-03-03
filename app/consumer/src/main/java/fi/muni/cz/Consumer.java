@@ -107,7 +107,7 @@ public class Consumer {
         EPServiceProvider cep = Utils.getServiceProvider();
         EPAdministrator cepAdm = cep.getEPAdministrator();
         EPStatement cepStatement = cepAdm.createEPL(epRule == null ? this.epRule : epRule);
-        cepStatement.addListener(new EventListener());
+        cepStatement.addListener(new EventListener(this.epRule));
         return cep.getEPRuntime();
     }
 

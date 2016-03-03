@@ -23,6 +23,12 @@ public class EventListener implements UpdateListener {
 
     private CuratorFramework zkSession = AppData.instance().getZkSession();
 
+    private String epRule;
+
+    public EventListener(String epRule) {
+        this.epRule = epRule;
+    }
+
     public void update(EventBean[] newData, EventBean[] oldData) {
         try {
             logger.info("Event received.");
@@ -72,8 +78,6 @@ public class EventListener implements UpdateListener {
 
             // --------------------- NEW PRODUCERS -----------------------------------
 
-            logger.info("Number of incoming beans: " + newData.length);
-
             for (EventBean bean : newData) {
                 String source = bean.get("source").toString();
                 String source_ip = source.substring(source.lastIndexOf("/") + 1, source.length());
@@ -88,6 +92,11 @@ public class EventListener implements UpdateListener {
                 zkSession.setData().forPath(AppData.ZK_ROOT + "/" + source_ip, data.toString().getBytes());
                 logger.info("Set data at node: " + AppData.ZK_ROOT + "/" + source_ip + ". Data: " + data.toString());
                 Thread.sleep(1000);
+            }
+
+            logger.info("EpRule: " + this.epRule);
+            for (EventBean bean : newData) {
+                logger.info("Bean: " + bean.get("source").toString());
             }
 
 
