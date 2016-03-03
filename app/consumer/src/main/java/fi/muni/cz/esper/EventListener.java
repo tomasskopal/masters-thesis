@@ -33,8 +33,8 @@ public class EventListener implements UpdateListener {
         try {
             logger.info("Event received.");
 
-            if (newData.length < 2) {
-                logger.info("There is just one PC with error. This is not an attack.");
+            if (newData.length < 20) {
+                //logger.info("There is just one PC with error. This is not an attack.");
                 return;
             }
 
