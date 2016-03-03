@@ -72,6 +72,8 @@ public class EventListener implements UpdateListener {
 
             // --------------------- NEW PRODUCERS -----------------------------------
 
+            logger.info("Number of incoming beans: " + newData.length);
+
             for (EventBean bean : newData) {
                 String source = bean.get("source").toString();
                 String source_ip = source.substring(source.lastIndexOf("/") + 1, source.length());
@@ -87,6 +89,7 @@ public class EventListener implements UpdateListener {
                 logger.info("Set data at node: " + AppData.ZK_ROOT + "/" + source_ip + ". Data: " + data.toString());
                 Thread.sleep(1000);
             }
+
 
             if (newData[0].get("level").toString().equals("LEVEL1")) { // TODO : this if is just for the testing
                 data = new JSONObject();
