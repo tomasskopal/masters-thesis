@@ -19,6 +19,9 @@ public class EpRules {
         rules.put("PORT_SCAN", "select source, count(*) as cnt, level from "
                 + "IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE port = '11' group by source, level having count(*) > 3");
 
+        rules.put("PING_OF_DEATH", "select source, count(*) as cnt, level from "
+                + "IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE packet = '100' group by source, level having count(*) > 3");
+
         rules.put("LEVEL2", "select source, count(*) as cnt, level from "
                 + "IncommingEvent(level='LEVEL2').win:time_batch(5 sec) group by source, level having count(*) > 7");
     }
