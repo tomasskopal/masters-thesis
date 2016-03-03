@@ -46,9 +46,9 @@ public class SimpleConsumer implements Runnable {
             }
 
             String msg = new String(it.next().message());
-            if (AppData.instance().getIp().endsWith("130")) {
+            //if (AppData.instance().getIp().endsWith("130")) {
                 logger.info("Message received: " + msg);
-            }
+            //}
             if (this.inactive) {
                 continue;
             }
