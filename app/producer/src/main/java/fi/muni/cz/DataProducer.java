@@ -56,11 +56,15 @@ public class DataProducer implements Runnable {
                 JSONObject dataMsg = getData();
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
-                producer.send(data);
-
-                if (counter % 10 == 0) {
+                if (identifier.endsWith("138") || identifier.endsWith("150")) {
+                    producer.send(data);
                     logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic + ", from: " + identifier);
                 }
+
+
+                //if (counter % 10 == 0) {
+                //    logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic + ", from: " + identifier);
+                //}
 
                 try {
                     Thread.sleep(this.level.equals(AnalyzingLevel.LEVEL1) ? 1000 : (ThreadLocalRandom.current().nextInt(3, 10) * 100));

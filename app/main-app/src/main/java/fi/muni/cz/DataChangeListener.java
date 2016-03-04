@@ -123,7 +123,7 @@ public class DataChangeListener implements NodeCacheListener {
         if (epRule == null) {
             switch (analyzingLevel) {
                 case LEVEL1:
-                    epRule = EpRules.instance().getRule("PORT_SCAN");
+                    epRule = EpRules.instance().getRule("SYN_FLOOD");
                     break;
                 case LEVEL2:
                     epRule = EpRules.instance().getRule("LEVEL2");
