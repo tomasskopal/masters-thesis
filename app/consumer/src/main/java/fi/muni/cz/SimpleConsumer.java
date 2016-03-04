@@ -47,9 +47,9 @@ public class SimpleConsumer implements Runnable {
 
             String msg = new String(it.next().message());
             IncommingEvent event = new IncommingEvent(msg);
-            if (event.getSource().endsWith("130") || event.getSource().endsWith("138")) {
-                logger.info("Message received: " + msg);
-            }
+//            if (event.getSource().endsWith("130") || event.getSource().endsWith("138")) {
+//                logger.info("Message received: " + msg);
+//            }
             if (this.inactive) {
                 continue;
             }
