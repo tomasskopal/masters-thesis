@@ -56,7 +56,7 @@ public class DataProducer implements Runnable {
                 JSONObject dataMsg = getData();
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
-                if (identifier.endsWith("138") || identifier.endsWith("150")) {
+                if (identifier.endsWith("130") || identifier.endsWith("181")) {
                     producer.send(data);
                     logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic + ", from: " + identifier);
                 }
