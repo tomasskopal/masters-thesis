@@ -61,6 +61,8 @@ public class MainApp {
             // create main node
             createNodeAndRegisterWatcher(AppData.ZK_ROOT + "/" + ip);
             Thread.sleep(1000);
+            registerChildrenWatcher(AppData.ZK_ROOT + "/" + ip);
+            Thread.sleep(1000);
 
             if (appMode.equals("combined")) {
                 data.put("appMode", "consumer");

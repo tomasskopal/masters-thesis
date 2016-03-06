@@ -69,7 +69,6 @@ public class DataChangeListener implements NodeCacheListener {
                             (String) json.get("path"),
                             null
                     );
-                    MainApp.registerChildrenWatcher((String) json.get("path"));
                 }
                 break;
             case CREATE_CHILDREN:
