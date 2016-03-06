@@ -52,7 +52,7 @@ public class DataProducer implements Runnable {
 
             long counter = 0;
 
-            while (!this.shutdown) {
+            while (!Thread.currentThread().isInterrupted()) {
                 JSONObject dataMsg = getData();
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
@@ -73,6 +73,8 @@ public class DataProducer implements Runnable {
                 }
                 counter++;
             }
+
+            logger.info("--------------- end of producing data for topic: " + this.topic + " ------------------");
 
         } catch (Exception ex) {
             logger.error("Sending data fails", ex);
