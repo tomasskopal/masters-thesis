@@ -17,7 +17,7 @@ public class DataProducer implements Runnable {
 
     private static final Logger logger = Logger.getLogger("producer");
 
-    private boolean shutdown = false;
+    private volatile boolean shutdown = false;
 
     private String host = "147.251.43.181";
     private AnalyzingLevel level;
@@ -32,10 +32,6 @@ public class DataProducer implements Runnable {
 
     @Override
     public void run() {
-        sendData();
-    }
-
-    private void sendData() {
         Properties props = new Properties();
         props.put("metadata.broker.list", host + ":9092");
         props.put("serializer.class", "kafka.serializer.StringEncoder");
@@ -52,7 +48,7 @@ public class DataProducer implements Runnable {
 
             long counter = 0;
 
-            while (!Thread.currentThread().isInterrupted()) {
+            while (!this.shutdown) {
                 JSONObject dataMsg = getData();
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
@@ -80,7 +76,7 @@ public class DataProducer implements Runnable {
             logger.error("Sending data fails", ex);
         }
     }
-
+    
     private JSONObject getData() {
         JSONObject dataMsg = new JSONObject();
         dataMsg.put("msg", "Message from the data producer.");
