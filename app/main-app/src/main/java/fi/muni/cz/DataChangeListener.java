@@ -86,7 +86,7 @@ public class DataChangeListener implements NodeCacheListener {
                 break;
             case STOP_PRODUCER:
                 String path = (String) json.get("path");
-                logger.info(dataProducers.keySet());
+                logger.info("---------- Stopping producer for path: " + path + " ---------------------");
                 dataProducers.get(path).stop();
                 dataProducers.remove(path);
                 curatorFramework.delete().guaranteed().forPath(path);
