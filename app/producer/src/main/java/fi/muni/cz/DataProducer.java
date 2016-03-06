@@ -40,8 +40,6 @@ public class DataProducer implements Runnable {
         ProducerConfig config = new ProducerConfig(props);
         Producer<String, String> producer = new Producer<>(config);
 
-        final boolean getRandom = true;
-
         try {
             logger.info("Start sending data to topic: " + topic);
 
@@ -52,15 +50,11 @@ public class DataProducer implements Runnable {
                 JSONObject dataMsg = getData();
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
-                if (identifier.endsWith("130") || identifier.endsWith("181")) {
-                    producer.send(data);
+                producer.send(data);
+
+                if (counter % 10 == 0) {
                     logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic + ", from: " + identifier);
                 }
-
-
-                //if (counter % 10 == 0) {
-                //    logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic + ", from: " + identifier);
-                //}
 
                 try {
                     Thread.sleep(this.level.equals(AnalyzingLevel.LEVEL1) ? 1000 : (ThreadLocalRandom.current().nextInt(3, 10) * 100));
@@ -76,7 +70,7 @@ public class DataProducer implements Runnable {
             logger.error("Sending data fails", ex);
         }
     }
-    
+
     private JSONObject getData() {
         JSONObject dataMsg = new JSONObject();
         dataMsg.put("msg", "Message from the data producer.");
