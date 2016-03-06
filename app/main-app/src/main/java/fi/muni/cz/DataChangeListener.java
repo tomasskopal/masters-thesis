@@ -1,5 +1,6 @@
 package fi.muni.cz;
 
+import javafx.util.Pair;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
@@ -23,7 +24,7 @@ public class DataChangeListener implements NodeCacheListener {
     private static Logger logger;
 
     private NodeCache dataCache;
-    private static final Map<String, DataProducer> dataProducers = new HashMap<>();
+    private static final Map<String, Pair<DataProducer, Thread>> dataProducers = new HashMap<>();
     private static List<Consumer> dataConsumers = new ArrayList<>();
 
     public DataChangeListener(NodeCache cache) {
@@ -87,7 +88,9 @@ public class DataChangeListener implements NodeCacheListener {
             case STOP_PRODUCER:
                 String path = (String) json.get("path");
                 logger.info("---------- Stopping producer for path: " + path + " ---------------------");
-                dataProducers.get(path).stop();
+                Pair<DataProducer, Thread> producer = dataProducers.get(path);
+                producer.getKey().stop();
+                producer.getValue().interrupt();
                 dataProducers.remove(path);
                 curatorFramework.delete().guaranteed().forPath(path);
                 break;
@@ -168,7 +171,7 @@ public class DataChangeListener implements NodeCacheListener {
             dataProducer
         );
         producer.start();
-        dataProducers.put(path, dataProducer);
+        dataProducers.put(path, new Pair<>(dataProducer, producer));
         logger.info(dataProducers.keySet());
         logger.info("------------- Producer was created from incoming z-node data. With path: " + path + "-------------------- ");
     }

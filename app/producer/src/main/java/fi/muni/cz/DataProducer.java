@@ -17,7 +17,7 @@ public class DataProducer implements Runnable {
 
     private static final Logger logger = Logger.getLogger("producer");
 
-    boolean shutdown = false;
+    private boolean shutdown = false;
 
     private String host = "147.251.43.181";
     private AnalyzingLevel level;
@@ -52,7 +52,7 @@ public class DataProducer implements Runnable {
 
             long counter = 0;
 
-            while (!shutdown) {
+            while (!this.shutdown) {
                 JSONObject dataMsg = getData();
 
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
