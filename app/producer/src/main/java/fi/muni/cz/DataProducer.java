@@ -52,7 +52,9 @@ public class DataProducer implements Runnable {
                 KeyedMessage<String, String> data = new KeyedMessage<>(topic, dataMsg.toString());
                 producer.send(data);
 
-                if (counter % 10 == 0) {
+                if (this.level.equals(AnalyzingLevel.LEVEL2)) {
+                    logger.info("MSG level2: to topic: " + topic + ", from: " + identifier);
+                } else if (counter % 10 == 0) {
                     logger.info("MSG: " + dataMsg.toString() + ", to topic: " + topic + ", from: " + identifier);
                 }
 
