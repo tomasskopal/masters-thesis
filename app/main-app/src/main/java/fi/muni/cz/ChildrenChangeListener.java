@@ -56,7 +56,7 @@ public class ChildrenChangeListener implements PathChildrenCacheListener {
 
             JSONObject data = new JSONObject();
             data.put("action", ActionType.STOP_CONSUMER.toString());
-            AppData.instance().getZkSession().setData().forPath(AppData.ZK_ROOT + "/" + node);
+            AppData.instance().getZkSession().setData().forPath(AppData.ZK_ROOT + "/" + node, data.toString().getBytes());
         } catch (Exception e) {
             logger.error("Something went wrong when watcher try to stop consumer.", e);
         }
