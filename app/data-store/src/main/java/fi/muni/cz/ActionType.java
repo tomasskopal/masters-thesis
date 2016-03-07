@@ -5,9 +5,10 @@ package fi.muni.cz;
  */
 public enum ActionType {
     CREATE,
-    CREATE_CHILDREN,
+    CREATE_CHILDREN_PRODUCER,
     STOP_PRODUCER,
     STOP_CONSUMER,
     INACTIVE_CONSUMER,
-    SET_EP_RULE
+    SET_EP_RULE,
+    DELETE_SELF
 }

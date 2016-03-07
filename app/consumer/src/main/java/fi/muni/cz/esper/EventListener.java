@@ -3,16 +3,11 @@ package fi.muni.cz.esper;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import fi.muni.cz.ActionType;
-import fi.muni.cz.AnalyzingLevel;
 import fi.muni.cz.AppData;
-import fi.muni.cz.Consumer;
 import org.apache.curator.framework.CuratorFramework;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by tomasskopal on 24.10.15.
@@ -83,7 +78,7 @@ public class EventListener implements UpdateListener {
                 String source_ip = source.substring(source.lastIndexOf("/") + 1, source.length());
 
                 data = new JSONObject();
-                data.put("action", ActionType.CREATE_CHILDREN.toString());
+                data.put("action", ActionType.CREATE_CHILDREN_PRODUCER.toString());
                 data.put("appMode", "producer");
                 data.put("parent", newParent);
                 data.put("level", "LEVEL2");

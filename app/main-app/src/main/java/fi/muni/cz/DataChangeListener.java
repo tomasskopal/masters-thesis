@@ -72,7 +72,7 @@ public class DataChangeListener implements NodeCacheListener {
                     );
                 }
                 break;
-            case CREATE_CHILDREN:
+            case CREATE_CHILDREN_PRODUCER:
                 JSONObject data = new JSONObject();
                 data.put("action", ActionType.CREATE.toString());
                 data.put("appMode", "producer");
@@ -92,7 +92,11 @@ public class DataChangeListener implements NodeCacheListener {
                 producer.getKey().stop();
                 producer.getValue().interrupt();
                 dataProducers.remove(path);
-                curatorFramework.delete().guaranteed().forPath(path);
+
+                JSONObject data1 = new JSONObject();
+                data1.put("action", ActionType.DELETE_SELF.toString());
+                data1.put("path", json.get("path"));
+                curatorFramework.setData().forPath((String) json.get("path"), data1.toString().getBytes());
                 break;
             case STOP_CONSUMER:
                 logger.info("Try to stop consumer. At PC (ip): " + AppData.instance().getIp());
@@ -116,6 +120,13 @@ public class DataChangeListener implements NodeCacheListener {
                         null,
                         EpRules.instance().getRule((String) json.get("rule"))
                 );
+                break;
+            case DELETE_SELF:
+                path = (String) json.get("path");
+                logger.info("Deleting node for path: " + path);
+                this.dataCache.close();
+                this.dataCache = null;
+                curatorFramework.delete().guaranteed().forPath(path);
                 break;
         }
     }
