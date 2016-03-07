@@ -88,16 +88,6 @@ public class MainApp {
     }
 
     public static void createNodeAndRegisterWatcher(String path) throws Exception {
-        createNode(path);
-
-        // register watcher
-        CuratorFramework curatorFramework = AppData.instance().getZkSession();
-        NodeCache dataCache = new NodeCache(curatorFramework, path);
-        dataCache.getListenable().addListener(new DataChangeListener(dataCache));
-        dataCache.start();
-    }
-
-    public static void createNode(String path) throws Exception {
         CuratorFramework curatorFramework = AppData.instance().getZkSession();
         if (curatorFramework.checkExists().forPath(path ) != null) {
             logger.info("Node: " + path + " already exists.");
