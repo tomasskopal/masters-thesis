@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  28 FEB 2016 19:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  8 MAR 2016 21:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1939,7 +1939,7 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/qpl/m/sc/17.28'.
 (microtype)             Ignoring protrusion settings for this character.
 
-<fithesis/logo/mu/fithesis-fi.pdf, id=141, 291.0875pt x 292.09125pt>
+<fithesis/logo/mu/fithesis-fi.pdf, id=145, 291.0875pt x 292.09125pt>
 File: fithesis/logo/mu/fithesis-fi.pdf Graphic file (type pdf)
 
 <use fithesis/logo/mu/fithesis-fi.pdf>
@@ -2143,6 +2143,8 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
+color push 0 g 0 G
+color pop
 ] [6
 color push 0 g 0 G
 color pop
@@ -2169,16 +2171,12 @@ color push 0 g 0 G
 color pop
 ]
 Kapitola 2.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3
+[3
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-]
-[4
+] [4
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2201,46 +2199,12 @@ color push 0 g 0 G
 color pop
 ]
 Kapitola 4.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [7
+[7
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-]
-Underfull \vbox (badness 1132) has occurred while \output is active []
-
- [8
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-]
-LaTeX Font Info:    Try loading font information for OMS+qpl on input line 148.
-
-LaTeX Font Info:    No file OMSqpl.fd. on input line 148.
-
-
-LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 148.
-
-[9
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-] [10
+] [8
 color push 0 g 0 G
 color pop
 
@@ -2249,7 +2213,41 @@ color push 0 g 0 G
 color pop
 ]
 Kapitola 5.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+]
+Underfull \vbox (badness 1132) has occurred while \output is active []
+
+ [10
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+]
+LaTeX Font Info:    Try loading font information for OMS+qpl on input line 160.
+
+LaTeX Font Info:    No file OMSqpl.fd. on input line 160.
+
+
+LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 160.
+
 [11
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2261,7 +2259,21 @@ color pop
 
 color push 0 g 0 G
 color pop
-] [13
+]
+Kapitola 6.
+[13
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] [14
+color push 0 g 0 G
+color pop
+
+
+color push 0 g 0 G
+color pop
+] [15
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2275,13 +2287,13 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 167.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 167.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 179.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 179.
 (./master-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 167.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 167.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 179.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 179.
 Package rerunfilecheck Info: File `master-thesis.out' has not changed.
-(rerunfilecheck)             Checksum: E39A03947D12DBF0F6913C698F262C60;2245.
+(rerunfilecheck)             Checksum: 952DCDBBC9F8B338B95FEC4ECD0B74A7;2290.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -2291,11 +2303,11 @@ Package logreq Info: Writing requests to 'master-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39046 strings out of 493089
- 704709 string characters out of 6134842
+ 39060 strings out of 493089
+ 704843 string characters out of 6134842
  1155196 words of memory out of 5000000
- 41742 multiletter control sequences out of 15000+600000
- 62163 words of font info for 82 fonts, out of 8000000 for 9000
+ 41745 multiletter control sequences out of 15000+600000
+ 62695 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,7n,84p,10405b,1644s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
@@ -2307,10 +2319,10 @@ f-dist/fonts/type1/public/tex-gyre/qplb.pfb></usr/local/texlive/2015/texmf-dist
 /type1/public/tex-gyre/qplri.pfb></usr/local/texlive/2015/texmf-dist/fonts/type
 1/urw/palatino/uplr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/p
 alatino/uplri8a.pfb>
-Output written on master-thesis.pdf (23 pages, 149747 bytes).
+Output written on master-thesis.pdf (25 pages, 153637 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 267 compressed objects within 3 object streams
- 54 named destinations out of 1000 (max. 500000)
- 14690 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 339 PDF objects out of 1000 (max. 8388607)
+ 280 compressed objects within 3 object streams
+ 57 named destinations out of 1000 (max. 500000)
+ 14698 words of extra memory for PDF output out of 17280 (max. 10000000)
 

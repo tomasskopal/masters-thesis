@@ -94,16 +94,24 @@ Pokud však uvažujeme reálný provoz na síti, který se dnes v centrálních 
 %%[https://is.muni.cz/do/rect/habilitace/1433/44368572/44368651/HP_kor.-verejna.pdf]
 , je dávkové zpracování nereálné. Potřebujeme data analyzovat za běhu (angl. real time).
 
-Jednotkou zpracování dat je událost (angl. event). Událost je základním pojmem používaným v oblasti zpracování událostí. Je definována jako objekt, který reprezentuje záznam o aktivitě v daném systému. Událost může mít vlastnosti. Typickým příkladem takové vlastnosti je čas vzniku události. [\ref{bib_1}] Jednoduchým příkladem události může být paket. Je to datová schránka, která obsahuje informace, které můžeme analyzovat. Samostatný paket nemá téměř žádnou vypovídající hodnotu, kdežto proud paketů je základem Internetu.
+Jednotkou zpracování dat je událost (angl. event). Událost je základním pojmem používaným v oblasti zpracování událostí. Je definována jako objekt, který reprezentuje záznam o aktivitě v daném systému. Událost může mít vlastnosti. Typickým příkladem takové vlastnosti je čas vzniku události, příčina jejího vzniku nebo její typ. [\ref{bib_1}] Jednoduchým příkladem události může být paket. Je to datová schránka, která obsahuje informace, které můžeme analyzovat. Samostatný paket nemá téměř žádnou vypovídající hodnotu, kdežto proud paketů je základem Internetu.
 
 Takový proud událostí skrývá množství dat, která je možné získat až při komplexní analýze, která zohledňuje více událostí v řadě. To nazýváme \textit{komplexní zpracování dat (angl. complex event processing neboli CEP)}
+
 
 \section{CEP}
 
 Je těžké shrnout celý vědní obor pod jednu všeobjímající definici. David Luckham ve své knize  THE POWER OF EVENTS: AN INTRODUCTION TO COMPLEX EVENT PROCESSING IN DISTRIBUTED ENTERPRISE SYSTEMS [\ref{bib_1}] říká, že CEP je soubor technik a nástrojů, které pomáhají k pochopení a kontrole událostmi řízených systémů.
 
+Jak už bylo řečeno, množství událostí v systémech je enormní. Při jejich zpracování se setkáváme s pojmem \textit{komplexní událost}. Taková událost se může vyskytnout pouze jako reakce na sled jiných, dílčích, událostí. Dílčí události mohou spolu souviset mnoha různými způsoby, nejčastěji je však spojujeme na základě vlastností (čas vzniku, příčina vzniku, typ, atd).
 
-\section{Událost v CEP}
+Zde bude popis komplexni udalosti "last touch" z Facebooku
+
+TODO: pouze prelozit: One of the major themes of CEP is that different kinds of events are related. CEP provides techniques for defining and utilizing relationships between events. CEP applies to any type of event that happens in a computer application or a network or an information system. In fact, one of its techniques lets you define your own events as patterns of the events in your computer system. CEP lets you see when your events happen. This is one way to understand what is going on in your system.
+
+That brings us to another point—flexibility. CEP allows users to specify the events that are of interest to them at any moment. Events of interest can be low-level network monitoring alerts or high-level enterprise management intelligence, depending upon the role and viewpoint of individual users. Different kinds of events can be specified and monitored simultaneously. And the specification of the events of interest, how they should be viewed and acted upon, can be changed on the fly, while the system is running.
+
+Musím navázat na následující kapitolu, tím, že v dnešní době už nestačí analyzovat data pouze na jednom PC, ale v clusteru.
 \section{Distribuované CEP}
 Zde chci popsat co to je distribuované zpracování dat. V další kapitole pak navážu, tím jaké nástroje v současnosti pro zpracování dat máme (Samsa, Storm)
 \chapter{Nástroje pro distribuované zpracování událostí}
@@ -111,6 +119,9 @@ Zde chci popsat co to je distribuované zpracování dat. V další kapitole pak
 \section{Apache Storm}
 \section{CAVE}
 http://dl.acm.org/citation.cfm?doid=2675743.2771834
+\chapter{Analýza a návrh}
+se lehce dostknu toho co zminenym technologiim chybi a co by navrhovane reseni (ktere budu popisovat dale) umoznilo delat jinak. Bude to priprava ctenare na to co prijde.
+ Mely by zde byt take nastineny vstupy a vystupy a obecny navrh reseni. Bez znalosti toho jak to konkretne bude udelane. Defacto interface. Zde bude zakomponovan i prepis filipova zadani
 \chapter{Vytvoření clusteru v rámci sítě}
 \section{Motivace}
 \section{Technologie}
@@ -141,7 +152,8 @@ Bude zde také zmíněno dynamické nasazování nových ep pravidel. To by se d
 
 \subsection{Esper pravidla}
 Mini kapitola, kterou bych věnoval použitým esper pravidlům.
-
+\section{Demo}
+Nějaké print screeny. Jednoduše ukázka běhu programu.
 \section{Známá omezení}
 Diskuse nedostatků nebo možných vylepšení výše navrženého řešení. 
 \begin{itemize}
