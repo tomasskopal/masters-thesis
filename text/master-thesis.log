@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  8 MAR 2016 21:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  11 MAR 2016 09:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2171,23 +2171,43 @@ color push 0 g 0 G
 color pop
 ]
 Kapitola 2.
-[3
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-] [4
+
+Underfull \vbox (badness 1314) has occurred while \output is active []
+
+ [3
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
-Kapitola 3.
+Underfull \vbox (badness 4634) has occurred while \output is active []
+
+ [4
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+]
+LaTeX Font Info:    Try loading font information for OMS+qpl on input line 123.
+
+LaTeX Font Info:    No file OMSqpl.fd. on input line 123.
+
+
+LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 123.
+
 [5
 color push 0 g 0 G
 color pop
-
-
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
 ] [6
@@ -2198,7 +2218,7 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-Kapitola 4.
+Kapitola 3.
 [7
 color push 0 g 0 G
 color pop
@@ -2212,11 +2232,25 @@ color pop
 color push 0 g 0 G
 color pop
 ]
+Kapitola 4.
+[9
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] [10
+color push 0 g 0 G
+color pop
+
+
+color push 0 g 0 G
+color pop
+]
 Kapitola 5.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [9
+ [11
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2224,44 +2258,21 @@ color pop
 ]
 Underfull \vbox (badness 1132) has occurred while \output is active []
 
- [10
+ [12
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
-LaTeX Font Info:    Try loading font information for OMS+qpl on input line 160.
-
-LaTeX Font Info:    No file OMSqpl.fd. on input line 160.
-
-
-LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 160.
-
-[11
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-] [12
-color push 0 g 0 G
-color pop
-
-
-color push 0 g 0 G
-color pop
-]
-Kapitola 6.
 [13
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2273,7 +2284,69 @@ color pop
 
 color push 0 g 0 G
 color pop
-] [15
+]
+Kapitola 6.
+[15
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] [16
+color push 0 g 0 G
+color pop
+
+
+color push 0 g 0 G
+color pop
+]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 189.
+
+ (/usr/local/texlive/2015/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Package microtype Info: Loading generic settings for font family
+(microtype)             `lmtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+Underfull \hbox (badness 10000) in paragraph at lines 189--190
+[]\T1/qpl/m/n/12 (+20) COULOURIS, Ge-orge F. \T1/qpl/m/it/12 Dis-tri-bu-ted sys
+-tems: con-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 189--190
+\T1/qpl/m/it/12 cepts and de-sign \T1/qpl/m/n/12 (+20) [on-line]. 5th ed. Bos-t
+on: Addison-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 189--190
+\T1/qpl/m/n/12 (+20) Wesley, c2012. ISBN 01-321-4301-1. Do-stupné z:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 189--190
+[]$\T1/lmtt/m/n/12 https : / / azmuri . files . wordpress . com / 2013 / 09 /
+ []
+
+
+Overfull \hbox (90.39471pt too wide) in paragraph at lines 189--190
+\T1/lmtt/m/n/12 george-[]coulouris-[]distributed-[]systems-[]concepts-[]and-[]d
+esign-[]5th-[]edition .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 192--193
+[]$\T1/lmtt/m/n/12 http : / / grids . ucs . indiana . edu / ptliupages / public
+ations /
+ []
+
+[17
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2287,11 +2360,11 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 179.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 179.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 197.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 197.
 (./master-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 179.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 179.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 197.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 197.
 Package rerunfilecheck Info: File `master-thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 952DCDBBC9F8B338B95FEC4ECD0B74A7;2290.
 
@@ -2303,26 +2376,27 @@ Package logreq Info: Writing requests to 'master-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39060 strings out of 493089
- 704843 string characters out of 6134842
- 1155196 words of memory out of 5000000
- 41745 multiletter control sequences out of 15000+600000
- 62695 words of font info for 86 fonts, out of 8000000 for 9000
+ 39131 strings out of 493089
+ 705785 string characters out of 6134842
+ 1155248 words of memory out of 5000000
+ 41789 multiletter control sequences out of 15000+600000
+ 64077 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,7n,84p,10405b,1644s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
-exlive/2015/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}{/usr/local/texlive/20
-15/texmf-dist/fonts/enc/dvips/tex-gyre/q-ec-sc.enc}</usr/local/texlive/2015/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texm
-f-dist/fonts/type1/public/tex-gyre/qplb.pfb></usr/local/texlive/2015/texmf-dist
-/fonts/type1/public/tex-gyre/qplr.pfb></usr/local/texlive/2015/texmf-dist/fonts
-/type1/public/tex-gyre/qplri.pfb></usr/local/texlive/2015/texmf-dist/fonts/type
-1/urw/palatino/uplr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/p
-alatino/uplri8a.pfb>
-Output written on master-thesis.pdf (25 pages, 153637 bytes).
+ 69i,8n,84p,10405b,1644s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
+texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2015/te
+xmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}{/usr/local/texlive/2015/texmf-dist/
+fonts/enc/dvips/tex-gyre/q-ec-sc.enc}</usr/local/texlive/2015/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/t
+ype1/public/lm/lmtt12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/publi
+c/tex-gyre/qplb.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-
+gyre/qplr.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/q
+plri.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pf
+b></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on master-thesis.pdf (27 pages, 180364 bytes).
 PDF statistics:
- 339 PDF objects out of 1000 (max. 8388607)
- 280 compressed objects within 3 object streams
- 57 named destinations out of 1000 (max. 500000)
- 14698 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 362 PDF objects out of 1000 (max. 8388607)
+ 300 compressed objects within 3 object streams
+ 61 named destinations out of 1000 (max. 500000)
+ 15210 words of extra memory for PDF output out of 17280 (max. 10000000)
 

@@ -105,15 +105,27 @@ Je těžké shrnout celý vědní obor pod jednu všeobjímající definici. Dav
 
 Jak už bylo řečeno, množství událostí v systémech je enormní. Při jejich zpracování se setkáváme s pojmem \textit{komplexní událost}. Taková událost se může vyskytnout pouze jako reakce na sled jiných, dílčích, událostí. Dílčí události mohou spolu souviset mnoha různými způsoby, nejčastěji je však spojujeme na základě vlastností (čas vzniku, příčina vzniku, typ, atd).
 
-Zde bude popis komplexni udalosti "last touch" z Facebooku
+Příkladem komplexní události může být akce nakoupení produktu v internetovém obchodě. Je to v dnešní době elektronického marketingu velké téma. Běžnému uživateli Internetu je v mnoha kanálech (Facebook ads, Google ads, mailing) zobrazována reklama. Některý uživatel nakoupí produkt při prvním zobrazení určité reklamy. Jiný uživatel potřebuje reklamu vidět alespoň pětkrát, než nakoupí. Způsob jak tuto "cestu" měřit se jmenuje atribuční model. Atribuční model je tak defacto soubor událostí, které vyvolaly konečnou, komplexní, událost. Tedy nákup produktu v obchodě. S roustoucím počtem zařízení, roste počet reklam a také se komplikují atribuční modely. Vhodnými technikami zpracování dílčích událostí (zobrazení reklamy, kliknutí na reklamu, nainstalování aplikace) lze například predikovat chování uživatele.
 
-TODO: pouze prelozit: One of the major themes of CEP is that different kinds of events are related. CEP provides techniques for defining and utilizing relationships between events. CEP applies to any type of event that happens in a computer application or a network or an information system. In fact, one of its techniques lets you define your own events as patterns of the events in your computer system. CEP lets you see when your events happen. This is one way to understand what is going on in your system.
+CEP nabízí techniky pro definici a využití vztahů mezi událostmi. Může být využíván pro analýzu libovolného typu událostí v aplikaci, počítačové síti nebo v informačním systému. Jednou z těchto technik je i definování vlastních událostí, jakožto pravidla. Jinak řečeno, můžeme vytvořit vlastní reakci na soubor určitých událostí v našem systému. Touto cestou můžeme pochopit co se v našem systému odehrává.
 
-That brings us to another point—flexibility. CEP allows users to specify the events that are of interest to them at any moment. Events of interest can be low-level network monitoring alerts or high-level enterprise management intelligence, depending upon the role and viewpoint of individual users. Different kinds of events can be specified and monitored simultaneously. And the specification of the events of interest, how they should be viewed and acted upon, can be changed on the fly, while the system is running.
+To zvyšuje míru flexibility. Uživatel může za pomocí CEP specifikovat taková pravidla, která jej aktuálně zajímají a jsou pro něj přínosem. Může analyzovat jak nízko-úrovňové, tak vysoko-úrovňové procesy. Různé druhy událostí mohou být v CEP monitorovány současně. Velkou výhodou je, že pravidla mohou být měněna, odebírána a přidávána za běhu, tedy bez výpadku systému.
 
-Musím navázat na následující kapitolu, tím, že v dnešní době už nestačí analyzovat data pouze na jednom PC, ale v clusteru.
+Zpracování proudu událostí a vyhodnocení, jestli se pravidlo vyskytlo, stojí samozřejmě určitý výpočetní výkon. V závislosti na typu a množství dat. Pokud je dat hodně (například analýza síťového provozu), musíme výpočet distribuovat.
+ 
 \section{Distribuované CEP}
-Zde chci popsat co to je distribuované zpracování dat. V další kapitole pak navážu, tím jaké nástroje v současnosti pro zpracování dat máme (Samsa, Storm)
+Úvodem kapitoly je potřeba jasně vymezit co v tomto kontextu chápeme pod pojmem "distribuovaný". Distribuované systémy definujeme jako systémy, ve kterých spolu hardwarové nebo softwarové komponenty komunikují pouze zasíláním zpráv. Distribuovaný výpočet, je pak takový výpočet, který probíhá v distribuovaném systému. [\ref{bib_2}]
+
+Požadavky na distribuované zpracování událostí (DCEP) jsou v mnoha ohledech jiné než na zpracování centralizované. Dvě hlavní vlastnosti, které vyžadujeme jsou vysoká míra dostupnosti (angl. availability) a nízké zpoždění (angl. latency). Cílem je pak maximalizovat dostupnost a minimalizovat zpoždění. Bohužel u většiny návrhů platí, že tyto vlastnosti jsou závislé a zlepšení jedné, zhoršuje druhou. Zlepšení dostupnosti, zvýší zpoždění, protože potřebujeme více času na synchronizaci všech řídících informací. [\ref{bib_3}]
+
+Zmíněné dvě vlastnosti nejsou jediné. Mezi vlastnosti distribuovaného zpracování události můžeme dále zařadit:
+\begin{itemize}
+  \item rovnoměrné rozdělení dat mezi výpočetní uzly (angl. data partitioning)
+  \item automatické škálování výpočtu
+  \item tolerance chyb
+  \item správa datového úložiště
+\end{itemize}
+
 \chapter{Nástroje pro distribuované zpracování událostí}
 \section{Apache Samsa}
 \section{Apache Storm}
@@ -172,8 +184,14 @@ Závěr bude v tomto případě obsahovat obšírnější zhodnocení toho jak s
 LLUCKHAM, David. \textit{The Power of Events: An Introduction to Complex
 Event Processing in Distributed Enterprise Systems.} Pearson
 Education, Inc., 2002, ISBN 9780201727890 \label{bib_1}
-\end{thebibliography}
 
+\bibitem
+CCOULOURIS, George F. \textit{Distributed systems: concepts and design} [online]. 5th ed. Boston: Addison-Wesley, c2012. ISBN 01-321-4301-1. Dostupné z: \url{https://azmuri.files.wordpress.com/2013/09/george-coulouris-distributed-systems-concepts-and-design-5th-edition.pdf} \label{bib_2}
+
+\bibitem
+KKAMBURUGAMUVE, Supun; FOX, Geoffrey; LEAKE, David and QIU, Judy. \textit{Survey of Distributed Stream Processing for Large Stream Sources}. Technical report, 2013. [online]. Dostupné z: \url{http://grids.ucs.indiana.edu/ptliupages/publications/survey_stream_processing.pdf} \label{bib_3}
+
+\end{thebibliography}
 \appendix %% Start the appendices.
 
 \end{document}
