@@ -25,6 +25,8 @@
   %% <http://mirrors.ctan.org/macros/latex/contrib/fithesis/guide/mu/fi.pdf>.
 ]{fithesis3}
 %% The following section sets up the locales used in the thesis.
+\usepackage{graphicx}
+\usepackage{hyperref}
 \usepackage[resetfonts]{cmap} %% We need to load the T2A font encoding
 \usepackage[T1,T2A]{fontenc}  %% to use the Cyrillic fonts with Russian texts.
 \usepackage[
@@ -85,7 +87,8 @@
 \usepackage{menukeys}
 \begin{document}
 \chapter{Úvod}
-Cílem této práce je vytvoření  ...
+
+Obecně zadání práce říká, že má být vytvořen middleware pro distribuované zpracování vzorů událostí (angl. middleware solution for distributed event pattern matching). Z anglického popisu vychází zkratka MSFDEPM. Velkým zjednodušením dostaneme "distributed event matching", neboli DEM. Pro účely této práce a snadnější orientaci budu popisované řešení identifikovat zkratkou \textit{DEM}.
 
 \chapter{Zpracování událostí}
 Se zvyšujícím se počtem zařízení, která jsou schopna produkovat data, se zvyšuje potřeba tato data analyzovat. Běžně rozšířeným způsobem je zpracování dat dávkově. Tedy, data se uloží a ve vhodnou dobu, typicky v noci, se analyzují.
@@ -114,7 +117,11 @@ To zvyšuje míru flexibility. Uživatel může za pomocí CEP specifikovat tako
 Zpracování proudu událostí a vyhodnocení, jestli se pravidlo vyskytlo, stojí samozřejmě určitý výpočetní výkon. V závislosti na typu a množství dat. Pokud je dat hodně (například analýza síťového provozu), musíme výpočet distribuovat.
  
 \section{Distribuované CEP}
-Úvodem kapitoly je potřeba jasně vymezit co v tomto kontextu chápeme pod pojmem "distribuovaný". Distribuované systémy definujeme jako systémy, ve kterých spolu hardwarové nebo softwarové komponenty komunikují pouze zasíláním zpráv. Distribuovaný výpočet, je pak takový výpočet, který probíhá v distribuovaném systému. [\ref{bib_2}]
+Úvodem kapitoly je potřeba jasně vymezit co v tomto kontextu chápeme pod pojmem "distribuovaný". Obecně se používají dva výklady:
+\begin{itemize}
+  \item Distribuované zpracování událostí jako zpracování událostí z více heterogenních zdrojů (distribuovaný systém).~[\ref{bib_2}] Takový výpočet může běžet i na jenom stroji a samotná analýza většinou nebývá paralelní. Takto pojem používá i \textit{David Luckham} v knize \textit{The Power of Events} [\ref{bib_1}] v popisu obrázku \textit{1.1}.
+  \item Distribuované zpracování událostí jako výpočet rozdělený na více menších, méně náročných úloh za účelem rychlejšího zpracování s využitím paralelismu. Dále v práci budeme pojem chápat právě takto.
+\end{itemize}
 
 Požadavky na distribuované zpracování událostí (DCEP) jsou v mnoha ohledech jiné než na zpracování centralizované. Dvě hlavní vlastnosti, které vyžadujeme jsou vysoká míra dostupnosti (angl. availability) a nízké zpoždění (angl. latency). Cílem je pak maximalizovat dostupnost a minimalizovat zpoždění. Bohužel u většiny návrhů platí, že tyto vlastnosti jsou závislé a zlepšení jedné, zhoršuje druhou. Zlepšení dostupnosti, zvýší zpoždění, protože potřebujeme více času na synchronizaci všech řídících informací. [\ref{bib_3}]
 
@@ -132,14 +139,43 @@ Zmíněné dvě vlastnosti nejsou jediné. Mezi vlastnosti distribuovaného zpra
 \section{CAVE}
 http://dl.acm.org/citation.cfm?doid=2675743.2771834
 \chapter{Analýza a návrh}
-se lehce dostknu toho co zminenym technologiim chybi a co by navrhovane reseni (ktere budu popisovat dale) umoznilo delat jinak. Bude to priprava ctenare na to co prijde.
- Mely by zde byt take nastineny vstupy a vystupy a obecny navrh reseni. Bez znalosti toho jak to konkretne bude udelane. Defacto interface. Zde bude zakomponovan i prepis filipova zadani
+Zde bude zakomponovan i prepis filipova zadani
+ 
+Aktuálně největším zdrojem dat je jednoznačně síťová komunikace. Nejčastější případ, je ten, že přes jeden hlavní uzel probíhá většina komunikace. Podobně je tomu i v softwaru. Aplikační server zpracovává všechny klientské požadavky. Takový uzel je zdrojem dat, která chceme analyzovat. Vytváří sekvenční proud dat, který můžeme vhodně distribuovat do clusteru. Ten jej zpracovává.
+
+Problém nastane, když je množství produkovaných dat větší než je kapacita analyzujícího (analyzujících) počítačů. V takovém případě můžeme přidat výpočetní sílu nebo zvolit úplně jiný přístup k datové analýze.
+
+\section{Vstupy a výstupy}
+Uvažujme situaci, kdy necháme na síťovém uzlu aby analyzoval běžně známe hrozby. Taková zařízení jsou na trhu běžně dostupná. A zbytek analýzy bude probíhat až na uzlech v rámci sítě. V modelové situaci útočník obejde firewall a na koncových zařízeních v síti začnou vznikat anomálie. Za normální situace by se takový útok neodhalil, protože na koncových zařízeních neběží žádná detekce. Často to ani není prakticky možné, protože kdyby počítače odesílaly všechen provoz do clusteru na analýzu, byla by to ještě větší zátěž než, kdyby to dělal hlavní síťový prvek. Cílem této práce je tak vytvořit řešení, které bude možno nasadit přímo na koncová zařízení a provádět analýzu tam. Hrubou představu aplikace znázorňuje obrázek \ref{fig:cloud-comparison}
+
+\begin{figure}[h]
+	\centering
+    \includegraphics[width=0.8\textwidth, height=0.55\textheight]{images/cloud-comparison.png}
+    \caption{Srovnání}
+    \label{fig:cloud-comparison}
+\end{figure}
+
+Vstupem jsou data zaznamenána na každém stroji připojeném do \textit{DEM}. Formát, množství a povaha dat je pak určena konkrétní situací, která je potřeba sledovat. Pro účely této práce jsou data naivně generována aby vytvořila simulaci síťového útoku. Detailní popis je v kapitole~\ref{sec:udalosti-v-systemu}
+
+Výstupem by mělo být upozornění na nestandardní situaci v části nebo celém systému. Formát výstupu DEM je opět individuální vzhledem k situaci. Zjištěné výsledky mohou být ukládány ve formě logů (tak je to vyřešeno v této práci), odesílána do centrálního dohledu nebo ukládána do databáze.
+
+Do DEM bude možno nasadit pravidla na detekci vzorů událostí. Tato pravidla mohou být omezena časovou platností a nasazena na analýzu pouze určitého množství uzlů.
+
 \chapter{Vytvoření clusteru v rámci sítě}
+Kapitola je jádrem této práce. Popisuje implementaci a fungování DEM.
 \section{Motivace}
 \section{Technologie}
-Tato kapitola popisuje jednotlivé technologie, které jsou použity při implementaci algoritmu. Na konci každé subsekce bude popis toho jak konkrétně je technologie použita v mém řešení.
+Tato kapitola popisuje jednotlivé technologie, které jsou použity při implementaci algoritmu. Na konci každé subsekce je popis toho jak konkrétně je technologie použita v mém řešení.
+
 \subsection{Apache Maven}
+Apache Maven je nástroj pro správu, řízení a automatizaci sestavování aplikací (angl. build). Maven sám nemá žádné uživatelské rozhraní a běží pouze na příkazové řádce. Jeho účelem je usnadnit práci vývojáři tím, že definuje jednotný proces sestavení. \ref{bib_4} Také definuje strukturu aplikace, protože jednotlivé typy souborů hledá v určitých balíčcích. Například spustitelné Java soubory by měly být v adresáři \textit{src/maven/java}.
+
+Konfigurační soubor Mavenu je \textit{pom.xml}, ve kterém jsou uvedeny zásuvné moduly (pluginy), podle kterých Maven pozná, co má dělat. Také je zde seznam závislostí na externí knihovny, které Maven dokáže stáhnout. Při použití Mavenu je sestavení programu otázkou jen jednoho příkazu (\textit{mvn clean install}).
+
 \subsection{Apache Kafka}
+Apache Kafka je systém pro zasílání zpráv. \ref{bib_5} Klastr Kafky může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem Kafky je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive přepážkou (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet přepážek. Přepážka je menší jednotka než téma.
+
+Do kafky data zapisují \textit{producenti} a na druhé straně z ní data čtou \textit{konzumenti} (angl. producer and consumer).
 \subsection{Apache ZooKeeper}
 Popis technologie podle dokumentace
 
@@ -148,6 +184,7 @@ Konkrétní použití: Jak se sestavuje strom a k čemu slouží (je důležité
 CuratorFramework
 \subsection{Esper}
 \section{Události v systému}
+\label{sec:udalosti-v-systemu}
 Kapitola popisující hlavní myšlenku povahy dat, která bude algoritmus vyhodnocovat. Také zde budou ukázky používaných dat.
 \subsection{Hrubozrnné}
 \subsection{Jemnozrnné}
@@ -190,6 +227,12 @@ CCOULOURIS, George F. \textit{Distributed systems: concepts and design} [online]
 
 \bibitem
 KKAMBURUGAMUVE, Supun; FOX, Geoffrey; LEAKE, David and QIU, Judy. \textit{Survey of Distributed Stream Processing for Large Stream Sources}. Technical report, 2013. [online]. Dostupné z: \url{http://grids.ucs.indiana.edu/ptliupages/publications/survey_stream_processing.pdf} \label{bib_3}
+
+\bibitem
+AApache Maven [online]. Dostupné z: \url{http://maven.apache.org} \label{bib_4}
+
+\bibitem
+Apache Kafka [online]. Dostupné z: \url{http://kafka.apache.org} \label{bib_5}
 
 \end{thebibliography}
 \appendix %% Start the appendices.
