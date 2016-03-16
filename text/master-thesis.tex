@@ -108,7 +108,7 @@ Je těžké shrnout celý vědní obor pod jednu všeobjímající definici. Dav
 
 Jak už bylo řečeno, množství událostí v systémech je enormní. Při jejich zpracování se setkáváme s pojmem \textit{komplexní událost}. Taková událost se může vyskytnout pouze jako reakce na sled jiných, dílčích, událostí. Dílčí události mohou spolu souviset mnoha různými způsoby, nejčastěji je však spojujeme na základě vlastností (čas vzniku, příčina vzniku, typ, atd).
 
-Příkladem komplexní události může být akce nakoupení produktu v internetovém obchodě. Je to v dnešní době elektronického marketingu velké téma. Běžnému uživateli Internetu je v mnoha kanálech (Facebook ads, Google ads, mailing) zobrazována reklama. Některý uživatel nakoupí produkt při prvním zobrazení určité reklamy. Jiný uživatel potřebuje reklamu vidět alespoň pětkrát, než nakoupí. Způsob jak tuto "cestu" měřit se jmenuje atribuční model. Atribuční model je tak defacto soubor událostí, které vyvolaly konečnou, komplexní, událost. Tedy nákup produktu v obchodě. S roustoucím počtem zařízení, roste počet reklam a také se komplikují atribuční modely. Vhodnými technikami zpracování dílčích událostí (zobrazení reklamy, kliknutí na reklamu, nainstalování aplikace) lze například predikovat chování uživatele.
+Příkladem komplexní události může být akce nakoupení produktu v internetovém obchodě. Je to v dnešní době elektronického marketingu velké téma. Běžnému uživateli Internetu je v mnoha kanálech (Facebook ads, Google ads, mailing) zobrazována reklama. Některý uživatel nakoupí produkt při prvním zobrazení určité reklamy. Jiný uživatel potřebuje reklamu vidět alespoň pětkrát, než nakoupí. Způsob jak tuto "cestu" měřit se jmenuje atribuční model [\ref{bib_6}]. Atribuční model je tak defacto soubor událostí, které vyvolaly konečnou, komplexní, událost. Tedy nákup produktu v obchodě. S roustoucím počtem zařízení, roste počet reklam a také se komplikují atribuční modely. Vhodnými technikami zpracování dílčích událostí (zobrazení reklamy, kliknutí na reklamu, nainstalování aplikace) lze například predikovat chování uživatele.
 
 CEP nabízí techniky pro definici a využití vztahů mezi událostmi. Může být využíván pro analýzu libovolného typu událostí v aplikaci, počítačové síti nebo v informačním systému. Jednou z těchto technik je i definování vlastních událostí, jakožto pravidla. Jinak řečeno, můžeme vytvořit vlastní reakci na soubor určitých událostí v našem systému. Touto cestou můžeme pochopit co se v našem systému odehrává.
 
@@ -173,9 +173,41 @@ Apache Maven je nástroj pro správu, řízení a automatizaci sestavování apl
 Konfigurační soubor Mavenu je \textit{pom.xml}, ve kterém jsou uvedeny zásuvné moduly (pluginy), podle kterých Maven pozná, co má dělat. Také je zde seznam závislostí na externí knihovny, které Maven dokáže stáhnout. Při použití Mavenu je sestavení programu otázkou jen jednoho příkazu (\textit{mvn clean install}).
 
 \subsection{Apache Kafka}
-Apache Kafka je systém pro zasílání zpráv. \ref{bib_5} Klastr Kafky může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem Kafky je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive přepážkou (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet přepážek. Přepážka je menší jednotka než téma.
+Apache Kafka je systém pro zasílání zpráv. [\ref{bib_5}] Klastr Kafky může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem Kafky je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive přepážkou (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet přepážek. Přepážka je menší jednotka než téma. Každé téma může být replikováno mezi brokery.
 
-Do kafky data zapisují \textit{producenti} a na druhé straně z ní data čtou \textit{konzumenti} (angl. producer and consumer).
+\subsection*{Konzument a producent}
+
+Do kafky data zapisují \textit{producenti} a na druhé straně z ní data čtou \textit{konzumenti} (angl. producer and consumer). Zapisování dat producentem je přímočaré. Producent rozhoduje do kterého tématu či přepážky se má zpráva zapsat. Zprávy jsou ukládány do fronty, tedy způsobem FIFO \footnote{FIFO -- první zapsán, první přečten (angl. first in first out)}. Čtení zpráv závisí na aktuálním stavu. Konzumenty je možné seskupovat do skupin a podle toho se pak rozlišuje způsob čtení zpráv na "queuing" a "publish-subscribe". V modelu "queue" je zpráva poslána vždy jednomu z konzumentů. Naopak v modelu "publish-subscribe" je každá zpráva poslána všem konzumentům. V dokumentaci Kafky se říká [\ref{bib_5}]:
+\begin{itemize}
+  \item Pokud jsou všichni konzumenti ve stejné skupině, pak Kafka funguje v modelu "queue".
+  \item Pokud je každý konzument v jiné skupině, pak je Kafka v modelu "publish-subscribe". Všechny zprávy jsou distribuovány všem konzumentům \footnote{Broadcast}.
+\end{itemize}
+
+\begin{figure}[h]
+	\centering
+    \includegraphics[width=0.65\textwidth, height=0.45\textheight]{images/kafka.png}
+    \caption{Znázornění základního schématu Kafky}
+    \label{fig:kafka}
+\end{figure}
+
+\subsection*{Garance}
+Kafka poskytuje následující seznam garancí:
+\begin{itemize}
+  \item Zprávy poslané do určitého tématu budou seřazeny v pořadí v jakém byly odeslány. Například pokud je zpráva \textit{M1} odeslána producentem dříve než zpráva \textit{M2}, pak Kafka zaručuje, že bude mít zpráva \textit{M1} menší offset a bude v logu zobrazena dříve než \textit{M2}.
+  \item Konzument vidí zprávy v takovém pořadí, v jakém byly uloženy do logu.
+   \item Pro téma s faktorem replikování \textit{N} (bude replikováno mezi \textit{N} brokerů), Kafka zaručuje zachování dat až pro \textit{N-1} vypadlých serverů.
+\end{itemize}
+
+\subsection*{Použití}
+Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačích, které data produkují. V navrhovaném řešení jsem nezaznamenal potřebu dělit témata na příčky (partition). Také Kafka není distribuovaná do několika brokerů a je spuštěna pouze na jenom stroji. Distribuci bych nakonfiguroval až v případě produkčního nasazení pro prevenci výpadků. Na každém počítači běží nejméně jeden producent a nejvýše jeden konzument. Jednotlivá témata jsou pojmenována podle ip adres počítačů. Konkrétně při iniciálním spuštění je vytvořen jeden konzument a počet producentů je roven počtu počítačů. Viz obrázek \ref{fig:kafka-impl}
+
+\begin{figure}[h]
+	\centering
+    \includegraphics[width=0.8\textwidth, height=0.45\textheight]{images/kafka-impl.png}
+    \caption{Struktura Kafky při iniciálním spuštění}
+    \label{fig:kafka-impl}
+\end{figure}
+
 \subsection{Apache ZooKeeper}
 Popis technologie podle dokumentace
 
@@ -219,11 +251,11 @@ Závěr bude v tomto případě obsahovat obšírnější zhodnocení toho jak s
 \begin{thebibliography}{99}
 \bibitem
 LLUCKHAM, David. \textit{The Power of Events: An Introduction to Complex
-Event Processing in Distributed Enterprise Systems.} Pearson
-Education, Inc., 2002, ISBN 9780201727890 \label{bib_1}
+Event Processing in Distributed Enterprise Systems.} Addison-Wesley Professional, 2002. ISBN 978-0-201-72789-0. \label{bib_1}
 
 \bibitem
-CCOULOURIS, George F. \textit{Distributed systems: concepts and design} [online]. 5th ed. Boston: Addison-Wesley, c2012. ISBN 01-321-4301-1. Dostupné z: \url{https://azmuri.files.wordpress.com/2013/09/george-coulouris-distributed-systems-concepts-and-design-5th-edition.pdf} \label{bib_2}
+CCOULOURIS, George F. \textit{Distributed systems: concepts and design}. 5th ed. Boston: Addison-Wesley, c2012. ISBN 01-321-4301-1. \label{bib_2}
+%% Dostupné z: \url{https://azmuri.files.wordpress.com/2013/09/george-coulouris-distributed-systems-concepts-and-design-5th-edition.pdf}
 
 \bibitem
 KKAMBURUGAMUVE, Supun; FOX, Geoffrey; LEAKE, David and QIU, Judy. \textit{Survey of Distributed Stream Processing for Large Stream Sources}. Technical report, 2013. [online]. Dostupné z: \url{http://grids.ucs.indiana.edu/ptliupages/publications/survey_stream_processing.pdf} \label{bib_3}
@@ -232,7 +264,10 @@ KKAMBURUGAMUVE, Supun; FOX, Geoffrey; LEAKE, David and QIU, Judy. \textit{Survey
 AApache Maven [online]. Dostupné z: \url{http://maven.apache.org} \label{bib_4}
 
 \bibitem
-Apache Kafka [online]. Dostupné z: \url{http://kafka.apache.org} \label{bib_5}
+AApache Kafka [online]. Dostupné z: \url{http://kafka.apache.org} \label{bib_5}
+
+\bibitem
+OOfficial Google documentation  [online]. Dostupné z: \url{https://support.google.com/analytics/answer/1662518?hl=en&ref_topic=3205717} \label{bib_6}
 
 \end{thebibliography}
 \appendix %% Start the appendices.

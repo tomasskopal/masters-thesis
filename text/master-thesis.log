@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  13 MAR 2016 19:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  16 MAR 2016 19:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2230,7 +2230,7 @@ color push 0 g 0 G
 color pop
 ]
 Kapitola 4.
-<images/cloud-comparison.png, id=276, 747.79375pt x 1056.94875pt>
+<images/cloud-comparison.png, id=277, 747.79375pt x 1056.94875pt>
 File: images/cloud-comparison.png Graphic file (type png)
 
 <use images/cloud-comparison.png>
@@ -2263,39 +2263,95 @@ color pop
 
 color push 0 g 0 G
 color pop
-] [12
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-] [13
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-] [14
-color push 0 g 0 G
-color pop
+] <images/kafka.png, id=300, 364.562pt x 351.714pt>
+File: images/kafka.png Graphic file (type png)
+ <use images/kafka.png>
+Package pdftex.def Info: images/kafka.png used on input line 188.
+(pdftex.def)             Requested size: 234.882pt x 245.9298pt.
 
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[12
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] <images/kafka-impl.png, id=310, 426.393pt x 338.866pt>
+File: images/kafka-impl.png Graphic file (type png)
+
+<use images/kafka-impl.png>
+Package pdftex.def Info: images/kafka-impl.png used on input line 206.
+(pdftex.def)             Requested size: 289.09108pt x 245.92749pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[13
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color pop
+ <./images/kafka.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color pop
+ <./images/kafka-impl.png>]
+Underfull \vbox (badness 1132) has occurred while \output is active []
+
+ [15
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+]
+[16
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
 ]
 Kapitola 6.
-[15
+[17
 color push 0 g 0 G
 color pop
+
+
 color push 0 g 0 G
 color pop
-] [16
+] [18
 color push 0 g 0 G
 color pop
 
@@ -2303,7 +2359,7 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 226.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 261.
 
  (/usr/local/texlive/2015/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -2313,40 +2369,24 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 10000) in paragraph at lines 226--227
-[]\T1/qpl/m/n/12 (+20) COULOURIS, Ge-orge F. \T1/qpl/m/it/12 Dis-tri-bu-ted sys
--tems: con-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 226--227
-\T1/qpl/m/it/12 cepts and de-sign \T1/qpl/m/n/12 (+20) [on-line]. 5th ed. Bos-t
-on: Addison-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 226--227
-\T1/qpl/m/n/12 (+20) Wesley, c2012. ISBN 01-321-4301-1. Do-stupné z:
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 226--227
-[]$\T1/lmtt/m/n/12 https : / / azmuri . files . wordpress . com / 2013 / 09 /
- []
-
-
-Overfull \hbox (90.39471pt too wide) in paragraph at lines 226--227
-\T1/lmtt/m/n/12 george-[]coulouris-[]distributed-[]systems-[]concepts-[]and-[]d
-esign-[]5th-[]edition .
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 229--230
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
 []$\T1/lmtt/m/n/12 http : / / grids . ucs . indiana . edu / ptliupages / public
 ations /
  []
 
-[17
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
+[]\T1/qpl/m/n/12 (+20) Official Go-o-gle do-cu-men-tation [on-line]. Do-stupné 
+z:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
+[]$\T1/lmtt/m/n/12 https : / / support . google . com / analytics / answer / 16
+62518 ?
+ []
+
+[19
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2362,8 +2402,10 @@ been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.240 \end{document}
+l.275 \end{document}
                     
+color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2375,11 +2417,11 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 240.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 240.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 275.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 275.
 (./master-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 240.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 240.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 275.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 275.
 Package rerunfilecheck Info: File `master-thesis.out' has not changed.
 (rerunfilecheck)             Checksum: DEED6A5442DA412303ABC4AA58D844FF;2366.
 
@@ -2394,11 +2436,11 @@ Package logreq Info: Writing requests to 'master-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39265 strings out of 493089
- 707383 string characters out of 6134842
- 1162924 words of memory out of 5000000
- 41920 multiletter control sequences out of 15000+600000
- 64742 words of font info for 100 fonts, out of 8000000 for 9000
+ 39309 strings out of 493089
+ 707961 string characters out of 6134842
+ 1163115 words of memory out of 5000000
+ 41939 multiletter control sequences out of 15000+600000
+ 68496 words of font info for 107 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,7n,84p,10405b,1644s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
@@ -2411,10 +2453,10 @@ c/tex-gyre/qplb.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-
 gyre/qplr.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/q
 plri.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pf
 b></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on master-thesis.pdf (27 pages, 220341 bytes).
+Output written on master-thesis.pdf (29 pages, 263657 bytes).
 PDF statistics:
- 380 PDF objects out of 1000 (max. 8388607)
- 315 compressed objects within 4 object streams
- 64 named destinations out of 1000 (max. 500000)
- 15223 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 407 PDF objects out of 1000 (max. 8388607)
+ 336 compressed objects within 4 object streams
+ 74 named destinations out of 1000 (max. 500000)
+ 19329 words of extra memory for PDF output out of 20736 (max. 10000000)
 
