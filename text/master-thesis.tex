@@ -172,6 +172,16 @@ Apache Maven je nástroj pro správu, řízení a automatizaci sestavování apl
 
 Konfigurační soubor Mavenu je \textit{pom.xml}, ve kterém jsou uvedeny zásuvné moduly (pluginy), podle kterých Maven pozná, co má dělat. Také je zde seznam závislostí na externí knihovny, které Maven dokáže stáhnout. Při použití Mavenu je sestavení programu otázkou jen jednoho příkazu (\textit{mvn clean install}).
 
+\subsection*{Použití}
+Kromě definování závislostí je Maven v projektu použit na vytvoření modulů. Moduly jsou celkem čtyři a jsou navrženy tak, aby názvem i logikou odpovídaly účelu a nepřesahovaly své určení. Jsou to:
+\begin{itemize}
+  \item Producer -- slouží pro generování dat a jejich posílání do Kafky. Data jsou generována v určitých časových intervalech a jejich struktura je přesně daná. Syntax a sémantika vzorových dat je popsána v kapitole \ref{sec:udalosti-v-systemu}. Při reálném použití by byl tento modul přepsán nebo nahrazen za takový, který bude reálná data číst z nějakého systémového nebo aplikačního logu.
+  \item Consumer -- tento modul čte data z Kafky a analyzuje je za pomocí nástroje Esper \ref{sec:esper}. Události, které Esper vyhodnotí slouží v DEM jako řídící zprávy pro přechod do dalšího stavu. Případně jsou události pouze zapsány do logu.
+  \item MainApp -- modul obsahuje spustitelnou třídu a je tak vstupním bodem programu. Také se zde zpracovávají všechny řídící události ze ZooKeeperu \ref{sec:zookeeper} a rozhoduje se jaká vlákna (konzument nebo producent) se mají vytvořit nebo zastavit.
+  \item AppData -- modul obsahuje několik výčtových typů, které jsou společné v celé aplikaci a jednu singleton \footnote{Singleton neboli jedináček je návrhový vzor, který je využívaný, když je potřeba mít pouze jednu instanci dané třídy.} třídu, která drží některá řídící data. Například ip adresu počítače. Tato data mají k dispozici všechny moduly.
+\end{itemize}
+Protože je veškerá komunikace řízena událostmi a zasíláním zpráv, moduly jsou na sobě relativně nezávislé a v případě potřeby je možné je zaměnit za jiné. 
+
 \subsection{Apache Kafka}
 Apache Kafka je systém pro zasílání zpráv. [\ref{bib_5}] Klastr Kafky může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem Kafky je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive přepážkou (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet přepážek. Přepážka je menší jednotka než téma. Každé téma může být replikováno mezi brokery.
 
@@ -195,7 +205,7 @@ Kafka poskytuje následující seznam garancí:
 \begin{itemize}
   \item Zprávy poslané do určitého tématu budou seřazeny v pořadí v jakém byly odeslány. Například pokud je zpráva \textit{M1} odeslána producentem dříve než zpráva \textit{M2}, pak Kafka zaručuje, že bude mít zpráva \textit{M1} menší offset a bude v logu zobrazena dříve než \textit{M2}.
   \item Konzument vidí zprávy v takovém pořadí, v jakém byly uloženy do logu.
-   \item Pro téma s faktorem replikování \textit{N} (bude replikováno mezi \textit{N} brokerů), Kafka zaručuje zachování dat až pro \textit{N-1} vypadlých serverů.
+  \item Pro téma s faktorem replikování \textit{N} (bude replikováno mezi \textit{N} brokerů), Kafka zaručuje zachování dat až pro \textit{N-1} vypadlých serverů.
 \end{itemize}
 
 \subsection*{Použití}
@@ -209,12 +219,14 @@ Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačí
 \end{figure}
 
 \subsection{Apache ZooKeeper}
+\label{sec:zookeeper}
 Popis technologie podle dokumentace
 
 Konkrétní použití: Jak se sestavuje strom a k čemu slouží (je důležité zmínit, že jde pouze o virtuální stav a je nutné myslet na to, že aplikace běží na daném uzlu pouze jednou). Jaké má zookeeper tree výhody (dá se zjistit jestli a jaké má uzel potomky, dá se kterýkoli uzel modifikovat, což způsobí příslušnou změnu v aplikaci).
 
 CuratorFramework
 \subsection{Esper}
+\label{sec:esper}
 \section{Události v systému}
 \label{sec:udalosti-v-systemu}
 Kapitola popisující hlavní myšlenku povahy dat, která bude algoritmus vyhodnocovat. Také zde budou ukázky používaných dat.
@@ -223,8 +235,8 @@ Kapitola popisující hlavní myšlenku povahy dat, která bude algoritmus vyhod
 \section{Konfigurace}
 \section{Implementace}
 Pro implementaci byla zvolena Java (konkrétně ve verzi 1.8), protože všechny použité technologie mají dobrá API pro Javu a většina příkladů je právě v Javě. Dalším důvodem je také to, že Java se dobře hodí pro běh aplikací tohoto druhu, protože má dobrou práci s vlákny. Posledním, méně důležitým, důvodem je popularita Javy a snadná čitelnost kódu.
-\subsection{Architektura aplikace}
-Popis jednotlivých maven modulů. K čemu který slouží
+\subsection*{Architektura aplikace}
+Je popsána v kapitole Maven. Hodilo by se sem ale ještě něco dopsat. Zeptat se jak je např řešen idependent deploy modulů u Paříze. 
 \subsection{Iniciální spuštění}
 \subsection{Přechody mezi stavy}
 Jedna z nejdůležitějších kapitol, která ukazuje co způsobí, že aplikace začne vyhodnocovat jemnozrnné události. Počínaje tím, že Esper vyhodnotí proud událostí a emituje ep-událost. Dále přes zpracování ep-události, nastavení příslušných dat jednotlivým zk-uzlům v zk-stromě, či modifikaci zk-stromu. Až po ukončení zpracovávání jemnozrnný událostí a návrat k iniciálnímu stavu.
