@@ -69,6 +69,7 @@ public class MainApp {
                 data.put("path", AppData.ZK_ROOT + "/" + ip);
                 curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
                 Thread.sleep(1000);
+                setTimerForMainRule(10000);
             }
 
             // create producer node
@@ -85,6 +86,28 @@ public class MainApp {
         } catch (Exception e) {
             logger.error("Main app fails. Error: ", e);
         }
+    }
+
+    private void setTimerForMainRule(int ttl) {
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        CuratorFramework curatorFramework = AppData.instance().getZkSession();
+                        try {
+                            JSONObject data = new JSONObject();
+                            data.put("action", ActionType.INACTIVE_CONSUMER.toString());
+                            curatorFramework.setData().forPath(
+                                    AppData.ZK_ROOT + "/" + AppData.instance().getIp(),
+                                    data.toString().getBytes()
+                            );
+                        } catch (Exception e) {
+                            logger.error("Something in the tim failed", e);
+                        }
+                    }
+                },
+                ttl
+        );
     }
 
     public static void createNodeAndRegisterWatcher(String path) throws Exception {

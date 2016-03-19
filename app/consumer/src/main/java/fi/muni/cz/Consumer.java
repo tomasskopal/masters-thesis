@@ -35,7 +35,7 @@ public class Consumer {
     private final ConsumerConnector consumer;
     private final String topic;
     private  ExecutorService executor;
-    EPServiceProvider cep;
+    private EPServiceProvider cep;
     private String epRule;
 
     private static List<SimpleConsumer> consumerThreads = new ArrayList<>();
