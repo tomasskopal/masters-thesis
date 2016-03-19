@@ -38,13 +38,13 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.3}\slshape Ud\IeC {\'a}losti v syst\IeC {\'e}mu}{15}{section.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.3.1}\rmfamily Hrubozrnn\IeC {\'e}}{15}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.1}\rmfamily Hrubozrnn\IeC {\'e}}{16}{subsection.5.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.3.2}\rmfamily Jemnozrnn\IeC {\'e}}{15}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.2}\rmfamily Jemnozrnn\IeC {\'e}}{16}{subsection.5.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}\slshape Konfigurace}{15}{section.5.4}
+\contentsline {section}{\numberline {5.4}\slshape Konfigurace}{16}{section.5.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.5}\slshape Implementace}{15}{section.5.5}
+\contentsline {section}{\numberline {5.5}\slshape Implementace}{16}{section.5.5}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {5.5.1}\rmfamily Inici\IeC {\'a}ln\IeC {\'\i } spu\IeC {\v s}t\IeC {\v e}n\IeC {\'\i }}{16}{subsection.5.5.1}
 \defcounter {refsection}{0}\relax 
@@ -52,8 +52,8 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {5.5.3}\rmfamily Esper pravidla}{16}{subsection.5.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.6}\slshape Demo}{16}{section.5.6}
+\contentsline {section}{\numberline {5.6}\slshape Demo}{17}{section.5.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.7}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{16}{section.5.7}
+\contentsline {section}{\numberline {5.7}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{17}{section.5.7}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {6}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{19}{chapter.6}

@@ -54,8 +54,8 @@
     author        = Bc. Tomáš Skopal,
     gender        = m,
     advisor       = RNDr. Filip Nguyen,
-    title         = {Distributed Complex Event Processing},
-    TeXtitle      = {Distributed Complex Event Processing},
+    title         = {Distribuované Komplexní Zpracování Událostí},
+    TeXtitle      = {Distribuované Komplexní Zpracování Událostí},
     keywords      = {keyword1, keyword2, ...},
     TeXkeywords   = {keyword1, keyword2, \ldots},
     date			 =	2016/05/30
@@ -220,7 +220,9 @@ Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačí
 
 \subsection{Apache ZooKeeper}
 \label{sec:zookeeper}
-Popis technologie podle dokumentace
+ZooKeeper je další z rodiny "open-source" Apache technologií. Je to centralizovaná služba pro správu konfiguračních dat, pojmenování a poskytování synchronizace distribuovaných uzlů. [\ref{bib_7}]
+
+ZooKeeper je navržen, tak aby jej bylo jednoduché použít. Struktura datového modelu je podobná stromovému uspořádání souborového systému. Je napsán v Javě a poskytuje konektory pro Javu a pro C.
 
 Konkrétní použití: Jak se sestavuje strom a k čemu slouží (je důležité zmínit, že jde pouze o virtuální stav a je nutné myslet na to, že aplikace běží na daném uzlu pouze jednou). Jaké má zookeeper tree výhody (dá se zjistit jestli a jaké má uzel potomky, dá se kterýkoli uzel modifikovat, což způsobí příslušnou změnu v aplikaci).
 
@@ -280,6 +282,9 @@ AApache Kafka [online]. Dostupné z: \url{http://kafka.apache.org} \label{bib_5}
 
 \bibitem
 OOfficial Google documentation  [online]. Dostupné z: \url{https://support.google.com/analytics/answer/1662518?hl=en&ref_topic=3205717} \label{bib_6}
+
+\bibitem
+AApache ZooKeeper [online]. Dostupné z: \url{https://zookeeper.apache.org/} \label{bib_7}
 
 \end{thebibliography}
 \appendix %% Start the appendices.
