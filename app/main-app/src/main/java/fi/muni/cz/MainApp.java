@@ -69,7 +69,7 @@ public class MainApp {
                 data.put("path", AppData.ZK_ROOT + "/" + ip);
                 curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + ip, data.toString().getBytes());
                 Thread.sleep(1000);
-                setTimerForMainRule(10000);
+                setTimerForMainRule(30000);
             }
 
             // create producer node
