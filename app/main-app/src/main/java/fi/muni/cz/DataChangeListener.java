@@ -155,11 +155,18 @@ public class DataChangeListener implements NodeCacheListener {
                         public void run() {
                             CuratorFramework curatorFramework = AppData.instance().getZkSession();
                             try {
+                                JSONObject data = new JSONObject();
+                                data.put("action", ActionType.INACTIVE_CONSUMER.toString());
+                                curatorFramework.setData().forPath(
+                                        AppData.ZK_ROOT + "/147.251.43.181",
+                                        data.toString().getBytes()
+                                );
+
                                 for (String children : curatorFramework.getChildren().forPath(path)) {
                                     String children_path = path + "/" + children;
                                     logger.info("Time is up. Stopping producer: " + children_path);
 
-                                    JSONObject data = new JSONObject();
+                                    data = new JSONObject();
                                     data.put("action", ActionType.STOP_PRODUCER.toString());
                                     data.put("path", children_path);
                                     curatorFramework.setData().forPath(AppData.ZK_ROOT + "/" + children, data.toString().getBytes());
