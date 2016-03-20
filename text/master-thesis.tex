@@ -25,6 +25,33 @@
   %% <http://mirrors.ctan.org/macros/latex/contrib/fithesis/guide/mu/fi.pdf>.
 ]{fithesis3}
 %% The following section sets up the locales used in the thesis.
+\usepackage{listings}
+\usepackage{color}
+
+\renewcommand{\lstlistingname}{Ukázka kódu}
+\renewcommand{\lstlistlistingname}{Ukázky kódu}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{
+  frame=tb,
+  language=Java,
+  captionpos=b,                    % sets the caption-position to bottom
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage[resetfonts]{cmap} %% We need to load the T2A font encoding
@@ -218,15 +245,77 @@ Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačí
     \label{fig:kafka-impl}
 \end{figure}
 
+\newpage
 \subsection{Apache ZooKeeper}
 \label{sec:zookeeper}
 ZooKeeper je další z rodiny "open-source" Apache technologií. Je to centralizovaná služba pro správu konfiguračních dat, pojmenování a poskytování synchronizace distribuovaných uzlů. [\ref{bib_7}]
 
-ZooKeeper je navržen, tak aby jej bylo jednoduché použít. Struktura datového modelu je podobná stromovému uspořádání souborového systému. Je napsán v Javě a poskytuje konektory pro Javu a pro C.
+ZooKeeper je navržen, tak aby jej bylo jednoduché použít. Je napsán v Javě a poskytuje konektory pro Javu a pro C. Struktura datového modelu je podobná stromovému uspořádání souborového systému. Datový model ZooKeeperu je sestaven z uzlů zvaných \textit{znodes}. Na rozdíl od klasického souborového systému, který je navržen pro dlouhodobé ukládání dat, ZooKeeper data drží v paměti, a tak může dosahovat nízkého zpoždění a vysoké propustnosti. Pro ilustraci, uvažujme jednoduchý příklad: Každý znode může obsahovat data (až do limitu 1MB). V takovém případě znode reprezentuje soubor (řekněme textový) v souborovém systému. V ZooKeeperu může mít každý uzel nula až N potomků. Pak znode vystupuje obdobně jako složka v souborovém systému. Každý znode může zároveň obsahovat data a mít potomky.
 
-Konkrétní použití: Jak se sestavuje strom a k čemu slouží (je důležité zmínit, že jde pouze o virtuální stav a je nutné myslet na to, že aplikace běží na daném uzlu pouze jednou). Jaké má zookeeper tree výhody (dá se zjistit jestli a jaké má uzel potomky, dá se kterýkoli uzel modifikovat, což způsobí příslušnou změnu v aplikaci).
+\subsection*{Garance}
+Obdobně jako Kafka a naprostá většina distribuovaných systémů, musí i ZooKeeper poskytovat určité garance běhu v distribuovaném prostředí.
 
-CuratorFramework
+\begin{itemize}
+  \item Sekvenční konzistence -- změny na uzlu jsou aplikovány v takovém pořadí v jakém byly odeslány (modifikace dat, odebrání nebo přidání potomka, apod).
+  \item Atomicita -- změny jsou úspěšně aplikovány úplně nebo neprovedeny vůbec. Neexistuje žádný mezistav.
+  \item Spolehlivost -- Jakmile je změna aplikována, je stav uzlu garantován. Nemění se až do doby další změny.
+  \item Časová konzistence -- Stav systému je po uplynutí definovaného času vždy aktuální.
+\end{itemize}
+
+\subsection*{API}
+ZooKeeper nabízí uživateli (programátorovi) velice jednoduché rozhraní, pro manipulaci s jednotlivými uzly. Sestává se z těchto operací:
+\begin{itemize}
+  \item Vytvoření (create)
+  \item Smazání (delete)
+  \item Kontrola existence uzlu (exists)
+  \item Získání dat (get data)
+  \item Zapsání dat (set data)
+  \item Získání všech potomků daného uzlu (get children)
+  \item Ukazatel dokončení synchronizace dat (sync)
+\end{itemize}
+
+Kromě operace \textit{sync} jsou v této práci použity všechny.
+
+\subsection*{Pozorovatelé}
+Pozorovatelé \footnote{Z anglického slova \textit{Watches}. Jde o konkrétní implementaci návrhového vzoru "observable". [\ref{bib_8}]} jsou nedílnou součástí téměř každého událostmi řízeného systému. Stejně tak, je tomu u ZooKeeperu. Na znode je možné zaregistrovat dva druhy pozorovatelů:
+
+\begin{itemize}
+  \item Datový pozorovatel -- změní stav, když jsou změněna data v uzlu. Tzn někdo zavolal operaci "zapsání dat". Změna stavu obsahuje nově nastavená data
+  \item Pozorovatel potomků -- změní stav, když nastane změna v některém z potomků daného uzlu. Událost obsahuje, mimo jiné, informaci o typu změny (smazání, vytvoření, zápis dat, ztráta konektivity) a identifikaci potomka. 
+\end{itemize}
+
+\subsection*{Apache Curator}
+Aplikační rámec \textit{Curator}	je nástroj vytvořený společností Neflix pro jednodušší práci se ZooKeeperem. Rozhraní ZooKeeperu se potýká s několika problémy, jako je například nedostatečné ošetření výpadků konektivity nebo selhání operace. Proto byl navržen \textit{Curator}, který se osvědčil a později přešel pod licenci \textit{Apache}. Poskytuje následující benefity:
+
+\begin{itemize}
+  \item Komplexnější rozhraní pro jednodušší práci se ZooKeeperem. \ref{code:curator}
+  \item Automatické připojení na instanci ZooKeeperu a automatické opravy výpadků.
+  \item Kompletní a dobře otestovaná implementace některých složitějších operací.
+\end{itemize}
+
+\begin{lstlisting}[label=code:curator,caption={Demonstrace jednoduchého použití aplikačního rámce Curator, na smazání uzlu \textit{zkNode1} a všech jeho potomků.},language=Java]
+curatorFramework.delete()
+   .guaranteed()
+   .deletingChildrenIfNeeded()
+   .forPath("/zkNode1");
+\end{lstlisting}
+ 
+\subsection*{Použití}
+ZooKeeper je použit pro řízení běhu celého procesu DEM. Jeho hlavní úlohou je distribuce řídících dat mezi jednotlivými výpočetními jednotkami. Druhou funkcí, která logicky vychází ze stromové struktury datového modelu, je reflexe aktuálního stavu aplikace.
+
+Je důležité zmínit, že cesta ve stromové struktuře je určena jednoznačným textovým identifikátorem. Jednotlivé uzly jsou pak odděleny lomítkem. Na obrázku \ref{fig:zookeeper-impl} můžeme vidět strukturu uzlů, při iniciálním spuštění DEM. Příklad identifikátoru prvního uzlu z druhé vrstvy je \textit{"/root/ip1/ip1"}, druhého uzlu z první vrstvy \textit{"/root/ip2"}, atd.
+
+Obrázek \ref{fig:zookeeper-impl} dále znázorňuje logickou strukturu DEM. První vrstva reprezentuje konzumenty a druhá vrstva producenty. Jinak řečeno "kdo komu posílá data". Podstatné je, uvědomit si, že strom zobrazuje pouze virtuální stav. Aplikace jako taková běží na daném stroji vždy jen jednou a strom pak reprezentuje spíše množství běžících vláken a jejich úlohu. Jak je vidět z obrázku \ref{fig:zookeeper-impl}, v DEM existují 4 producenti (jeden na každém fyzickém stroji) a jeden konzument (fyzický stroj s \textit{ip1}). To odpovídá stavu Kafky z obrázku \ref{fig:kafka-impl}.
+
+Výhody stromové struktury jsou jasné. U každého uzlu se dá zjistit jaké má potomky (které stroje posílají data a kam). Změna cíle, kam má stroj posílat data, je na úrovni rozhraní triviální. Stačí přesunout uzel v druhé vrstvě pod jiného rodiče.
+
+\begin{figure}[h]
+	\centering
+    \includegraphics[width=1\textwidth, height=0.22\textheight]{images/zookeeper-impl.png}
+    \caption{Stromová struktura uzlů v Zookeeperu při iniciálním spuštění.}
+    \label{fig:zookeeper-impl}
+\end{figure}
+
 \subsection{Esper}
 \label{sec:esper}
 \section{Události v systému}
@@ -285,6 +374,12 @@ OOfficial Google documentation  [online]. Dostupné z: \url{https://support.goog
 
 \bibitem
 AApache ZooKeeper [online]. Dostupné z: \url{https://zookeeper.apache.org/} \label{bib_7}
+
+\bibitem
+GGAMMA, Erich, Richard HELM, Ralph JOHNSON a John VLISSIDES. GANG OF FOUR. \textit{Design Patterns: Elements of Reusable Object-Oriented Software}. Addison-Wesley, 1994. ISBN 0-201-63361-2 \label{bib_8}
+
+\bibitem
+AApache Curator [online]. Dostupné z: \url{http://curator.apache.org/index.html} \label{bib_9}
 
 \end{thebibliography}
 \appendix %% Start the appendices.
