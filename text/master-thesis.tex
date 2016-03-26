@@ -27,6 +27,7 @@
 %% The following section sets up the locales used in the thesis.
 \usepackage{listings}
 \usepackage{color}
+\usepackage{float}
 
 \renewcommand{\lstlistingname}{Ukázka kódu}
 \renewcommand{\lstlistlistingname}{Ukázky kódu}
@@ -165,20 +166,54 @@ Zmíněné dvě vlastnosti nejsou jediné. Mezi vlastnosti distribuovaného zpra
 \section{Apache Storm}
 \section{CAVE}
 http://dl.acm.org/citation.cfm?doid=2675743.2771834
-\chapter{Analýza a návrh}
-Zde bude zakomponovan i prepis filipova zadani
- 
-Aktuálně největším zdrojem dat je jednoznačně síťová komunikace. Nejčastější případ, je ten, že přes jeden hlavní uzel probíhá většina komunikace. Podobně je tomu i v softwaru. Aplikační server zpracovává všechny klientské požadavky. Takový uzel je zdrojem dat, která chceme analyzovat. Vytváří sekvenční proud dat, který můžeme vhodně distribuovat do clusteru. Ten jej zpracovává.
+\chapter{Analýza}
+
+Cílem této práce je vytvoření software pro distribuované zpracování událostí, který bude schopen detekovat komplexní události na základě pravidel. Aplikace by měla být schopna zvládnout libovolný počet připojených uzlů. Síť propojených uzlů je možné reprezentovat grafem G(V, E), kde V jsou uzly grafu, neboli konkrétní počítače na kterých probíhá zpracování. E jsou pak orientované hrany grafu, které reprezentují informaci o tom který počítač posílá data kterému. Každá hrana je označena příznakem \textit{L\_i}, který označuje typ události, která je po dané hraně posílána. Konkrétním příkladem tak může být událost \textit{L\_1}, představující zprávu typu \textit{chyba}, která není tak častá, ale její závažnost je vyšší. A událost \textit{L\_2}, představující zprávu typu \textit{upozornění}, která je častá, ale méně závažná.
+
+Pravidla pro detekci komplexních událostí, budou mít časovou platnost. Po uplynutí daného času se pravidlo automaticky stane neaktivní. Pravidla bude také možné nasadit pouze na určitou podmnožinu uzlů V grafu G. 
+
+Na obrázku \ref{fig:analysis_case_1} je vidět příklad grafu, kde je na uzlu \textit{V1} nasazeno pravidlo analyzující události \textit{L\_1}.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.4\textwidth, height=0.15\textheight]{images/analysis_case_1.png}
+    \caption{Před vyhodnocením pravidla \textit{P: L\_1} existuje jeden uzel zpracovávající události}
+    \label{fig:analysis_case_1}
+\end{figure}
+
+Po určitém počtu výskytů události \textit{L\_1} je vytvořena nová skupina z uzlů V3 a V4 kde je V4 zvolen hlavním uzlem. Viz obr. \ref{fig:analysis_case_2}
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.4\textwidth, height=0.15\textheight]{images/analysis_case_2.png}
+    \caption{Po vyhodnocení pravidla \textit{P: L\_1} existují dva uzly zpracovávající události}
+    \label{fig:analysis_case_2}
+\end{figure}
+
+Požadavky jsou kladeny hlavně na variabilitu, možnost nasazení pravidel s časovou platností. Menší důraz je na výkon a proces nasazování.
+
+Na obrázku \ref{fig:usecase} je znázorněn diagram užití, který přehledně shrnuje požadavky na systém. Vystupují v něm dvě role. Uživatel, je zde člověk, který spouští analýzu. Druhou rolí je Algoritmus, který reprezentuje samotný software. Je zde uveden proto, aby bylo zřejmé jaké operace se od systému vyžadují.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.9\textwidth, height=0.45\textheight]{images/usecase.png}
+    \caption{Diagram užití}
+    \label{fig:usecase}
+\end{figure}
+
+Typickým místem pro nasazení distribuovaného zpracování událostí je analýza síťové komunikace. To je také místo, kde bude DEM nasazen.
+
+Nejčastější případ, je ten, že přes jeden hlavní uzel probíhá většina komunikace. Podobně je tomu i v softwaru. Aplikační server zpracovává všechny klientské požadavky. Takový uzel je zdrojem dat, která chceme analyzovat. Vytváří sekvenční proud dat, který můžeme vhodně distribuovat do clusteru. Ten jej zpracovává.
 
 Problém nastane, když je množství produkovaných dat větší než je kapacita analyzujícího (analyzujících) počítačů. V takovém případě můžeme přidat výpočetní sílu nebo zvolit úplně jiný přístup k datové analýze.
 
 \section{Vstupy a výstupy}
-Uvažujme situaci, kdy necháme na síťovém uzlu aby analyzoval běžně známe hrozby. Taková zařízení jsou na trhu běžně dostupná. A zbytek analýzy bude probíhat až na uzlech v rámci sítě. V modelové situaci útočník obejde firewall a na koncových zařízeních v síti začnou vznikat anomálie. Za normální situace by se takový útok neodhalil, protože na koncových zařízeních neběží žádná detekce. Často to ani není prakticky možné, protože kdyby počítače odesílaly všechen provoz do clusteru na analýzu, byla by to ještě větší zátěž než, kdyby to dělal hlavní síťový prvek. Cílem této práce je tak vytvořit řešení, které bude možno nasadit přímo na koncová zařízení a provádět analýzu tam. Hrubou představu aplikace znázorňuje obrázek \ref{fig:cloud-comparison}
+Uvažujme situaci, kdy necháme na síťovém uzlu aby analyzoval běžně známe hrozby. Taková zařízení jsou na trhu běžně dostupná. A zbytek analýzy bude probíhat až na uzlech v rámci sítě. V modelové situaci útočník obejde firewall a na koncových zařízeních v síti začnou vznikat anomálie. Za normální situace by se takový útok neodhalil, protože na koncových zařízeních neběží žádná detekce. Často to ani není prakticky možné, protože kdyby počítače odesílaly všechen provoz do clusteru na analýzu, byla by to ještě větší zátěž než, kdyby to dělal hlavní síťový prvek. Cílem této práce je tak vytvořit řešení, které bude možno nasadit přímo na koncová zařízení a provádět analýzu tam. Hrubou představu znázorňuje obrázek \ref{fig:cloud-comparison}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
     \includegraphics[width=0.8\textwidth, height=0.55\textheight]{images/cloud-comparison.png}
-    \caption{Srovnání}
+    \caption{Srovnání přístupu zasílání dat do cloudu (v levo) a vytvoření cloudu přímo na koncových zařízeních (v pravo)}
     \label{fig:cloud-comparison}
 \end{figure}
 
@@ -187,8 +222,9 @@ Vstupem jsou data zaznamenána na každém stroji připojeném do \textit{DEM}. 
 Výstupem by mělo být upozornění na nestandardní situaci v části nebo celém systému. Formát výstupu DEM je opět individuální vzhledem k situaci. Zjištěné výsledky mohou být ukládány ve formě logů (tak je to vyřešeno v této práci), odesílána do centrálního dohledu nebo ukládána do databáze.
 
 Do DEM bude možno nasadit pravidla na detekci vzorů událostí. Tato pravidla mohou být omezena časovou platností a nasazena na analýzu pouze určitého množství uzlů.
+\chapter{Návrh}
 
-\chapter{Vytvoření clusteru v rámci sítě}
+\chapter{Nasazení}
 Kapitola je jádrem této práce. Popisuje implementaci a fungování DEM.
 \section{Motivace}
 \section{Technologie}
@@ -220,7 +256,7 @@ Do kafky data zapisují \textit{producenti} a na druhé straně z ní data čtou
   \item Pokud je každý konzument v jiné skupině, pak je Kafka v modelu "publish-subscribe". Všechny zprávy jsou distribuovány všem konzumentům \footnote{Broadcast}.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
     \includegraphics[width=0.65\textwidth, height=0.45\textheight]{images/kafka.png}
     \caption{Znázornění základního schématu Kafky}
@@ -238,7 +274,7 @@ Kafka poskytuje následující seznam garancí:
 \subsection*{Použití}
 Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačích, které data produkují. V navrhovaném řešení jsem nezaznamenal potřebu dělit témata na příčky (partition). Také Kafka není distribuovaná do několika brokerů a je spuštěna pouze na jenom stroji. Distribuci bych nakonfiguroval až v případě produkčního nasazení pro prevenci výpadků. Na každém počítači běží nejméně jeden producent a nejvýše jeden konzument. Jednotlivá témata jsou pojmenována podle ip adres počítačů. Konkrétně při iniciálním spuštění je vytvořen jeden konzument a počet producentů je roven počtu počítačů. Viz obrázek \ref{fig:kafka-impl}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
     \includegraphics[width=0.8\textwidth, height=0.45\textheight]{images/kafka-impl.png}
     \caption{Struktura Kafky při iniciálním spuštění}
@@ -309,7 +345,7 @@ Obrázek \ref{fig:zookeeper-impl} dále znázorňuje logickou strukturu DEM. Prv
 
 Výhody stromové struktury jsou jasné. U každého uzlu se dá zjistit jaké má potomky (které stroje posílají data a kam). Změna cíle, kam má stroj posílat data, je na úrovni rozhraní triviální. Stačí přesunout uzel v druhé vrstvě pod jiného rodiče.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
     \includegraphics[width=1\textwidth, height=0.22\textheight]{images/zookeeper-impl.png}
     \caption{Stromová struktura uzlů v Zookeeperu při iniciálním spuštění.}

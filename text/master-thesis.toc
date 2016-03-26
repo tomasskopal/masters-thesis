@@ -18,42 +18,44 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3.3}\slshape CAVE}{7}{section.3.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}\bfseries Anal\IeC {\'y}za a n\IeC {\'a}vrh}{9}{chapter.4}
+\contentsline {chapter}{\numberline {4}\bfseries Anal\IeC {\'y}za}{9}{chapter.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.1}\slshape Vstupy a v\IeC {\'y}stupy}{9}{section.4.1}
+\contentsline {section}{\numberline {4.1}\slshape Vstupy a v\IeC {\'y}stupy}{11}{section.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}\bfseries Vytvo\IeC {\v r}en\IeC {\'\i } clusteru v r\IeC {\'a}mci s\IeC {\'\i }t\IeC {\v e}}{11}{chapter.5}
+\contentsline {chapter}{\numberline {5}\bfseries N\IeC {\'a}vrh}{13}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}\slshape Motivace}{11}{section.5.1}
+\contentsline {chapter}{\numberline {6}\bfseries Nasazen\IeC {\'\i }}{15}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}\slshape Technologie}{11}{section.5.2}
+\contentsline {section}{\numberline {6.1}\slshape Motivace}{15}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2.1}\rmfamily Apache Maven}{11}{subsection.5.2.1}
+\contentsline {section}{\numberline {6.2}\slshape Technologie}{15}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2.2}\rmfamily Apache Kafka}{12}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {6.2.1}\rmfamily Apache Maven}{15}{subsection.6.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2.3}\rmfamily Apache ZooKeeper}{15}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {6.2.2}\rmfamily Apache Kafka}{16}{subsection.6.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2.4}\rmfamily Esper}{19}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {6.2.3}\rmfamily Apache ZooKeeper}{20}{subsection.6.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}\slshape Ud\IeC {\'a}losti v syst\IeC {\'e}mu}{19}{section.5.3}
+\contentsline {subsection}{\numberline {6.2.4}\rmfamily Esper}{24}{subsection.6.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.3.1}\rmfamily Hrubozrnn\IeC {\'e}}{19}{subsection.5.3.1}
+\contentsline {section}{\numberline {6.3}\slshape Ud\IeC {\'a}losti v syst\IeC {\'e}mu}{24}{section.6.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.3.2}\rmfamily Jemnozrnn\IeC {\'e}}{19}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {6.3.1}\rmfamily Hrubozrnn\IeC {\'e}}{24}{subsection.6.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}\slshape Konfigurace}{19}{section.5.4}
+\contentsline {subsection}{\numberline {6.3.2}\rmfamily Jemnozrnn\IeC {\'e}}{24}{subsection.6.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.5}\slshape Implementace}{19}{section.5.5}
+\contentsline {section}{\numberline {6.4}\slshape Konfigurace}{24}{section.6.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.5.1}\rmfamily Inici\IeC {\'a}ln\IeC {\'\i } spu\IeC {\v s}t\IeC {\v e}n\IeC {\'\i }}{20}{subsection.5.5.1}
+\contentsline {section}{\numberline {6.5}\slshape Implementace}{24}{section.6.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.5.2}\rmfamily P\IeC {\v r}echody mezi stavy}{20}{subsection.5.5.2}
+\contentsline {subsection}{\numberline {6.5.1}\rmfamily Inici\IeC {\'a}ln\IeC {\'\i } spu\IeC {\v s}t\IeC {\v e}n\IeC {\'\i }}{24}{subsection.6.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.5.3}\rmfamily Esper pravidla}{20}{subsection.5.5.3}
+\contentsline {subsection}{\numberline {6.5.2}\rmfamily P\IeC {\v r}echody mezi stavy}{24}{subsection.6.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.6}\slshape Demo}{20}{section.5.6}
+\contentsline {subsection}{\numberline {6.5.3}\rmfamily Esper pravidla}{25}{subsection.6.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.7}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{20}{section.5.7}
+\contentsline {section}{\numberline {6.6}\slshape Demo}{25}{section.6.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{21}{chapter.6}
+\contentsline {section}{\numberline {6.7}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{25}{section.6.7}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {7}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{27}{chapter.7}
