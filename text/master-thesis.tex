@@ -17,7 +17,7 @@
            %% hide the List of Figures.
   nolot,     %% Prints the List of Tables. Replace with `nolot` to
            %% hide the List of Tables.
-  twoside,
+  oneside, %% or twoside
   nocover,
   monochrome,
   12pt
@@ -167,6 +167,9 @@ Zmíněné dvě vlastnosti nejsou jediné. Mezi vlastnosti distribuovaného zpra
 \section{CAVE}
 http://dl.acm.org/citation.cfm?doid=2675743.2771834
 \chapter{Analýza}
+\label{sec:analysis}
+
+Tato kapitola popisuje požadavky na systém a zasazuje systém do prostředí ve kterém bude nasazen. Počátek kapitoly parafrázuje a rozvíjí zadání práce. Dále je diagram užití, který shrnuje funkční požadavky. Na konci kapitoly jsou na modelovém příkladě demonstrovány vstupy a výstupy systému.
 
 Cílem této práce je vytvoření software pro distribuované zpracování událostí, který bude schopen detekovat komplexní události na základě pravidel. Aplikace by měla být schopna zvládnout libovolný počet připojených uzlů. Síť propojených uzlů je možné reprezentovat grafem G(V, E), kde V jsou uzly grafu, neboli konkrétní počítače na kterých probíhá zpracování. E jsou pak orientované hrany grafu, které reprezentují informaci o tom který počítač posílá data kterému. Každá hrana je označena příznakem \textit{L\_i}, který označuje typ události, která je po dané hraně posílána. Konkrétním příkladem tak může být událost \textit{L\_1}, představující zprávu typu \textit{chyba}, která není tak častá, ale její závažnost je vyšší. A událost \textit{L\_2}, představující zprávu typu \textit{upozornění}, která je častá, ale méně závažná.
 
@@ -223,12 +226,10 @@ Výstupem by mělo být upozornění na nestandardní situaci v části nebo cel
 
 Do DEM bude možno nasadit pravidla na detekci vzorů událostí. Tato pravidla mohou být omezena časovou platností a nasazena na analýzu pouze určitého množství uzlů.
 \chapter{Návrh}
+Tato kapitola postupně popisuje jak budou reálně splněny požadavky na systém uvedené v analýze. Stěžejní část kapitoly je volba technologií. U každé zvolené technologie je její popis a jak bude použita ve výsledném řešení.
 
-\chapter{Nasazení}
-Kapitola je jádrem této práce. Popisuje implementaci a fungování DEM.
-\section{Motivace}
 \section{Technologie}
-Tato kapitola popisuje jednotlivé technologie, které jsou použity při implementaci algoritmu. Na konci každé subsekce je popis toho jak konkrétně je technologie použita v mém řešení.
+Tato kapitola podkapitola jednotlivé technologie, které jsou použity při implementaci algoritmu. Na konci každé subsekce je popis toho jak konkrétně je technologie použita v mém řešení.
 
 \subsection{Apache Maven}
 Apache Maven je nástroj pro správu, řízení a automatizaci sestavování aplikací (angl. build). Maven sám nemá žádné uživatelské rozhraní a běží pouze na příkazové řádce. Jeho účelem je usnadnit práci vývojáři tím, že definuje jednotný proces sestavení. \ref{bib_4} Také definuje strukturu aplikace, protože jednotlivé typy souborů hledá v určitých balíčcích. Například spustitelné Java soubory by měly být v adresáři \textit{src/maven/java}.
@@ -355,16 +356,52 @@ Výhody stromové struktury jsou jasné. U každého uzlu se dá zjistit jaké m
 \newpage
 \subsection{Esper}
 \label{sec:esper}
+TODO - dopsat
+
+\section{Sumarizace}
+Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technologie je použita při implementaci daného požadavku z analýzy.
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\textwidth}{lllX}
+    \toprule
+    Požadavek & Technologie \\
+    \midrule
+    Posílání zpráv mezi stroji & Kafka \\
+    Libovolný počet připojených uzlů & ZooKeeper + Kafka \\
+    Nasazení nového pravidla & ZooKeeper \\
+    Definování chování jednotlivých strojů & ZooKeeper \\
+    Vytvořit nebo rozpustit skupinu strojů & ZooKeeper \\
+    Nalezení určitého vzoru (pattern) v datech & Esper \\
+    Propojit technologie do funkčního celku & Java + Maven \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Splnění požadavků na systém}
+  \label{tab:fulfill-usecases}
+\end{table}
+
 \section{Události v systému}
 \label{sec:udalosti-v-systemu}
-Kapitola popisující hlavní myšlenku povahy dat, která bude algoritmus vyhodnocovat. Také zde budou ukázky používaných dat.
-\subsection{Hrubozrnné}
-\subsection{Jemnozrnné}
+Povaha a struktura vyhodnocovaných dat je neopomenutelnou součástí každého systému, tedy i tohoto. Pro potřeby analýzy zavedeme dva druhy událostí, \textbf{hrubozrné} a \textbf{jemnozrné}. Hrubozrné jsou události, které nenastávají příliš často, ale mají v systému důležitý význam. Jemnozrné naopak.
+
+Jak je nastíněno v kapitole \label{sec:analysis}, budeme se zabývat analýzou síťové komunikace. Základem je zde samozřejmě proud paketů. Příchozí pakety mohou mimo jiné znamenat pro daný stoj bezpečnostní hrozbu. Například při útoku \textit{SYN flood} je restart (kolaps) stroje způsoben zahlcením pakety s příznakem \textit{SYN}. Zde můžeme za hrubozrnou událost považovat signalizaci restartu stroje. Jemnozrné události jsou pak jednotlivé pakety.
+
+Principem analýzy je identifikace strojů s výskytem stejných hrubozrných událostí a pustit na nich analýzu jemnozrných událostí, která ma za cíl odhalit příčinu.
+ 
+\subsection*{Hrubozrnné}
+Hrubozrné události mají komplexní povahu. Jsou tedy výsledkem nějakého složitějšího procesu. Ve výše uvedeném příkladě šlo o restart počítače způsobený cíleným útokem. Jiným příkladem může být chybová zpráva v aplikaci (angl. error log). Pokud je aplikace zasažena \textit{DoS} útokem, pak je hrubozrnou událostí její nedostupnost. V DEM jsou hrubozrné události reprezentovány štítkem \textbf{LEVEL1}.
+ 
+\subsection*{Jemnozrnné}
+Tento druh událostí se vyskytuje běžně a sama o sobě nemá událost prakticky žádný význam. Například jeden paket s s příznakem \textit{SYN} se v síťové komunikaci objevuje běžně. V DEM jsou hrubozrné události reprezentovány štítkem \textbf{LEVEL2}.
+
+\chapter{Nasazení}
+Kapitola je jádrem této práce. Popisuje implementaci a fungování DEM.
+
 \section{Konfigurace}
 \section{Implementace}
 Pro implementaci byla zvolena Java (konkrétně ve verzi 1.8), protože všechny použité technologie mají dobrá API pro Javu a většina příkladů je právě v Javě. Dalším důvodem je také to, že Java se dobře hodí pro běh aplikací tohoto druhu, protože má dobrou práci s vlákny. Posledním, méně důležitým, důvodem je popularita Javy a snadná čitelnost kódu.
 \subsection*{Architektura aplikace}
-Je popsána v kapitole Maven. Hodilo by se sem ale ještě něco dopsat. Zeptat se jak je např řešen idependent deploy modulů u Paříze. 
+Je popsána v kapitole Maven. Hodilo by se sem ale ještě něco dopsat. 
 \subsection{Iniciální spuštění}
 \subsection{Přechody mezi stavy}
 Jedna z nejdůležitějších kapitol, která ukazuje co způsobí, že aplikace začne vyhodnocovat jemnozrnné události. Počínaje tím, že Esper vyhodnotí proud událostí a emituje ep-událost. Dále přes zpracování ep-události, nastavení příslušných dat jednotlivým zk-uzlům v zk-stromě, či modifikaci zk-stromu. Až po ukončení zpracovávání jemnozrnný událostí a návrat k iniciálnímu stavu.
@@ -373,6 +410,7 @@ Bude zde také zmíněno dynamické nasazování nových ep pravidel. To by se d
 
 \subsection{Esper pravidla}
 Mini kapitola, kterou bych věnoval použitým esper pravidlům.
+\section{Testování}
 \section{Demo}
 Nějaké print screeny. Jednoduše ukázka běhu programu.
 \section{Známá omezení}
