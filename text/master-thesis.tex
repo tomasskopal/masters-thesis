@@ -25,9 +25,29 @@
   %% <http://mirrors.ctan.org/macros/latex/contrib/fithesis/guide/mu/fi.pdf>.
 ]{fithesis3}
 %% The following section sets up the locales used in the thesis.
+
+
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{listings}
+
+\newtcblisting{mylisting}{
+  listing only,
+  hbox,
+  colframe=gray,
+  colback=gray!10,
+  listing options={
+    basicstyle=\small\ttfamily,
+    breaklines=false,
+  	frame=none,
+    columns=fullflexible
+  }
+}
+
+\usepackage{caption}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{float}
+\usepackage{fancyvrb}
 
 \renewcommand{\lstlistingname}{Ukázka kódu}
 \renewcommand{\lstlistlistingname}{Ukázky kódu}
@@ -411,6 +431,37 @@ Bude zde také zmíněno dynamické nasazování nových ep pravidel. To by se d
 \subsection{Esper pravidla}
 Mini kapitola, kterou bych věnoval použitým esper pravidlům.
 \section{Testování}
+
+\begin{center}
+\begin{minipage}[H]{.6\linewidth}
+	\begin{mylisting}
+	{
+		level: "LEVEL1 / LEVEL2",
+		source: <zk-path>
+	}
+	\end{mylisting}
+	\captionof{figure}{První ukázka}
+	\label{fig:data-example-1} 
+\end{minipage}
+\end{center}
+
+\begin{center}
+\begin{minipage}[H]{.65\linewidth}
+	\begin{mylisting}
+	{
+		level: "LEVEL1 / LEVEL2",
+		source: <zk-path>,
+		msg: "info textual message",
+		flag: "SYN",
+		size: 10,
+		port: 80
+	}
+	\end{mylisting}
+	\captionof{figure}{Druhá ukázka}
+	\label{fig:data-example-2} 
+\end{minipage}
+\end{center}
+
 \section{Demo}
 Nějaké print screeny. Jednoduše ukázka běhu programu.
 \section{Známá omezení}

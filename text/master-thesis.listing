@@ -1,0 +1,9 @@
+	{
+		level: "LEVEL1 / LEVEL2",
+		source: <zk-path>,
+		msg: "info textual message",
+		flag: "SYN",
+		size: 10,
+		port: 80
+	}
+	
