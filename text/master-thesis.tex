@@ -17,7 +17,7 @@
            %% hide the List of Figures.
   nolot,     %% Prints the List of Tables. Replace with `nolot` to
            %% hide the List of Tables.
-  oneside, %% or twoside
+  twoside, %% or oneside
   nocover,
   monochrome,
   12pt
@@ -257,6 +257,7 @@ Apache Maven je nástroj pro správu, řízení a automatizaci sestavování apl
 Konfigurační soubor Mavenu je \textit{pom.xml}, ve kterém jsou uvedeny zásuvné moduly (pluginy), podle kterých Maven pozná, co má dělat. Také je zde seznam závislostí na externí knihovny, které Maven dokáže stáhnout. Při použití Mavenu je sestavení programu otázkou jen jednoho příkazu (\textit{mvn clean install}).
 
 \subsection*{Použití}
+\label{sec:maven-usage}
 Kromě definování závislostí je Maven v projektu použit na vytvoření modulů. Moduly jsou celkem čtyři a jsou navrženy tak, aby názvem i logikou odpovídaly účelu a nepřesahovaly své určení. Jsou to:
 \begin{itemize}
   \item Producer -- slouží pro generování dat a jejich posílání do Kafky. Data jsou generována v určitých časových intervalech a jejich struktura je přesně daná. Syntax a sémantika vzorových dat je popsána v kapitole \ref{sec:udalosti-v-systemu}. Při reálném použití by byl tento modul přepsán nebo nahrazen za takový, který bude reálná data číst z nějakého systémového nebo aplikačního logu.
@@ -415,13 +416,48 @@ Hrubozrné události mají komplexní povahu. Jsou tedy výsledkem nějakého sl
 Tento druh událostí se vyskytuje běžně a sama o sobě nemá událost prakticky žádný význam. Například jeden paket s s příznakem \textit{SYN} se v síťové komunikaci objevuje běžně. V DEM jsou hrubozrné události reprezentovány štítkem \textbf{LEVEL2}.
 
 \chapter{Nasazení}
-Kapitola je jádrem této práce. Popisuje implementaci a fungování DEM.
+Předchozí kapitoly Analýza a Návrh shrnují požadavky na systém a technologie, za pomoci kterých budou požadavky splněny. V Návrhu je také popsáno jak bude konkrétně daná technologie použita. Tato kapitola navazuje samotnou implementací a testováním. Je zde popsán běh programu od úplného začátku, tedy správné konfigurace, až po ukázky výstupu. 
 
 \section{Konfigurace}
 \section{Implementace}
 Pro implementaci byla zvolena Java (konkrétně ve verzi 1.8), protože všechny použité technologie mají dobrá API pro Javu a většina příkladů je právě v Javě. Dalším důvodem je také to, že Java se dobře hodí pro běh aplikací tohoto druhu, protože má dobrou práci s vlákny. Posledním, méně důležitým, důvodem je popularita Javy a snadná čitelnost kódu.
-\subsection*{Architektura aplikace}
-Je popsána v kapitole Maven. Hodilo by se sem ale ještě něco dopsat. 
+
+Aplikace je z pohledu počtu řádků poměrně malá, ale je kompletně řízena událostmi. Posílání zpráv v Kafce je asynchronní a ZooKeeper i Esper jsou ze své podstaty událostmi řízené aplikační rámce (angl. frameworky). Proto je architektura pro přehlednost členěna do logických modulů. Jednotlivé moduly jsou podrobně popsány v kapitole \ref{sec:maven-usage}.
+
+Implementace probíhala iterativním vývojem. Nejdříve bylo potřeba nastudovat technologie a zvolit vhodnou konfiguraci. Dále jsem vyzkoušel jednoduchou implementaci základního API Kafky a posílání zpráv na jenom stroji. Dalším logickým krokem bylo vyzkoušet komunikaci mezi dvěma různými počítači v síti. V tomto bodě jsem mohl přidat vyhodnocení vzorů událostí pomocí Esperu.
+
+Aplikace byla tedy nachystána na přidání více počítačů a testování distribuovaného chování. Napsal jsem několik skriptů pro automatizaci vývoje. Skripty jsou součástí práce jako elektronická příloha. Když aplikace zvládala posílání zpráv mezi čtyřmi testovacími stroji mohl jsem začít pracovat na poslední a nejsložitější iteraci. Tou byla integrace ZooKeeperu. Na základě vyhodnoceného vzoru událostí ZooKeeper automaticky sdružuje počítače do pracovních skupin. Skupiny také ruší a umožňuje nasazení nových pravidel pro analýzu.
+
+ZooKeeper je jádrem algoritmu. Na každém uzlu je navěšen posluchač, který zaznamenává změny dat. Aplikace je řízena tím, že je do příslušného uzlu vložen nový datový objekt, který obsahuje akci a příslušná data. Například akce \textit{CREATE} znamená vytvoření nového vlákna, které bude reprezentovat konzumenta dat nebo datového producenta. Ukázka datového objektu je na obrázku \ref{fig:json-example}.
+
+\begin{center}
+\begin{minipage}[H]{.8\linewidth}
+\centering
+	\begin{mylisting}
+{
+	action: "CREATE",
+	mode: "producer",
+	level: "LEVEL1",
+	parent: "<ip>",
+	path: "<zk-path>"
+}
+	\end{mylisting}
+	\captionof{figure}{Ukázka datového objektu pro akci \textit{CREATE} při vytváření producenta}
+	\label{fig:json-example} 
+\end{minipage}
+\end{center}
+
+Seznam hlavních řídících akcí pro ZooKeeper:
+
+\begin{itemize}
+  \item CREATE -- vytváří nové vlákno s producentem nebo konzumentem
+  \item CREATE\_CHILDREN\_PRODUCER -- pro daný uzel vytvoří úplně nového potomka a spustí v něm vlákno s producentem
+  \item STOP\_PRODUCER -- zastaví producenta (stopne a zabije vlákno)
+  \item STOP\_CONSUMER -- zastaví konzumenta (stopne a zabije vlákno)
+  \item SET\_EP\_RULE -- nastaví v uzlu nové pravidlo pro analýzu
+  \item DELETEd\_SELF -- smaže sama sebe (ZooKeeper uzel) včetně zabití všech konzumentů a producentů, které v rámci daného uzlu běží
+\end{itemize}
+
 \subsection{Iniciální spuštění}
 \subsection{Přechody mezi stavy}
 Jedna z nejdůležitějších kapitol, která ukazuje co způsobí, že aplikace začne vyhodnocovat jemnozrnné události. Počínaje tím, že Esper vyhodnotí proud událostí a emituje ep-událost. Dále přes zpracování ep-události, nastavení příslušných dat jednotlivým zk-uzlům v zk-stromě, či modifikaci zk-stromu. Až po ukončení zpracovávání jemnozrnný událostí a návrat k iniciálnímu stavu.
