@@ -1,9 +1,4 @@
-	{
-		level: "LEVEL1 / LEVEL2",
-		source: <zk-path>,
-		msg: "info textual message",
-		flag: "SYN",
-		size: 10,
-		port: 80
-	}
+"select source, count(*) as cnt, level from
+IncommingEvent(level='LEVEL2').win:time_batch(5 sec) group
+by source, level having count(*) > 7"
 	

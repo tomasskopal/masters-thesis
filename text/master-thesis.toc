@@ -38,20 +38,20 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.3}\slshape Ud\IeC {\'a}losti v syst\IeC {\'e}mu}{20}{section.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}\bfseries Nasazen\IeC {\'\i }}{21}{chapter.6}
+\contentsline {chapter}{\numberline {6}\bfseries Nasazen\IeC {\'\i }}{22}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}\slshape Konfigurace}{21}{section.6.1}
+\contentsline {section}{\numberline {6.1}\slshape Konfigurace}{22}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}\slshape Implementace}{21}{section.6.2}
+\contentsline {section}{\numberline {6.2}\slshape Implementace}{22}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2.1}\rmfamily Spu\IeC {\v s}t\IeC {\v e}n\IeC {\'\i }}{23}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.1}\rmfamily Spu\IeC {\v s}t\IeC {\v e}n\IeC {\'\i }}{24}{subsection.6.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2.2}\rmfamily P\IeC {\v r}echody mezi stavy}{24}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.2}\rmfamily P\IeC {\v r}echody mezi stavy}{25}{subsection.6.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.3}\slshape Testov\IeC {\'a}n\IeC {\'\i }}{26}{section.6.3}
+\contentsline {section}{\numberline {6.3}\slshape Testov\IeC {\'a}n\IeC {\'\i }}{27}{section.6.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.4}\slshape Demo}{27}{section.6.4}
+\contentsline {section}{\numberline {6.4}\slshape Demo}{31}{section.6.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.5}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{27}{section.6.5}
+\contentsline {section}{\numberline {6.5}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{31}{section.6.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {7}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{28}{chapter.7}
+\contentsline {chapter}{\numberline {7}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{32}{chapter.7}

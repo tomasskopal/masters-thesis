@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  9 APR 2016 13:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  9 APR 2016 21:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2526,15 +2526,15 @@ color pop
 File: images/zookeeper-impl.png Graphic file (type png)
 
 <use images/zookeeper-impl.png>
-Package pdftex.def Info: images/zookeeper-impl.png used on input line 372.
+Package pdftex.def Info: images/zookeeper-impl.png used on input line 373.
 (pdftex.def)             Requested size: 361.35587pt x 120.23247pt.
 
-Underfull \hbox (badness 10000) in alignment at lines 398--398
+Underfull \hbox (badness 10000) in alignment at lines 402--402
 [][][][]
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3657) has occurred while \output is active []
 
  [18
 color push 0 g 0 G
@@ -2546,12 +2546,12 @@ color pop
 color push 0 g 0 G
 color pop
  <./images/zookeeper-impl.png>]
-<images/app-architecture.png, id=358, 420.772pt x 448.877pt>
+<images/app-architecture.png, id=359, 420.772pt x 448.877pt>
 File: images/app-architecture.png Graphic file (type png)
 
 <use images/app-architecture.png>
-Package pdftex.def Info: images/app-architecture.png used on input line 405.
-(pdftex.def)             Requested size: 234.8731pt x 273.24608pt.
+Package pdftex.def Info: images/app-architecture.png used on input line 409.
+(pdftex.def)             Requested size: 289.09384pt x 355.21852pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -2563,19 +2563,25 @@ color push 0 g 0 G
 color pop
 color pop
 color push 0 g 0 G
+color pop
+]
+[20
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
 color push 0 g 0 G
 color pop
 color pop
 color push 0 g 0 G
 color pop
- <./images/app-architecture.png>] [20
+ <./images/app-architecture.png>] [21
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
 Kapitola 6.
-[21
+[22
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2586,16 +2592,16 @@ color pop
  (./master-thesis.listing)
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 453.
+(caption)                particular \caption on input line 457.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (5.25789pt too wide) in paragraph at lines 464--465
+Overfull \hbox (5.25789pt too wide) in paragraph at lines 468--469
 []\T1/qpl/m/n/12 (-20) STOP_CONSUMER -- za-staví kon-zu-menta (stopne a za-bije
  vlákno) 
  []
 
-[22
+[23
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2664,13 +2670,13 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] <images/app-start.png, id=395, 313.17pt x 186.296pt>
+] <images/app-start.png, id=400, 313.17pt x 186.296pt>
 File: images/app-start.png Graphic file (type png)
 
 <use images/app-start.png>
-Package pdftex.def Info: images/app-start.png used on input line 488.
+Package pdftex.def Info: images/app-start.png used on input line 492.
 (pdftex.def)             Requested size: 144.54257pt x 98.36685pt.
- [23
+ [24
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2685,7 +2691,7 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [24
+] [25
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2697,20 +2703,20 @@ color pop
 color push 0 g 0 G
 color pop
  <./images/app-start.png>]
-<images/zookeeper-state-1.png, id=410, 453.695pt x 238.491pt>
+<images/zookeeper-state-1.png, id=416, 453.695pt x 238.491pt>
 File: images/zookeeper-state-1.png Graphic file (type png)
 
 <use images/zookeeper-state-1.png>
-Package pdftex.def Info: images/zookeeper-state-1.png used on input line 504.
+Package pdftex.def Info: images/zookeeper-state-1.png used on input line 508.
 (pdftex.def)             Requested size: 216.80885pt x 109.2996pt.
 
-<images/kafka-state-1.png, id=412, 426.393pt x 317.185pt>
+<images/kafka-state-1.png, id=418, 426.393pt x 317.185pt>
 File: images/kafka-state-1.png Graphic file (type png)
 
 <use images/kafka-state-1.png>
-Package pdftex.def Info: images/kafka-state-1.png used on input line 513.
+Package pdftex.def Info: images/kafka-state-1.png used on input line 517.
 (pdftex.def)             Requested size: 180.67136pt x 163.95465pt.
- [25
+ [26
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2727,20 +2733,195 @@ color pop
 \openout4 = `master-thesis.listing'.
 
  (./master-thesis.listing)
+Overfull \hbox (9.86278pt too wide) in paragraph at lines 541--541
+[][] 
+ []
+
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 539.
+(caption)                particular \caption on input line 542.
+See the caption package documentation for explanation.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [27
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+]
+\openout4 = `master-thesis.listing'.
+
+
+(./master-thesis.listing)
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 563.
+See the caption package documentation for explanation.
+
+
+Underfull \hbox (badness 1297) in paragraph at lines 563--563
+[]\T1/qpl/m/n/12 (+20) Obrázek 6.6: |[]Ukázka da-to-vého ob-jektu z
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [28
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0 g 0 G
+color pop
+color pop
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+]
+LaTeX Font Info:    Try loading font information for T1+lmss on input line 569.
+
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/lm/t1lmss.fd
+File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Package microtype Info: Loading generic settings for font family
+(microtype)             `lmss' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+<images/pc-data-distribution.png, id=451, 301.125pt x 104.39pt>
+File: images/pc-data-distribution.png Graphic file (type png)
+
+<use images/pc-data-distribution.png>
+Package pdftex.def Info: images/pc-data-distribution.png used on input line 573
+.
+(pdftex.def)             Requested size: 234.88573pt x 109.30528pt.
+ [29
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0 g 0 G
+color pop
+color pop
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color pop
+ <./images/pc-data-distribution.png>]
+\openout4 = `master-thesis.listing'.
+
+
+(./master-thesis.listing)
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 588--588
+[][] 
+ []
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 589.
 See the caption package documentation for explanation.
 
 \openout4 = `master-thesis.listing'.
 
 (./master-thesis.listing)
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 600--600
+[][] 
+ []
+
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 556.
+(caption)                particular \caption on input line 601.
 See the caption package documentation for explanation.
 
-[26
+\openout4 = `master-thesis.listing'.
+
+(./master-thesis.listing)
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 612--612
+[][] 
+ []
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 613.
+See the caption package documentation for explanation.
+
+\openout4 = `master-thesis.listing'.
+
+(./master-thesis.listing)
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 626--626
+[][] 
+ []
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 627.
+See the caption package documentation for explanation.
+
+[30
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2761,6 +2942,230 @@ color push 0.58 0 0.82 rg 0.58 0 0.82 RG
 color pop
 color push 0.58 0 0.82 rg 0.58 0 0.82 RG
 color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0 g 0 G
+color pop
+color pop
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
 color push 0 g 0 G
 color pop
 color pop
@@ -2805,6 +3210,84 @@ color push 0.58 0 0.82 rg 0.58 0 0.82 RG
 color pop
 color push 0.58 0 0.82 rg 0.58 0 0.82 RG
 color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
 color push 0 g 0 G
 color pop
 color pop
@@ -2813,7 +3296,113 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [27
+color push 0 g 0 G
+color push 0 g 0 G
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0 g 0 G
+color pop
+color pop
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] [31
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2828,30 +3417,30 @@ color push 0 g 0 G
 color pop
 ]
 Kapitola 7.
-[28
+[32
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 589--590
+Underfull \hbox (badness 10000) in paragraph at lines 657--658
 []$\T1/lmtt/m/n/12 http : / / grids . ucs . indiana . edu / ptliupages / public
 ations /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 598--599
+Underfull \hbox (badness 10000) in paragraph at lines 666--667
 []\T1/qpl/m/n/12 (+20) Official Go-o-gle do-cu-men-tation [on-line]. Do-stupné 
 z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 598--599
+Underfull \hbox (badness 10000) in paragraph at lines 666--667
 []$\T1/lmtt/m/n/12 https : / / support . google . com / analytics / answer / 16
 62518 ?
  []
 
-[29
+[33
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2867,7 +3456,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.612 \end{document}
+l.680 \end{document}
                     
 color push 0 g 0 G
 color pop
@@ -2878,7 +3467,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.612 \end{document}
+l.680 \end{document}
                     
 color push 0 g 0 G
 color pop
@@ -2889,7 +3478,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.612 \end{document}
+l.680 \end{document}
                     
 color push 0 g 0 G
 color pop
@@ -2902,11 +3491,11 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 612.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 612.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 680.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 680.
 (./master-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 612.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 612.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 680.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 680.
 Package rerunfilecheck Info: File `master-thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 4FF87861F11B9A66EC9051A0A4D78EC4;1924.
 
@@ -2921,11 +3510,11 @@ Package logreq Info: Writing requests to 'master-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45968 strings out of 493089
- 853147 string characters out of 6134842
- 1340110 words of memory out of 5000000
- 48434 multiletter control sequences out of 15000+600000
- 75341 words of font info for 115 fonts, out of 8000000 for 9000
+ 46085 strings out of 493089
+ 855244 string characters out of 6134842
+ 1345865 words of memory out of 5000000
+ 48505 multiletter control sequences out of 15000+600000
+ 78357 words of font info for 118 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  61i,10n,93p,10434b,1648s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
@@ -2933,16 +3522,17 @@ texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive/2015/te
 xmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc}{/usr/local/texlive/2015/texmf-dist/
 fonts/enc/dvips/tex-gyre/q-ec-sc.enc}</usr/local/texlive/2015/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/t
-ype1/public/lm/lmtt10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/publi
-c/lm/lmtt12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre
-/qplb.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplr.
-pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplri.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/lo
-cal/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on master-thesis.pdf (35 pages, 463960 bytes).
+ype1/public/lm/lmss12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/publi
+c/lm/lmtt10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/lm/lmtt1
+2.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplb.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplr.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplri.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texliv
+e/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on master-thesis.pdf (39 pages, 494628 bytes).
 PDF statistics:
- 536 PDF objects out of 1000 (max. 8388607)
- 441 compressed objects within 5 object streams
- 132 named destinations out of 1000 (max. 500000)
- 22425 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 596 PDF objects out of 1000 (max. 8388607)
+ 494 compressed objects within 5 object streams
+ 159 named destinations out of 1000 (max. 500000)
+ 24478 words of extra memory for PDF output out of 24883 (max. 10000000)
 

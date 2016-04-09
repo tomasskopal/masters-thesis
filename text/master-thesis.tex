@@ -357,6 +357,7 @@ curatorFramework.delete()
    .deletingChildrenIfNeeded()
    .forPath("/zkNode1");
 \end{lstlisting}
+
  
 \subsection*{Použití}
 ZooKeeper je použit pro řízení běhu celého procesu DEM. Jeho hlavní úlohou je distribuce řídících dat mezi jednotlivými výpočetními jednotkami. Druhou funkcí, která logicky vychází ze stromové struktury datového modelu, je reflexe aktuálního stavu aplikace.
@@ -377,6 +378,9 @@ Výhody stromové struktury jsou zřejmé. U každého uzlu se dá zjistit jaké
 \subsection{Esper}
 \label{sec:esper}
 TODO - dopsat
+
+\subsection*{Použití}
+%% je potřeba detailne rozebrat jedno konkretni pravidlo, ktere pouzivam a vysvetlit jednotlive casti
 
 \section{Shrnutí}
 Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technologie je použita při implementaci daného požadavku z analýzy. A návrh schématu. Schéma je znázorněno na čtyřech strojích.
@@ -402,7 +406,7 @@ Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technol
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=.65\linewidth, height=.5\textheight]{images/app-architecture.png}
+    \includegraphics[width=.8\linewidth, height=.65\textheight]{images/app-architecture.png}
     \caption{Schéma aplikace, které znázorňuje které technologie jsou nasazeny na každém stroji a jaké mají mezi sebou vazby.}
     \label{fig:app-architecture}
 \end{figure}
@@ -519,47 +523,111 @@ V aktuálním stavu se tedy zároveň analyzují hrubozrné i jmenozrné událos
 
 Jak jemnozrná, tak hrubozrná pravidla jsou omezena časovou platností. Po uplynutí této doby je hrubozrná analýza zastavena a DEM čeká na nasazení jiného (nebo stejného) pravidla. V případě jemnozrné analýzy je celá práce ukončena a je potřeba "uklidit". To znamená zastavit vlákna s producenty i konzumentem a smazat příslušné uzly v "druhé vrstvě" ZooKeeper stromu. Tak aby se DEM dostal do stavu z obrázku \ref{fig:zookeeper-impl}.
 
+Do uzlu, který zpracovává hrubozrné události je možné kdykoli nasadit nové pravidlo pro detekci vzorů událostí.
 
-
-%%Bude zde také zmíněno dynamické nasazování nových ep pravidel.
 \section{Testování}
 
+Kapitola Testování se věnuje ukázkám datových objektů, které byly použity při testování funkčnosti algoritmu. Také jsou zde popsána pravidla, která byla použita pro analýzu. Data neodpovídají reálným, ale jsou vymyšlena aby simulovala určité situace, které jsou postaveny na reálných základech.
 
-
-%%Bude zde rozbor toho jaká pravidla jsou použita při iniciálním spuštěním a pro jemnozrnou analýzu a jaké jsou z toho výstupy
+Protože bylo z počátku složité uchopit celou myšlenku, začal jsem testovat algoritmus po jednotlivých akcích\footnote{Řídící akce z kapitoly \ref{sec:implementation}}. Pravidlo pro detekci bylo jednoduché a rozlišovalo pouze události úrovně jedna a dvě. Data byla generována na každém stroji v náhodných intervalech \textit{<0.5s - 1s>}. Ukázka datového objektu je na obrázku \ref{fig:data-example-1}.
 
 \begin{center}
-\begin{minipage}[H]{.6\linewidth}
+\begin{minipage}[H]{.5\linewidth}
 	\begin{mylisting}
-	{
-		level: "LEVEL1 / LEVEL2",
-		source: <zk-path>
-	}
+{
+	level: "LEVEL1 / LEVEL2",
+	source: <zk-path>
+}
 	\end{mylisting}
-	\captionof{figure}{První ukázka}
+	\captionof{figure}{Ukázka datového objektu z první fáze testování}
 	\label{fig:data-example-1} 
 \end{minipage}
 \end{center}
 
+V této fázi bylo hlavním cílem zjistit jestli Esper správně detekuje vzor událostí. S velkými problémy jsem se setkal při vytváření uzlů v ZooKeeperu. Někdy se uzly vytvářely duplicitně, někdy se vytvořily pod špatným rodičem. Nějakou dobu také trvalo zvolit správný postup vytváření a rušení vláken konzumentů a producentů aby nic nezůstalo "viset v paměti". Jeden příklad za všechny: Když je na uzel v ZooKeeperu navěšen nějaký posluchač a uzel je smazán, neznamená to, že se posluchač stane neaktivním a zruší se. Je ho potřeba explicitně vyjmout z kolekce a až potom smazat uzel. Jinak vznikají duplicity v posluchačích a akce jsou vyhodnoceny vícekrát.
+
+Jakmile byly vyřešeny problémy při jednotlivých akcích, bylo potřeba vymyslet reálnější datový model, který bude ukazovat myšlenku hrubozrné a jemnozrné analýzy. Proto jsem datový objekt rozšířil o další vlastnosti. Viz obrázek \ref{fig:data-example-2}. Myšlenka analýzy je tedy taková, že v akcích úrovně jedna se hledá vzor, který by nasvědčoval útoku. Pokud je takový vzor nalezen, je nad podezřelými počítači spuštěna detailní (jemnozrná analýza). Ta spočívá v počítání všech událostí úrovně dva. Pokud jejich počet v určitém časovém okně přesáhne daný limit, je "útok" prohlášen za reálný a zpráva je zapsána do logu.
+
 \begin{center}
 \begin{minipage}[H]{.65\linewidth}
 	\begin{mylisting}
-	{
-		level: "LEVEL1 / LEVEL2",
-		source: <zk-path>,
-		msg: "info textual message",
-		flag: "SYN",
-		size: 10,
-		port: 80
-	}
+{
+	level: "LEVEL1 / LEVEL2",
+	source: <zk-path>,
+	msg: "info textual message",
+	flag: "SYN",
+	size: 10,
+	port: 80
+}
 	\end{mylisting}
-	\captionof{figure}{Druhá ukázka}
+	\captionof{figure}{Ukázka datového objektu z první fáze testování, kde flag reprezentuje příznak v datagramu (SYN a ACK), size velikost paketu a port je cílový port v komunikaci.}
 	\label{fig:data-example-2} 
 \end{minipage}
 \end{center}
 
 \subsection*{Esper pravidla}
-Mini kapitola, kterou bych věnoval použitým esper pravidlům.
+Z datového objektu na obrázku \ref{fig:data-example-2} jsou pro nás nyní důležité atributy \menu{flag}, \menu{size} a \menu{port}. Na obrázku \ref{fig:pc-data-distribution} je vidět jak počítače generují testovací data. Neboli distribuce generovaných dat, které reprezentují potenciální hrozbu, mezi počítači.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.65\linewidth, height=.2\textheight]{images/pc-data-distribution.png}
+    \caption{Znázornění které počítače v testovacím prostředí produkují kritické typy datových objektů. Zbylé dva atributy jsou u každého počítače nastaveny na "neutrální" hodnotu.}
+    \label{fig:pc-data-distribution}
+\end{figure}
+
+Data u jednotlivých útoků jsou založena na skutečné podstatě, i když jde spíše o princip. Ve skutečnosti bývají síťové útoky velmi komplikované. Například určitě neplatí, že série dotazů na port číslo 11, automaticky znamená útok skenováním portů. Data jsou primárně zvolena pro demonstraci funkčnosti algoritmu.
+
+Na jednotlivé typy útoků jsou nachystaná pravidla pro hrubozrnou analýzu, která mají potenciální hrozbu detekovat:
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+SYN_FLOOD: "select source, count(*) as cnt, level from
+IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
+flag = 'SYN' group by source, level having count(*) > 3"
+	\end{mylisting}
+	\captionof{figure}{Pravidlo pro detekci útoku 'syn flood' (záplava pakety SYN)}
+	\label{fig:syn_flood_rule} 
+\end{minipage}
+\end{center}
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+PORT_SCAN: "select source, count(*) as cnt, level from
+IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
+port = '11' group by source, level having count(*) > 3"
+	\end{mylisting}
+	\captionof{figure}{Pravidlo pro detekci útoku 'port scan' (skenování portů)}
+	\label{fig:port_scan_rule} 
+\end{minipage}
+\end{center}
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+PING_OF_DEATH: "select source, count(*) as cnt, level from
+IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
+size = '100' group by source, level having count(*) > 3"
+	\end{mylisting}
+	\captionof{figure}{Pravidlo pro detekci útoku 'ping of death' (ping smrti)}
+	\label{fig:ping_of_death_rule} 
+\end{minipage}
+\end{center}
+
+Posledním pravidlem, je pravidlo pro analýzu jemnozrných událostí. Detekuje jestli je počet přijatých událostí úrovně dvě během 3 sekund větší než sedm. Pokud ano, jemnozrná analýza ukázala že podezřelé počítače jsou opravdu pod útokem.
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+"select source, count(*) as cnt, level from
+IncommingEvent(level='LEVEL2').win:time_batch(5 sec) group
+by source, level having count(*) > 7"
+	\end{mylisting}
+	\captionof{figure}{Pravidlo pro analýzu jemnozrných událostí}
+	\label{fig:level_2_rule} 
+\end{minipage}
+\end{center}
 
 \section{Demo}
 Nějaké print screeny. Jednoduše ukázka běhu programu.
