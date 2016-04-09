@@ -17,7 +17,7 @@
            %% hide the List of Figures.
   nolot,     %% Prints the List of Tables. Replace with `nolot` to
            %% hide the List of Tables.
-  twoside, %% or oneside
+  oneside, %% or twoside
   nocover,
   monochrome,
   12pt
@@ -294,11 +294,11 @@ Kafka poskytuje následující seznam garancí:
 \end{itemize}
 
 \subsection*{Použití}
-Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačích, které data produkují. V navrhovaném řešení jsem nezaznamenal potřebu dělit témata na příčky (partition). Také Kafka není distribuovaná do několika brokerů a je spuštěna pouze na jenom stroji. Distribuci bych nakonfiguroval až v případě produkčního nasazení pro prevenci výpadků. Na každém počítači běží nejméně jeden producent a nejvýše jeden konzument. Jednotlivá témata jsou pojmenována podle ip adres počítačů. Konkrétně při iniciálním spuštění je vytvořen jeden konzument a počet producentů je roven počtu počítačů. Viz obrázek \ref{fig:kafka-impl}
+Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačích, které data produkují. V navrhovaném řešení jsem nezaznamenal potřebu dělit témata na příčky (partition). Také Kafka není distribuovaná do několika brokerů a je spuštěna pouze na jenom stroji. Distribuci bych nakonfiguroval až v případě produkčního nasazení pro prevenci výpadků. Na každém počítači běží nejméně jeden producent a nejvýše jeden konzument. Jednotlivá témata jsou pojmenována podle ip adres počítačů. Konkrétně při iniciálním spuštění je jeden ze strojů určen jako konzument a počet producentů je roven počtu strojů. Protože existuje pouze jeden konzument, data jsou posílána pouze do jednoho odpovídajícího tématu. Viz obrázek \ref{fig:kafka-impl}
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.8\textwidth, height=0.45\textheight]{images/kafka-impl.png}
+    \includegraphics[width=0.55\textwidth, height=0.3\textheight]{images/kafka-impl.png}
     \caption{Struktura Kafky při iniciálním spuštění}
     \label{fig:kafka-impl}
 \end{figure}
@@ -365,7 +365,7 @@ Je důležité zmínit, že cesta ve stromové struktuře je určena jednoznačn
 
 Obrázek \ref{fig:zookeeper-impl} dále znázorňuje logickou strukturu DEM. První vrstva reprezentuje konzumenty a druhá vrstva producenty. Jinak řečeno "kdo komu posílá data". Podstatné je, uvědomit si, že strom zobrazuje pouze virtuální stav. Aplikace jako taková běží na daném stroji vždy jen jednou a strom pak reprezentuje spíše množství běžících vláken a jejich úlohu. Jak je vidět z obrázku \ref{fig:zookeeper-impl}, v DEM existují 4 producenti (jeden na každém fyzickém stroji) a jeden konzument (fyzický stroj s \textit{ip1}). To odpovídá stavu Kafky z obrázku \ref{fig:kafka-impl}.
 
-Výhody stromové struktury jsou jasné. U každého uzlu se dá zjistit jaké má potomky (které stroje posílají data a kam). Změna cíle, kam má stroj posílat data, je na úrovni rozhraní triviální. Stačí přesunout uzel v druhé vrstvě pod jiného rodiče.
+Výhody stromové struktury jsou zřejmé. U každého uzlu se dá zjistit jaké má potomky (které stroje posílají data a kam). Změna cíle, kam má stroj posílat data, je na úrovni rozhraní triviální. Stačí přesunout uzel v druhé vrstvě pod jiného rodiče.
 
 \begin{figure}[H]
 	\centering
@@ -374,13 +374,12 @@ Výhody stromové struktury jsou jasné. U každého uzlu se dá zjistit jaké m
     \label{fig:zookeeper-impl}
 \end{figure}
 
-\newpage
 \subsection{Esper}
 \label{sec:esper}
 TODO - dopsat
 
-\section{Sumarizace}
-Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technologie je použita při implementaci daného požadavku z analýzy.
+\section{Shrnutí}
+Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technologie je použita při implementaci daného požadavku z analýzy. A návrh schématu. Schéma je znázorněno na čtyřech strojích.
 
 \begin{table}[H]
   \centering
@@ -401,6 +400,13 @@ Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technol
   \label{tab:fulfill-usecases}
 \end{table}
 
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.65\linewidth, height=.5\textheight]{images/app-architecture.png}
+    \caption{Schéma aplikace, které znázorňuje které technologie jsou nasazeny na každém stroji a jaké mají mezi sebou vazby.}
+    \label{fig:app-architecture}
+\end{figure}
+
 \section{Události v systému}
 \label{sec:udalosti-v-systemu}
 Povaha a struktura vyhodnocovaných dat je neopomenutelnou součástí každého systému, tedy i tohoto. Pro potřeby analýzy zavedeme dva druhy událostí, \textbf{hrubozrné} a \textbf{jemnozrné}. Hrubozrné jsou události, které nenastávají příliš často, ale mají v systému důležitý význam. Jemnozrné naopak.
@@ -419,7 +425,9 @@ Tento druh událostí se vyskytuje běžně a sama o sobě nemá událost prakti
 Předchozí kapitoly Analýza a Návrh shrnují požadavky na systém a technologie, za pomoci kterých budou požadavky splněny. V Návrhu je také popsáno jak bude konkrétně daná technologie použita. Tato kapitola navazuje samotnou implementací a testováním. Je zde popsán běh programu od úplného začátku, tedy správné konfigurace, až po ukázky výstupu. 
 
 \section{Konfigurace}
+Zahrnout i popis prostředí OS a hw konfiguraci testovaných virtuálek.
 \section{Implementace}
+\label{sec:implementation}
 Pro implementaci byla zvolena Java (konkrétně ve verzi 1.8), protože všechny použité technologie mají dobrá API pro Javu a většina příkladů je právě v Javě. Dalším důvodem je také to, že Java se dobře hodí pro běh aplikací tohoto druhu, protože má dobrou práci s vlákny. Posledním, méně důležitým, důvodem je popularita Javy a snadná čitelnost kódu.
 
 Aplikace je z pohledu počtu řádků poměrně malá, ale je kompletně řízena událostmi. Posílání zpráv v Kafce je asynchronní a ZooKeeper i Esper jsou ze své podstaty událostmi řízené aplikační rámce (angl. frameworky). Proto je architektura pro přehlednost členěna do logických modulů. Jednotlivé moduly jsou podrobně popsány v kapitole \ref{sec:maven-usage}.
@@ -458,15 +466,67 @@ Seznam hlavních řídících akcí pro ZooKeeper:
   \item DELETEd\_SELF -- smaže sama sebe (ZooKeeper uzel) včetně zabití všech konzumentů a producentů, které v rámci daného uzlu běží
 \end{itemize}
 
-\subsection{Iniciální spuštění}
+\subsection{Spuštění}
+Před spuštěním algoritmu, tedy analýzy dat, je potřeba nastartovat Kafku. Záleží na počtu replikací Kafky. V našem případě je Kafka pouze jako jedna instance. Kafka běží přímo na jednom ze strojů. Dále na každém stroji spustíme ZooKeeper. ZooKeeper potřebuje ke správnému fungování, aby bylo online více než n/2 uzlů, kde n je celkový počet uzlů, které jsou v clusteru. V této práci probíhá testování na čtyřech strojích, tedy pro ZooKeeper musí být online nejméně tři. Jakmile jsou spuštěny tři stroje, ZooKeeper zvolí řídící instanci.
+
+Při spuštění samotné Java aplikace je potřeba zadat několik vstupních parametrů:
+
+\begin{itemize}
+  \item \textbf{ip}  -- ip adresa stroje. Slouží také jako jednoznačný identifikátor v ZooKeeperu
+  \item \textbf{zklist} -- seznam adres, kde běží jednotlivé instance ZooKeeperu. Prvky v seznamu jsou odděleny čárkou (bez mezery). List potřebuje aplikační rámec Curator [\ref{bib_9}] pro připojení k ZooKeeperu.
+  \item \textbf{m} -- označuje mód ve kterém je aplikace spuštěna. Jsou možné dva módy:
+  \begin{itemize}
+  	\item[*] \textbf{producer} -- aplikace je spuštěna jako producent. To znamená, že se zapojí do ZooKeeper stromu, zaregistruje příslušné posluchače a začne posílat data do Kafky. Do tématu, pojmenovaného podle ip adresy.
+  	\item[*] \textbf{combined} -- aplikace je spuštěna jako producent i konzument. Kromě producenta je vytvořen i konzument, který přijímá data z Kafky z tématu podle ip adresy. Data předává na analýzu Esperu.
+  \end{itemize}
+\end{itemize}
+
+V aplikaci je nastaveno výchozí pravidlo, podle kterého se mají data analyzovat. Jakmile je aplikace úspěšně spuštěna, začne produkovat, případně i konzumovat a analyzovat data. Spuštění každé jedné aplikace znamená, že se v ZooKeeperu vytvoří dva nové uzly, tak jak je vidět na obrázku  \ref{fig:app-start}. Postupně se buduje strom až do finálního stavu, který je vidět na obrázku \ref{fig:zookeeper-impl}.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.4\linewidth, height=.18\textheight]{images/app-start.png}
+    \caption{Postupné přidávání uzlů do ZooKeeper stromu}
+    \label{fig:app-start}
+\end{figure}
+
 \subsection{Přechody mezi stavy}
-Jedna z nejdůležitějších kapitol, která ukazuje co způsobí, že aplikace začne vyhodnocovat jemnozrnné události. Počínaje tím, že Esper vyhodnotí proud událostí a emituje ep-událost. Dále přes zpracování ep-události, nastavení příslušných dat jednotlivým zk-uzlům v zk-stromě, či modifikaci zk-stromu. Až po ukončení zpracovávání jemnozrnný událostí a návrat k iniciálnímu stavu.
+V předchozí kapitole jsem rozvedl jak probíhá spuštění aplikace do jakého stavu se po spuštění dostane. Tato kapitola se bude podrobněji věnovat tomu, v jakých stavech se může DEM nacházet. Schválně zde zmiňuji DEM, protože předchozí kapitola se věnovala hlavně spuštění z pohledu jedné instance. Zde jsou naproti tomu popsány stavy více z globálního pohledu.
 
-Bude zde také zmíněno dynamické nasazování nových ep pravidel. To by se dalo shrnout pod nadpis "ovládání clusteru z venčí" - řešeno přes nastavování dat jednotlivým uzlům v zookeeperu.
+Jakmile je spuštěn konzument, automaticky všechny události předává do Esperu, který je vyhodnocuje. Uvažujme pravidlo, které detekuje příchozích pěti událostí během tří sekund. Každý z počítačů svou aktivitou toto kritérium splní. Jakmile Esper detekuje splnění pravidla, vytvoří událost. Událost je v aplikaci zpracována. Pokud je aktivní jen jeden počítač, nemá smysl spouštět detailní analýzu. Naopak v případě, že vyhodnocení pravidla způsobilo více počítačů, je žádoucí na této podmnožině spustit detailní analýzu.
 
-\subsection{Esper pravidla}
-Mini kapitola, kterou bych věnoval použitým esper pravidlům.
+Přechod do nového stavu začíná volbou nového konzumenta. Tedy počítače, který bude analyzovat proud jemnozrných událostí. Pro volbu jsem zvolil postup, kdy je nalezen první takový počítač, který ještě neprovádí žádnou analýzu. Díky zvolené ZooKeeper struktuře je to jednoduché. Stačí projít první úroveň a hledat uzel, který ještě nemá žádné potomky. Takovému uzlu je nejdříve poslána akce \textit{CREATE}\footnote{Řídící akce ze seznamu z kapitoly \ref{sec:implementation}}, aby spustil vlákno s konzumentem. Pak tolik akcí \\ \textit{CREATE\_CHILDREN\_PRODUCER}, kolik strojů je určených k jemnozrné analýze. Samozřejmě součástí každé akce jsou i potřebná data (ip adresa počítače apod.).
+
+Na obrázku \ref{fig:zookeeper-state-1} je vidět příklad, kdy byly pro jemnozrnou analýzu vybrány stroje \textit{ip1} a  \textit{ip2}. Jak je vidět hrubozrná analýza stále probíhá na stroji \textit{ip1}, proto musí být jako konzument jemnozrných událostí zvolen stroj \textit{ip2}.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.6\linewidth, height=.2\textheight]{images/zookeeper-state-1.png}
+    \caption{Ukázka ZooKeeper stromu při současné analýze jemnozrných a hrubozrných událostí}
+    \label{fig:zookeeper-state-1}
+\end{figure}
+
+Jak už bylo řečeno dříve, ZooKeeper reprezentuje logickou strukturu. Na obrázku \ref{fig:kafka-state-1} je znázorněn odpovídající stav v Kafce. Protože už existují dva konzumenti, jsou v Kafce zaregistrována dvě témata.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.5\linewidth, height=.3\textheight]{images/kafka-state-1.png}
+    \caption{Ukázka stavu Kafky při současné analýze jemnozrných a hrubozrných událostí. Zkratky \textit{J} a \textit{H} na obrázku znamenají jemnozrné a hrubozrné události.}
+    \label{fig:kafka-state-1}
+\end{figure}
+
+V aktuálním stavu se tedy zároveň analyzují hrubozrné i jmenozrné události. Cílem další hrubozrné analýzy je odhalit jestli danému pravidlu neodpovídají ještě další počítače. Samozřejmě, pokud bude v průběhu jemnozrné analýzy vyhodnocen stejný vzor (stejná sada počítačů), pak se znovu jemnozrná analýza nespouští. Cílem jemnozrné analýzy je odhalit příčinu vzniku nestandardní situace. Logicky jsou tedy na uzlech \textit{ip1} a  \textit{ip2} nasazena jiná pravidla detekující vzory událostí.
+
+Jak jemnozrná, tak hrubozrná pravidla jsou omezena časovou platností. Po uplynutí této doby je hrubozrná analýza zastavena a DEM čeká na nasazení jiného (nebo stejného) pravidla. V případě jemnozrné analýzy je celá práce ukončena a je potřeba "uklidit". To znamená zastavit vlákna s producenty i konzumentem a smazat příslušné uzly v "druhé vrstvě" ZooKeeper stromu. Tak aby se DEM dostal do stavu z obrázku \ref{fig:zookeeper-impl}.
+
+
+
+%%Bude zde také zmíněno dynamické nasazování nových ep pravidel.
 \section{Testování}
+
+
+
+%%Bude zde rozbor toho jaká pravidla jsou použita při iniciálním spuštěním a pro jemnozrnou analýzu a jaké jsou z toho výstupy
 
 \begin{center}
 \begin{minipage}[H]{.6\linewidth}
@@ -497,6 +557,9 @@ Mini kapitola, kterou bych věnoval použitým esper pravidlům.
 	\label{fig:data-example-2} 
 \end{minipage}
 \end{center}
+
+\subsection*{Esper pravidla}
+Mini kapitola, kterou bych věnoval použitým esper pravidlům.
 
 \section{Demo}
 Nějaké print screeny. Jednoduše ukázka běhu programu.

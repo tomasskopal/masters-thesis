@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  5 APR 2016 21:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  9 APR 2016 13:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2089,7 +2089,7 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/qpl/m/sc/17.28'.
 (microtype)             Ignoring protrusion settings for this character.
 
-<fithesis/logo/mu/fithesis-fi.pdf, id=145, 291.0875pt x 292.09125pt>
+<fithesis/logo/mu/fithesis-fi.pdf, id=141, 291.0875pt x 292.09125pt>
 File: fithesis/logo/mu/fithesis-fi.pdf Graphic file (type pdf)
 
 <use fithesis/logo/mu/fithesis-fi.pdf>
@@ -2103,8 +2103,6 @@ Package microtype Info: Character `029' is missing
 color push 0 g 0 G
 color pop
 
-
-
 color push 0 g 0 G
 color pop
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
@@ -2115,62 +2113,24 @@ he same identifier (name{page.}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.136 \begin{document}
-                       [2
-color push 0 g 0 G
-color pop
-
-
-color push 0 g 0 G
-color pop
-]pdfTeX warning (ext4): destination with the same identifier (name{page.}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.136 \begin{document}
-                       [-1
-color push 0 g 0 G
-color pop
-
-
-color push 0 g 0 G
-color pop
-]pdfTeX warning (ext4): destination with the same identifier (name{page.}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.136 \begin{document}
                        [0
 color push 0 g 0 G
 color pop
-
-
 color push 0 g 0 G
 color pop
 ] [1
 color push 0 g 0 G
 color pop
-
-
 color push 0 g 0 G
 color pop
 ] [2
 color push 0 g 0 G
 color pop
-
-
 color push 0 g 0 G
 color pop
 ] [3
 color push 0 g 0 G
 color pop
-
-color push 0 g 0 G
-color pop
-] [4
-color push 0 g 0 G
-color pop
-
-
 color push 0 g 0 G
 color pop
 ] (./master-thesis.toc
@@ -2232,11 +2192,7 @@ LaTeX Font Warning: Font shape `T1/qpl/m/sl' in size <12> not available
 \tf@toc=\write11
 \openout11 = `master-thesis.toc'.
 
- [5
-color push 0 g 0 G
-color pop
-
-
+ [4
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2293,14 +2249,6 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-color push 0 g 0 G
-color pop
-] [6
-color push 0 g 0 G
-color pop
-
-
-
 color push 0 g 0 G
 color pop
 ]
@@ -2309,14 +2257,6 @@ Kapitola 1.
 color push 0 g 0 G
 color pop
 
-
-color push 0 g 0 G
-color pop
-] [2
-color push 0 g 0 G
-color pop
-
-
 color push 0 g 0 G
 color pop
 ]
@@ -2324,7 +2264,7 @@ Kapitola 2.
 
 Underfull \vbox (badness 1314) has occurred while \output is active []
 
- [3
+ [2
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2339,14 +2279,14 @@ LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
 (Font)              for symbol `textbullet' on input line 170.
 
-[4
+[3
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [5
+] [4
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2359,45 +2299,31 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-color push 0 g 0 G
-color pop
-] [6
-color push 0 g 0 G
-color pop
-
-
 color push 0 g 0 G
 color pop
 ]
 Kapitola 3.
-[7
+[5
 color push 0 g 0 G
 color pop
-color push 0 g 0 G
-color pop
-] [8
-color push 0 g 0 G
-color pop
-
-
 color push 0 g 0 G
 color pop
 ]
 Kapitola 4.
-<images/analysis_case_1.png, id=272, 151.767pt x 89.936pt>
+<images/analysis_case_1.png, id=240, 151.767pt x 89.936pt>
 File: images/analysis_case_1.png Graphic file (type png)
 
 <use images/analysis_case_1.png>
 Package pdftex.def Info: images/analysis_case_1.png used on input line 202.
 (pdftex.def)             Requested size: 144.53676pt x 81.97636pt.
 
-<images/analysis_case_2.png, id=275, 151.767pt x 81.906pt>
+<images/analysis_case_2.png, id=243, 151.767pt x 81.906pt>
 File: images/analysis_case_2.png Graphic file (type png)
 
 <use images/analysis_case_2.png>
 Package pdftex.def Info: images/analysis_case_2.png used on input line 211.
 (pdftex.def)             Requested size: 144.53676pt x 81.97827pt.
- [9
+ [6
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2407,13 +2333,13 @@ color pop
 color push 0 g 0 G
 color pop
  <./images/analysis_case_1.png>]
-<images/usecase.png, id=285, 702.625pt x 486.81876pt>
+<images/usecase.png, id=252, 702.625pt x 486.81876pt>
 File: images/usecase.png Graphic file (type png)
  <use images/usecase.png>
 Package pdftex.def Info: images/usecase.png used on input line 222.
 (pdftex.def)             Requested size: 325.21628pt x 245.91953pt.
 
-[10
+[7
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2427,7 +2353,7 @@ color pop
 color push 0 g 0 G
 color pop
  <./images/analysis_case_2.png> <./images/usecase.png>]
-<images/cloud-comparison.png, id=294, 747.79375pt x 1056.94875pt>
+<images/cloud-comparison.png, id=262, 747.79375pt x 1056.94875pt>
 File: images/cloud-comparison.png Graphic file (type png)
 
 <use images/cloud-comparison.png>
@@ -2436,13 +2362,13 @@ Package pdftex.def Info: images/cloud-comparison.png used on input line 238.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [11
+ [8
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
-[12
+[9
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2453,18 +2379,14 @@ color push 0 g 0 G
 color pop
  <./images/cloud-comparison.png>]
 Kapitola 5.
-[13
-color push 0 g 0 G
-color pop
-
-
+[10
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [14
 color push 0 g 0 G
 color pop
+] [11
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2475,13 +2397,15 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] <images/kafka.png, id=327, 364.562pt x 351.714pt>
+color push 0 g 0 G
+color pop
+] <images/kafka.png, id=294, 364.562pt x 351.714pt>
 File: images/kafka.png Graphic file (type png)
 
 <use images/kafka.png>
 Package pdftex.def Info: images/kafka.png used on input line 283.
 (pdftex.def)             Requested size: 234.882pt x 245.9298pt.
- [15
+ [12
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2497,16 +2421,16 @@ color pop
 color push 0 g 0 G
 color pop
  <./images/kafka.png>]
-<images/kafka-impl.png, id=338, 426.393pt x 338.866pt>
+<images/kafka-impl.png, id=304, 426.393pt x 322.003pt>
 File: images/kafka-impl.png Graphic file (type png)
 
 <use images/kafka-impl.png>
 Package pdftex.def Info: images/kafka-impl.png used on input line 301.
-(pdftex.def)             Requested size: 289.09108pt x 245.92749pt.
+(pdftex.def)             Requested size: 198.73914pt x 163.94911pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16
+ [13
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2518,7 +2442,7 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-[17
+[14
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2527,7 +2451,7 @@ color pop
 color pop
 color push 0 g 0 G
 color pop
- <./images/kafka-impl.png>] [18
+ <./images/kafka-impl.png>] [15
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2540,7 +2464,7 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [19
+] [16
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2576,7 +2500,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [20
+ [17
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2598,13 +2522,21 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-<images/zookeeper-impl.png, id=384, 571.736pt x 186.296pt>
+<images/zookeeper-impl.png, id=352, 571.736pt x 186.296pt>
 File: images/zookeeper-impl.png Graphic file (type png)
 
 <use images/zookeeper-impl.png>
 Package pdftex.def Info: images/zookeeper-impl.png used on input line 372.
 (pdftex.def)             Requested size: 361.35587pt x 120.23247pt.
- [21
+
+Underfull \hbox (badness 10000) in alignment at lines 398--398
+[][][][]
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [18
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2614,34 +2546,36 @@ color pop
 color push 0 g 0 G
 color pop
  <./images/zookeeper-impl.png>]
-Underfull \hbox (badness 10000) in alignment at lines 399--399
-[][][][]
- []
+<images/app-architecture.png, id=358, 420.772pt x 448.877pt>
+File: images/app-architecture.png Graphic file (type png)
 
-[22
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color push 0 g 0 G
-color pop
-color pop
-color push 0 g 0 G
-color pop
-] [23
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-] [24
-color push 0 g 0 G
-color pop
+<use images/app-architecture.png>
+Package pdftex.def Info: images/app-architecture.png used on input line 405.
+(pdftex.def)             Requested size: 234.8731pt x 273.24608pt.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [19
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color pop
+ <./images/app-architecture.png>] [20
+color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
 ]
 Kapitola 6.
-[25
+[21
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2652,14 +2586,159 @@ color pop
  (./master-thesis.listing)
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 445.
+(caption)                particular \caption on input line 453.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (5.25789pt too wide) in paragraph at lines 456--457
+Overfull \hbox (5.25789pt too wide) in paragraph at lines 464--465
 []\T1/qpl/m/n/12 (-20) STOP_CONSUMER -- za-staví kon-zu-menta (stopne a za-bije
  vlákno) 
  []
+
+[22
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0.58 0 0.82 rg 0.58 0 0.82 RG
+color pop
+color push 0 g 0 G
+color pop
+color pop
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] <images/app-start.png, id=395, 313.17pt x 186.296pt>
+File: images/app-start.png Graphic file (type png)
+
+<use images/app-start.png>
+Package pdftex.def Info: images/app-start.png used on input line 488.
+(pdftex.def)             Requested size: 144.54257pt x 98.36685pt.
+ [23
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] [24
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+ <./images/app-start.png>]
+<images/zookeeper-state-1.png, id=410, 453.695pt x 238.491pt>
+File: images/zookeeper-state-1.png Graphic file (type png)
+
+<use images/zookeeper-state-1.png>
+Package pdftex.def Info: images/zookeeper-state-1.png used on input line 504.
+(pdftex.def)             Requested size: 216.80885pt x 109.2996pt.
+
+<images/kafka-state-1.png, id=412, 426.393pt x 317.185pt>
+File: images/kafka-state-1.png Graphic file (type png)
+
+<use images/kafka-state-1.png>
+Package pdftex.def Info: images/kafka-state-1.png used on input line 513.
+(pdftex.def)             Requested size: 180.67136pt x 163.95465pt.
+ [25
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color pop
+ <./images/zookeeper-state-1.png> <./images/kafka-state-1.png>]
+\openout4 = `master-thesis.listing'.
+
+ (./master-thesis.listing)
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 539.
+See the caption package documentation for explanation.
+
+\openout4 = `master-thesis.listing'.
+
+(./master-thesis.listing)
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 556.
+See the caption package documentation for explanation.
 
 [26
 color push 0 g 0 G
@@ -2682,92 +2761,6 @@ color push 0.58 0 0.82 rg 0.58 0 0.82 RG
 color pop
 color push 0.58 0 0.82 rg 0.58 0 0.82 RG
 color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0 g 0 G
-color pop
-color pop
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-]
-\openout4 = `master-thesis.listing'.
-
- (./master-thesis.listing)
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 479.
-See the caption package documentation for explanation.
-
-\openout4 = `master-thesis.listing'.
-
-(./master-thesis.listing)
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 496.
-See the caption package documentation for explanation.
-
-[27
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color pop
-color push 0 g 0 G
-color push 0 g 0 G
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
-color push 0.58 0 0.82 rg 0.58 0 0.82 RG
-color pop
 color push 0 g 0 G
 color pop
 color pop
@@ -2820,7 +2813,7 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [28
+] [27
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2835,39 +2828,30 @@ color push 0 g 0 G
 color pop
 ]
 Kapitola 7.
-[29
+[28
 color push 0 g 0 G
 color pop
-
-
-color push 0 g 0 G
-color pop
-] [30
-color push 0 g 0 G
-color pop
-
-
 color push 0 g 0 G
 color pop
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 526--527
+Underfull \hbox (badness 10000) in paragraph at lines 589--590
 []$\T1/lmtt/m/n/12 http : / / grids . ucs . indiana . edu / ptliupages / public
 ations /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 535--536
+Underfull \hbox (badness 10000) in paragraph at lines 598--599
 []\T1/qpl/m/n/12 (+20) Official Go-o-gle do-cu-men-tation [on-line]. Do-stupné 
 z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 535--536
+Underfull \hbox (badness 10000) in paragraph at lines 598--599
 []$\T1/lmtt/m/n/12 https : / / support . google . com / analytics / answer / 16
 62518 ?
  []
 
-[31
+[29
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2883,7 +2867,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.549 \end{document}
+l.612 \end{document}
                     
 color push 0 g 0 G
 color pop
@@ -2894,7 +2878,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.549 \end{document}
+l.612 \end{document}
                     
 color push 0 g 0 G
 color pop
@@ -2905,7 +2889,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.549 \end{document}
+l.612 \end{document}
                     
 color push 0 g 0 G
 color pop
@@ -2918,13 +2902,13 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 549.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 549.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 612.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 612.
 (./master-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 549.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 549.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 612.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 612.
 Package rerunfilecheck Info: File `master-thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 62C5EE801140091C2B82122B4354785C;2058.
+(rerunfilecheck)             Checksum: 4FF87861F11B9A66EC9051A0A4D78EC4;1924.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -2937,10 +2921,10 @@ Package logreq Info: Writing requests to 'master-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45942 strings out of 493089
- 852463 string characters out of 6134842
- 1338513 words of memory out of 5000000
- 48413 multiletter control sequences out of 15000+600000
+ 45968 strings out of 493089
+ 853147 string characters out of 6134842
+ 1340110 words of memory out of 5000000
+ 48434 multiletter control sequences out of 15000+600000
  75341 words of font info for 115 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  61i,10n,93p,10434b,1648s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2955,10 +2939,10 @@ c/lm/lmtt12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre
 pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplri.pfb><
 /usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/lo
 cal/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on master-thesis.pdf (41 pages, 382166 bytes).
+Output written on master-thesis.pdf (35 pages, 463960 bytes).
 PDF statistics:
- 544 PDF objects out of 1000 (max. 8388607)
- 451 compressed objects within 5 object streams
- 131 named destinations out of 1000 (max. 500000)
- 22413 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 536 PDF objects out of 1000 (max. 8388607)
+ 441 compressed objects within 5 object streams
+ 132 named destinations out of 1000 (max. 500000)
+ 22425 words of extra memory for PDF output out of 24883 (max. 10000000)
 
