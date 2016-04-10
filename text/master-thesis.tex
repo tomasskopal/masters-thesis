@@ -104,8 +104,8 @@
     advisor       = RNDr. Filip Nguyen,
     title         = {Distribuované Komplexní Zpracování Událostí},
     TeXtitle      = {Distribuované Komplexní Zpracování Událostí},
-    keywords      = {keyword1, keyword2, ...},
-    TeXkeywords   = {keyword1, keyword2, \ldots},
+    keywords      = {CEP, Kafka, ZooKeeper, analýza, distribuovaný},
+    TeXkeywords   = {CEP, Kafka, ZooKeeper, analýza, distribuovaný},
     date			 =	2016/05/30
 }
 \thesislong{abstract}{
@@ -136,7 +136,9 @@
 \begin{document}
 \chapter{Úvod}
 
-Obecně zadání práce říká, že má být vytvořen middleware pro distribuované zpracování vzorů událostí (angl. middleware solution for distributed event pattern matching). Z anglického popisu vychází zkratka MSFDEPM. Velkým zjednodušením dostaneme "distributed event matching", neboli DEM. Pro účely této práce a snadnější orientaci budu popisované řešení identifikovat zkratkou \textit{DEM}.
+Obecně zadání práce říká, že má být vytvořen middleware pro distribuované zpracování vzorů událostí (angl. middleware solution for distributed event pattern matching). Z anglického popisu vychází zkratka MSFDEPM. Zjednodušením dostaneme "distributed event matching", neboli DEM. Pro účely této práce a snadnější orientaci budu popisované řešení identifikovat zkratkou \textit{DEM}.
+
+TODO - dopsat
 
 \chapter{Zpracování událostí}
 Se zvyšujícím se počtem zařízení, která jsou schopna produkovat data, se zvyšuje potřeba tato data analyzovat. Běžně rozšířeným způsobem je zpracování dat dávkově. Tedy, data se uloží a ve vhodnou dobu, typicky v noci, se analyzují.
@@ -182,10 +184,11 @@ Zmíněné dvě vlastnosti nejsou jediné. Mezi vlastnosti distribuovaného zpra
 \end{itemize}
 
 \chapter{Nástroje pro distribuované zpracování událostí}
+TODO - dopsat
 \section{Apache Samsa}
 \section{Apache Storm}
 \section{CAVE}
-http://dl.acm.org/citation.cfm?doid=2675743.2771834
+%% http://dl.acm.org/citation.cfm?doid=2675743.2771834
 \chapter{Analýza}
 \label{sec:analysis}
 
@@ -235,7 +238,7 @@ Uvažujme situaci, kdy necháme na síťovém uzlu aby analyzoval běžně znám
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.8\textwidth, height=0.55\textheight]{images/cloud-comparison.png}
+    \includegraphics[width=0.4\textwidth, height=0.35\textheight]{images/cloud-comparison.png}
     \caption{Srovnání přístupu zasílání dat do cloudu (v levo) a vytvoření cloudu přímo na koncových zařízeních (v pravo)}
     \label{fig:cloud-comparison}
 \end{figure}
@@ -406,7 +409,7 @@ Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technol
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=.8\linewidth, height=.65\textheight]{images/app-architecture.png}
+    \includegraphics[width=.7\linewidth, height=.57\textheight]{images/app-architecture.png}
     \caption{Schéma aplikace, které znázorňuje které technologie jsou nasazeny na každém stroji a jaké mají mezi sebou vazby.}
     \label{fig:app-architecture}
 \end{figure}
@@ -429,7 +432,60 @@ Tento druh událostí se vyskytuje běžně a sama o sobě nemá událost prakti
 Předchozí kapitoly Analýza a Návrh shrnují požadavky na systém a technologie, za pomoci kterých budou požadavky splněny. V Návrhu je také popsáno jak bude konkrétně daná technologie použita. Tato kapitola navazuje samotnou implementací a testováním. Je zde popsán běh programu od úplného začátku, tedy správné konfigurace, až po ukázky výstupu. 
 
 \section{Konfigurace}
-Zahrnout i popis prostředí OS a hw konfiguraci testovaných virtuálek.
+Jak Kafka, tak ZooKeeper nabízejí velkou variabilitu v konfiguraci. Oficiální dokumentace obou technologií obsahují dobrý popis konfigurace. Proto je tato kapitola věnována pouze konkrétním ukázkám konfigurací v DEM.
+
+Pro spuštění Kafky je důležitý soubor \textit{server.properties}. Obsahuje množství atributů, které se dají modifikovat. Většinu z nich není potřeba upravovat. Měnil jsem pouze \textit{broker id}, \textit{název stroje (host name)} a \textit{seznam ZooKeeper instancí}. Výňatek z konfiguračního souboru s upravenými hodnotami je na obrázku \ref{fig:kafka-conf}.
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+broker.id=0
+host.name=147.251.43.181
+zookeeper.connect=147.251.43.181:2181,147.251.43.130:2181
+	\end{mylisting}
+	\captionof{figure}{Výňatek z konfiguračního souboru Kafky}
+	\label{fig:kafka-conf} 
+\end{minipage}
+\end{center}
+
+U ZooKeeperu je potřeba upravit dva konfigurační soubory. První je \textit{zoo.cfg}. V něm se nastavují ip adresy a porty ostatních ZooKeeper instancí. Také se nastaví složka do které se ukládají dočasné soubory a je zde i druhý z konfiguračních souborů \textit{myid}. Soubor \textit{myid} obsahuje pouze jedno číslo, které jednoznačně identifikuje instanci a musí být unikátní.
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+# the port at which the clients will connect
+clientPort=2181
+
+dataDir=~/data/zookeeper
+
+# specify all zookeeper servers
+# The fist port is used by followers to connect to the leader
+# The second one is used for leader election
+server.1=147.251.43.181:2888:3888
+server.2=147.251.43.130:2888:3888
+server.3=147.251.43.150:2888:3888
+server.4=147.251.43.138:2888:3888
+	\end{mylisting}
+	\captionof{figure}{Ukázka konfiguračního souboru ZooKeeperu}
+	\label{fig:zk-conf} 
+\end{minipage}
+\end{center}
+
+Na konec pouze krátce uvedu hardwarovou konfiguraci virtuálních strojů na kterých probíhalo testování:
+
+\begin{center}
+\begin{minipage}[H]{.5\linewidth}
+	\begin{mylisting}
+OS: Ubuntu 12.04 x86_64
+RAM: 1GB
+Procesor: 1 core x86_64
+HDD: 20GB
+	\end{mylisting}
+	\captionof{figure}{Konfigurace virtuálních strojů}
+	\label{fig:virt-hw-conf} 
+\end{minipage}
+\end{center}
+
 \section{Implementace}
 \label{sec:implementation}
 Pro implementaci byla zvolena Java (konkrétně ve verzi 1.8), protože všechny použité technologie mají dobrá API pro Javu a většina příkladů je právě v Javě. Dalším důvodem je také to, že Java se dobře hodí pro běh aplikací tohoto druhu, protože má dobrou práci s vlákny. Posledním, méně důležitým, důvodem je popularita Javy a snadná čitelnost kódu.
@@ -630,18 +686,81 @@ by source, level having count(*) > 7"
 \end{center}
 
 \section{Demo}
-Nějaké print screeny. Jednoduše ukázka běhu programu.
+Tato kapitola má za cíl demonstrovat reálný běh aplikace na testovacích strojích. Všechny výstupy aplikace jsou logovány do souboru. Myslím si, že vhodným způsobem ukázky běhu programu jsou snímky obrazovky jejich výstupů. Aby byly snímky snadno pochopitelné, jsou v nich zvýrazněné a okomentované důležité prvky.
+
+První snímek na obrázku \ref{fig:deploy-rule-screen} ukazuje dva počítače \textit{<ip1>} a \textit{<ip2>} při nasazování pravidla pro hrubozrnou analýzu. Na snímku jsou vyznačeny čtyři významné body:
+
+\begin{enumerate}
+  \item Nasazení pravidla v ZooKeeper konzoli. Pravidlo má za cíl detekovat útok \textit{syn flood}.
+  \item Aplikace spuštěná na stroji \textit{<ip1>} analyzuje hrubozrné události. Druhý bod na snímku ukazuje, že pravidlu vyhověly dva počítače. To způsobilo, že se zvolil vhodný kandidát pro jemnozrnou analýzu (\textit{<ip2>}) a poslala se mu řídící instrukce s daty.
+  \item Třetí bod ukazuje přijetí řídící akce na druhém stroji a spuštění vlákna producenta. 
+  \item V tomto bodě je vidět, že hrubozrná analýza na stroji \textit{<ip1>} stále pokračuje a vyhodnotila znovu stejný vzor událostí. Ale skupina pro jemnozrnou analýzu už byla vytvořena, takže se znovu nevytváří.
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\linewidth, height=.3\textheight]{images/deploy-rule-screen.png}
+    \caption{Nasazení pravidla na hrubozrnou analýzu}
+    \label{fig:deploy-rule-screen}
+\end{figure}
+
+Druhý snímek na obrázku \ref{fig:match-pattern-screen} ukazuje detekování vzoru při jemnozrné analýze. Je vidět, že během pěti vteřin, ve kterých Esper analyzoval příchozí událostí bylo detekováno osm výskytů. To je více než minimální hranice sedm událostí, kterou specifikuje pravidlo. Jednoduše řečeno, útok \textit{syn flood} je potvrzen.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.9\linewidth, height=.15\textheight]{images/match-pattern-screen.png}
+    \caption{Detekce vzoru při jemnozrné analýze}
+    \label{fig:match-pattern-screen}
+\end{figure}
+
+Na posledním snímku \ref{fig:clean-up-screen} je vidět postupné zastavování jemnozrné analýzy na počítači \textit{<ip2>}. Tím se DEM vrací do výchozího stavu z obrázku \ref{fig:kafka-impl}. Odshora jsou označeny:
+
+\begin{enumerate}
+  \item zastavení vlákna producenta
+  \item smazání uzlu v ZooKeeper stromu
+  \item zastavení vlákna konzumenta
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.8\linewidth, height=.15\textheight]{images/clean-up-screen.png}
+    \caption{Postupné zastavování jemnozrné analýzy}
+    \label{fig:clean-up-screen}
+\end{figure}
+
 \section{Známá omezení}
-Diskuse nedostatků nebo možných vylepšení výše navrženého řešení. 
+Pomocí navrhovaného řešení je možné analyzovat širokou škálu událostí. Nejen dopady síťové komunikace, ale i síťový provoz jako takový. Dále je možné řešení nasadit například na analýzu aplikačních logů.
+
+Během testování jsem narazil na některá omezení, nedostatky nebo doporučení, která v této kapitole rozvedu. K některým situacím uvedu i konkrétní řešení. U některých je řešení předmětem dalšího rozvoje algoritmu nebo jeho podrobení výkonnostním testům.
+
+Nejdříve uvedu kompletní seznam. Každému bodu je následně věnován odstavec s popisem.
+
 \begin{itemize}
-	\item Momentální nemožnost spustit více consumerů na jednom stroji.
-	\item Velmi náročný monitoring a spouštění jednotlivých uzlů.
-	\item Zatím nevím jak je to s dynamickým přidáváním nových uzlů do hierarchie.
-	\item Nejsou vůbec otestovány výpadky některých uzlů. Zookeeper to zvládne, kafka také, ale co se stane s virtuálním zk-tree v aplikaci?
+	\item Momentální nemožnost spustit více konzumentů na jednom stroji (Více konzumentů).
+	\item Monitoring a spouštění jednotlivých uzlů (Monitoring).
+	\item Dynamické přidávání nových uzlů do hierarchie (Přidávání uzlů).
+	\item Výpadky některých uzlů. Zookeeper je na to připraven, Kafka také, ale není jasné do jakého stavu se dostane stromová hierarchie ZooKeeperu (Výpadky).
 \end{itemize}
 
+\subsection*{Více konzumentů}
+Tím, že témata v Kafce jsou členěna podle ip adres počítačů, není možné mít na jenom stroji více než jednoho konzumenta. Kdyby to tak bylo, četli by oba ze stejného tématu a "kradli si zprávy". Teoreticky by bylo možné aby se konzumenti dívali na obsah zpráv a podle toho je posílali do některé z instancí Esperu, ale takové řešení je příliš náchylné k chybám a těžko se škáluje.
+
+Vhodným řešením by bylo přidat ke každému tématu i přepážky, které by rozlišovaly druh zpráv. V případě této práce by v každém tématu byly dvě přepážky. Jedna pro jemnozrné (\textit{LEVEL2}) a druhá pro hrubozrné události (\textit{LEVEL1}). Přepážky je možné dynamicky přidávat a tím mít možnost na jednom stroji analyzovat události množství různých typů.
+
+\subsection*{Monitoring}
+Pokud by algoritmus nasazen do produkčního prostředí, byl by zároveň potřeba zavést  důsledný monitoring. Nejen to, jestli všechny instance pracují správně, ale také jaká pravidla jsou aktuálně nasazena a na jakých strojích. Dále vytížení Kafky. Objemy zpracovávaných dat. Atd.
+
+\subsection*{Přidávání uzlů}
+Uvažoval jsem nad tím, jak by se dalo do systému dynamicky přidávat další stroje. Celá architektura je na to připravená. Jediný problém je u ZooKeeperu. Jeho konfigurace je statická a zároveň se seznam adres předává i jako vstupní parametr při startu aplikace. Před verzí \textit{3.5.0} bylo jedinou možností napsat skript, který bude postupně provádět rekonfiguraci. Od verze \textit{3.5.0} má ZooKeeper v dokumentaci [\ref{bib_7}] popsán mechanizmus pro dynamickou rekonfiguraci\footnote{Konkrétní část dokumentace: \\
+https://zookeeper.apache.org/doc/trunk/zookeeperReconfig.html}.
+
+\subsection*{Výpadky}
+V rámci testování jsem zkoušel jak se aplikace vzpamatuje z výpadků některých uzlů. Chování nebylo příliš predikovatelné. Záleželo na tom v jaké fázi analýzy došlo k výpadku. Jestli byla spuštěna jemnozrná analýza nebo nikoliv. Pravidelně se opakovaly dva problémy. V ZooKeeperu zůstal zaregistrovaný některý z posluchačů a při obnově se stal znovu aktivním a tím docházelo k duplicitnímu zpracování řídících akcí. Druhým problémem byly nesmazané uzly ze ZooKeeper stromu, který se používá jako reprezentace stavu DEM.
+
 \chapter{Závěr}
-Závěr bude v tomto případě obsahovat obšírnější zhodnocení toho jak se povedlo splnit zadání. Že výsledkem práce je navržené řešení za použití kafky, zk, esperu, Javy.
+TODO - dopsat
+
+%%Závěr bude v tomto případě obsahovat obšírnější zhodnocení toho jak se povedlo splnit zadání. Že výsledkem práce je navržené řešení za použití kafky, zk, esperu, Javy.
 
 
 \begin{thebibliography}{99}
