@@ -48,6 +48,7 @@
 \usepackage{color}
 \usepackage{float}
 \usepackage{fancyvrb}
+\usepackage{epsfig}
 
 \renewcommand{\lstlistingname}{Ukázka kódu}
 \renewcommand{\lstlistlistingname}{Ukázky kódu}
@@ -109,7 +110,7 @@
     date			 =	2016/05/30
 }
 \thesislong{abstract}{
-    Goal of this thesis is to develop a Peer to Peer algorithm for distributed Event Pattern matching.. The application should be able to run any number of processing nodes. For the needs of this thesis, example of 4 nodes will be sufficient.
+    Goal of this thesis is to develop a algorithm for distributed Event Pattern matching.. The application should be able to run any number of processing nodes. For the needs of this thesis, example of 4 nodes will be sufficient.
 }
 
 %% The following section sets up the bibliography.
@@ -143,18 +144,17 @@ TODO - dopsat
 \chapter{Zpracování událostí}
 Se zvyšujícím se počtem zařízení, která jsou schopna produkovat data, se zvyšuje potřeba tato data analyzovat. Běžně rozšířeným způsobem je zpracování dat dávkově. Tedy, data se uloží a ve vhodnou dobu, typicky v noci, se analyzují.
 
-Pokud však uvažujeme reálný provoz na síti, který se dnes v centrálních uzlech pohybuje okolo $1 Tb/s$ 
-%%[https://is.muni.cz/do/rect/habilitace/1433/44368572/44368651/HP_kor.-verejna.pdf]
-, je dávkové zpracování nereálné. Potřebujeme data analyzovat za běhu (angl. real time).
+Pokud však uvažujeme reálný provoz na síti, který se dnes v centrálních uzlech pohybuje okolo $1 Tb/s$
+[\ref{bib_celeda}], je dávkové zpracování nereálné. Potřebujeme data analyzovat za běhu (angl. real time).
 
-Jednotkou zpracování dat je událost (angl. event). Událost je základním pojmem používaným v oblasti zpracování událostí. Je definována jako objekt, který reprezentuje záznam o aktivitě v daném systému. Událost může mít vlastnosti. Typickým příkladem takové vlastnosti je čas vzniku události, příčina jejího vzniku nebo její typ. [\ref{bib_1}] Jednoduchým příkladem události může být paket. Je to datová schránka, která obsahuje informace, které můžeme analyzovat. Samostatný paket nemá téměř žádnou vypovídající hodnotu, kdežto proud paketů je základem Internetu.
+Jednotkou zpracování dat je událost (angl. event). Událost je základním pojmem používaným v oblasti zpracování událostí. Je definována jako objekt, který reprezentuje záznam o aktivitě v daném systému. Událost může mít vlastnosti. Typickým příkladem takové vlastnosti je čas vzniku události, příčina jejího vzniku nebo její typ [\ref{bib_1}]. Jednoduchým příkladem události může být paket. Je to datová schránka, která obsahuje informace, které můžeme analyzovat. Samostatný paket nemá téměř žádnou vypovídající hodnotu, kdežto proud paketů je základem Internetu.
 
 Takový proud událostí skrývá množství dat, která je možné získat až při komplexní analýze, která zohledňuje více událostí v řadě. To nazýváme \textit{komplexní zpracování dat (angl. complex event processing neboli CEP)}
 
 
 \section{CEP}
 
-Je těžké shrnout celý vědní obor pod jednu všeobjímající definici. David Luckham ve své knize  THE POWER OF EVENTS: AN INTRODUCTION TO COMPLEX EVENT PROCESSING IN DISTRIBUTED ENTERPRISE SYSTEMS [\ref{bib_1}] říká, že CEP je soubor technik a nástrojů, které pomáhají k pochopení a kontrole událostmi řízených systémů.
+CEP je dynamický vědní obor, který se v poslední době hodně rozvíjí\footnote{Důkazem je aktivní komunita, která diskutuje problematiku na konferencích. Například konference v Oslu v roce 2015 (\url{http://dblp.uni-trier.de/db/conf/debs/debs2015.html})}. David Luckham ve své knize \textit{The Power Of Events: An Introduction To Complex Event Processing In Distributed Enterprise Systems} [\ref{bib_1}] definuje CEP jako soubor technik a nástrojů, které pomáhají k pochopení a kontrole událostmi řízených systémů.
 
 Jak už bylo řečeno, množství událostí v systémech je enormní. Při jejich zpracování se setkáváme s pojmem \textit{komplexní událost}. Taková událost se může vyskytnout pouze jako reakce na sled jiných, dílčích, událostí. Dílčí události mohou spolu souviset mnoha různými způsoby, nejčastěji je však spojujeme na základě vlastností (čas vzniku, příčina vzniku, typ, atd).
 
@@ -170,7 +170,7 @@ Zpracování proudu událostí a vyhodnocení, jestli se pravidlo vyskytlo, stoj
 Úvodem kapitoly je potřeba jasně vymezit co v tomto kontextu chápeme pod pojmem "distribuovaný". Obecně se používají dva výklady:
 \begin{itemize}
   \item Distribuované zpracování událostí jako zpracování událostí z více heterogenních zdrojů (distribuovaný systém).~[\ref{bib_2}] Takový výpočet může běžet i na jenom stroji a samotná analýza většinou nebývá paralelní. Takto pojem používá i \textit{David Luckham} v knize \textit{The Power of Events} [\ref{bib_1}] v popisu obrázku \textit{1.1}.
-  \item Distribuované zpracování událostí jako výpočet rozdělený na více menších, méně náročných úloh za účelem rychlejšího zpracování s využitím paralelismu. Dále v práci budeme pojem chápat právě takto.
+  \item Distribuované zpracování událostí jako výpočet rozdělený na více menších, méně náročných úloh za účelem rychlejšího zpracování s využitím paralelismu\footnote{Takto zpracovává data například Twitter [\ref{bib_distributed_computing}]. A to jejich distribucí pomocí nástroje \textit{Apache Storm}}. Dále v práci budeme pojem chápat právě takto.
 \end{itemize}
 
 Požadavky na distribuované zpracování událostí (DCEP) jsou v mnoha ohledech jiné než na zpracování centralizované. Dvě hlavní vlastnosti, které vyžadujeme jsou vysoká míra dostupnosti (angl. availability) a nízké zpoždění (angl. latency). Cílem je pak maximalizovat dostupnost a minimalizovat zpoždění. Bohužel u většiny návrhů platí, že tyto vlastnosti jsou závislé a zlepšení jedné, zhoršuje druhou. Zlepšení dostupnosti, zvýší zpoždění, protože potřebujeme více času na synchronizaci všech řídících informací. [\ref{bib_3}]
@@ -194,37 +194,26 @@ TODO - dopsat
 
 Tato kapitola popisuje požadavky na systém a zasazuje systém do prostředí ve kterém bude nasazen. Počátek kapitoly parafrázuje a rozvíjí zadání práce. Dále je diagram užití, který shrnuje funkční požadavky. Na konci kapitoly jsou na modelovém příkladě demonstrovány vstupy a výstupy systému.
 
-Cílem této práce je vytvoření software pro distribuované zpracování událostí, který bude schopen detekovat komplexní události na základě pravidel. Aplikace by měla být schopna zvládnout libovolný počet připojených uzlů. Síť propojených uzlů je možné reprezentovat grafem G(V, E), kde V jsou uzly grafu, neboli konkrétní počítače na kterých probíhá zpracování. E jsou pak orientované hrany grafu, které reprezentují informaci o tom který počítač posílá data kterému. Každá hrana je označena příznakem \textit{L\_i}, který označuje typ události, která je po dané hraně posílána. Konkrétním příkladem tak může být událost \textit{L\_1}, představující zprávu typu \textit{chyba}, která není tak častá, ale její závažnost je vyšší. A událost \textit{L\_2}, představující zprávu typu \textit{upozornění}, která je častá, ale méně závažná.
+Cílem této práce je vytvoření software pro distribuované zpracování událostí, který bude schopen detekovat komplexní události na základě pravidel. Aplikace by měla být schopna zvládnout libovolný počet připojených uzlů. Síť propojených uzlů je možné reprezentovat grafem G(V, E), kde V jsou uzly grafu, neboli konkrétní počítače na kterých probíhá zpracování. E jsou pak orientované hrany grafu, které reprezentují informaci o tom který počítač posílá data kterému. Každá hrana je označena příznakem \textit{$L_i$}, který označuje typ události, která je po dané hraně posílána. Konkrétním příkladem tak může být událost \textit{$L_1$}, představující zprávu typu \textit{chyba}, která není tak častá, ale její závažnost je vyšší. A událost \textit{$L_2$}, představující zprávu typu \textit{upozornění}, která je častá, ale méně závažná.
 
-Pravidla pro detekci komplexních událostí, budou mít časovou platnost. Po uplynutí daného času se pravidlo automaticky stane neaktivní. Pravidla bude také možné nasadit pouze na určitou podmnožinu uzlů V grafu G. 
+Pravidla pro detekci komplexních událostí, budou mít časovou platnost. Po uplynutí daného času se pravidlo automaticky stane neaktivní. Pravidla bude také možné nasadit pouze na určitou podmnožinu uzlů V grafu G. Více o pravidlech v kapitole \ref{sec:usecase_rule}.
 
-Na obrázku \ref{fig:analysis_case_1} je vidět příklad grafu, kde je na uzlu \textit{V1} nasazeno pravidlo analyzující události \textit{L\_1}.
+Na obrázku \ref{fig:analysis_case_1} je vidět příklad grafu, kde je na uzlu \textit{$V_1$} nasazeno pravidlo analyzující události \textit{$L_1$}.
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.4\textwidth, height=0.15\textheight]{images/analysis_case_1.png}
-    \caption{Před vyhodnocením pravidla \textit{P: L\_1} existuje jeden uzel zpracovávající události}
+    \includegraphics[width=0.4\textwidth, height=0.15\textheight]{images/analysis_case_1.eps}
+    \caption{Před vyhodnocením pravidla \textit{P: $L_1$} existuje jeden uzel zpracovávající události}
     \label{fig:analysis_case_1}
 \end{figure}
 
-Po určitém počtu výskytů události \textit{L\_1} je vytvořena nová skupina z uzlů V3 a V4 kde je V4 zvolen hlavním uzlem. Viz obr. \ref{fig:analysis_case_2}
+Po určitém počtu výskytů události \textit{$L_1$} je vytvořena nová skupina z uzlů \textit{$V_3$} a \textit{$V_4$} kde je \textit{$V_4$} zvolen hlavním uzlem. Viz obr. \ref{fig:analysis_case_2}
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.4\textwidth, height=0.15\textheight]{images/analysis_case_2.png}
-    \caption{Po vyhodnocení pravidla \textit{P: L\_1} existují dva uzly zpracovávající události}
+    \includegraphics[width=0.4\textwidth, height=0.15\textheight]{images/analysis_case_2.eps}
+    \caption{Po vyhodnocení pravidla \textit{P: $L_1$} existují dva uzly zpracovávající události}
     \label{fig:analysis_case_2}
-\end{figure}
-
-Požadavky jsou kladeny hlavně na variabilitu, možnost nasazení pravidel s časovou platností. Menší důraz je na výkon a proces nasazování.
-
-Na obrázku \ref{fig:usecase} je znázorněn diagram užití, který přehledně shrnuje požadavky na systém. Vystupují v něm dvě role. Uživatel, je zde člověk, který spouští analýzu. Druhou rolí je Algoritmus, který reprezentuje samotný software. Je zde uveden proto, aby bylo zřejmé jaké operace se od systému vyžadují.
-
-\begin{figure}[H]
-	\centering
-    \includegraphics[width=0.9\textwidth, height=0.45\textheight]{images/usecase.png}
-    \caption{Diagram užití}
-    \label{fig:usecase}
 \end{figure}
 
 Typickým místem pro nasazení distribuovaného zpracování událostí je analýza síťové komunikace. To je také místo, kde bude DEM nasazen.
@@ -248,6 +237,40 @@ Vstupem jsou data zaznamenána na každém stroji připojeném do \textit{DEM}. 
 Výstupem by mělo být upozornění na nestandardní situaci v části nebo celém systému. Formát výstupu DEM je opět individuální vzhledem k situaci. Zjištěné výsledky mohou být ukládány ve formě logů (tak je to vyřešeno v této práci), odesílána do centrálního dohledu nebo ukládána do databáze.
 
 Do DEM bude možno nasadit pravidla na detekci vzorů událostí. Tato pravidla mohou být omezena časovou platností a nasazena na analýzu pouze určitého množství uzlů.
+
+\section{Diagram užití}
+Cílem této kapitoly je jasně formulovat seznam požadavků, které má systém splňovat. Soubor požadavků je znázorněn graficky pomocí diagramu užití. Dále jsou všechny požadavky rozepsány. U některých je popis doplněn o pseudokód\footnote{Pseudokód je psán v angličtině, protože angličtina je obecně uznávaný jazyk pro psaní jakéhokoli kódu.}.
+
+Požadavky jsou kladeny hlavně na variabilitu, možnost nasazení pravidel s časovou platností. Menší důraz je na výkon a proces nasazování.
+
+Na obrázku \ref{fig:usecase} je znázorněn diagram užití, který přehledně shrnuje požadavky na systém. Vystupují v něm dvě role. Uživatel, je zde člověk, který spouští analýzu. Druhou rolí je Algoritmus, který reprezentuje samotný software. Je zde uveden proto, aby bylo zřejmé jaké operace se od systému vyžadují.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.9\textwidth, height=0.45\textheight]{images/usecase.png}
+    \caption{Diagram užití}
+    \label{fig:usecase}
+\end{figure}
+
+Dále následuje popis jednotlivých případů užití. Kvůli přehlednosti jsou nadpisy některých pravidel zkráceny.
+
+\subsection*{Spustit / zastavit aplikaci}
+Jak je z názvu patrné uživatel může spustit a zastavit aplikaci a s tím samozřejmě i analýzu. Je zde vhodné zdůraznit, že spuštění i zastavení by mělo být centralizované a jednoduché. To znamená kontrola pomocí jednoho skriptu. Tím se ušetří uživateli čas a předejde se některým chybám.
+
+\subsection*{Nasadit / odebrat pravidlo}
+\label{sec:usecase_rule}
+Uzly, které budou přijímat data, je budou zároveň i analyzovat. Tím, že data mají charakter potenciálně nekonečného proudu, bude pro analýzu potřeba zvolit vhodný nástroj. Nástroj bude muset umět na základě definovaného pravidla vyhodnotit která z příchozích dat pravidlu vyhovují. Jak již bylo zmíněno dat může být opravdu hodně, proto vyhodnocování musí probíhat pouze v omezeném časovém intervalu. Demonstrace pravidla za použití pseudokódu na obrázku \ref{fig:sec_usecase_rule} vyhodnocuje počet událostí typu \textit{$L_1$} v časovém okně pěti sekund.
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+SELECT count(*) FROM Event(type='L1') in window (5 sec)
+	\end{mylisting}
+	\captionof{figure}{Příklad pravidla}
+	\label{fig:sec_usecase_rule} 
+\end{minipage}
+\end{center}
+
 \chapter{Návrh}
 Tato kapitola postupně popisuje jak budou reálně splněny požadavky na systém uvedené v analýze. Stěžejní část kapitoly je volba technologií. U každé zvolené technologie je její popis a jak bude použita ve výsledném řešení.
 
@@ -765,6 +788,9 @@ TODO - dopsat
 
 \begin{thebibliography}{99}
 \bibitem
+CCeleda, Pavel. Network Traffic Analysis for Cyber Security. Brno, 2013. Masaryk Univerzity. [online]. Dostupné z: \url{https://is.muni.cz/do/rect/habilitace/1433/44368572/44368651/HP_kor.-verejna.pdf} \label{bib_celeda}
+
+\bibitem
 LLUCKHAM, David. \textit{The Power of Events: An Introduction to Complex
 Event Processing in Distributed Enterprise Systems.} Addison-Wesley Professional, 2002. ISBN 978-0-201-72789-0. \label{bib_1}
 
@@ -792,6 +818,11 @@ GGAMMA, Erich, Richard HELM, Ralph JOHNSON a John VLISSIDES. GANG OF FOUR. \text
 
 \bibitem
 AApache Curator [online]. Dostupné z: \url{http://curator.apache.org/index.html} \label{bib_9}
+
+\bibitem
+PProcess real-time big data with Twitter Storm [online]. Dostupné z: \url{http://www.ibm.com/developerworks/library/os-twitterstorm/} \label{bib_distributed_computing}
+
+
 
 \end{thebibliography}
 \appendix %% Start the appendices.
