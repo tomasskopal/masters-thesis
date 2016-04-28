@@ -223,11 +223,11 @@ Nejčastější případ, je ten, že přes jeden hlavní uzel probíhá větši
 Problém nastane, když je množství produkovaných dat větší než je kapacita analyzujícího (analyzujících) počítačů. V takovém případě můžeme přidat výpočetní sílu nebo zvolit úplně jiný přístup k datové analýze.
 
 \section{Vstupy a výstupy}
-Uvažujme situaci, kdy necháme na síťovém uzlu aby analyzoval běžně známe hrozby. Taková zařízení jsou na trhu běžně dostupná. A zbytek analýzy bude probíhat až na uzlech v rámci sítě. V modelové situaci útočník obejde firewall a na koncových zařízeních v síti začnou vznikat anomálie. Za normální situace by se takový útok neodhalil, protože na koncových zařízeních neběží žádná detekce. Často to ani není prakticky možné, protože kdyby počítače odesílaly všechen provoz do clusteru na analýzu, byla by to ještě větší zátěž než, kdyby to dělal hlavní síťový prvek. Cílem této práce je tak vytvořit řešení, které bude možno nasadit přímo na koncová zařízení a provádět analýzu tam. Hrubou představu znázorňuje obrázek \ref{fig:cloud-comparison}
+Uvažujme situaci, kdy necháme na síťovém uzlu aby analyzoval běžně známe hrozby. Taková zařízení jsou na trhu běžně dostupná. A zbytek analýzy bude probíhat až na uzlech v rámci sítě. V modelové situaci útočník obejde firewall a na koncových zařízeních v síti začnou vznikat anomálie. Za normální situace by se takový útok neodhalil, protože na koncových zařízeních neběží žádná detekce. Často to ani není prakticky možné, protože kdyby počítače odesílaly všechen provoz do clusteru na analýzu, byla by to ještě větší zátěž než, kdyby to dělal hlavní síťový prvek. Cílem této práce je tak vytvořit řešení, které bude možno nasadit přímo na koncová zařízení a provádět analýzu tam. Obecnou představu znázorňuje obrázek \ref{fig:cloud-comparison}. Na obrázku je vidět srovnání, kde jsou v levé části data posílána do nějakého cloudu (černé skřínky), kde jsou analyzována. Naopak v pravé části je výpočetní cluster pro analýzu vytvořen přímo z uzlů, které data produkují. 
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.4\textwidth, height=0.35\textheight]{images/cloud-comparison.png}
+    \includegraphics[width=0.5\textwidth, height=0.20\textheight]{images/cloud-comparison.eps}
     \caption{Srovnání přístupu zasílání dat do cloudu (v levo) a vytvoření cloudu přímo na koncových zařízeních (v pravo)}
     \label{fig:cloud-comparison}
 \end{figure}
@@ -262,14 +262,36 @@ Jak je z názvu patrné uživatel může spustit a zastavit aplikaci a s tím sa
 Uzly, které budou přijímat data, je budou zároveň i analyzovat. Tím, že data mají charakter potenciálně nekonečného proudu, bude pro analýzu potřeba zvolit vhodný nástroj. Nástroj bude muset umět na základě definovaného pravidla vyhodnotit která z příchozích dat pravidlu vyhovují. Jak již bylo zmíněno dat může být opravdu hodně, proto vyhodnocování musí probíhat pouze v omezeném časovém intervalu. Demonstrace pravidla za použití pseudokódu na obrázku \ref{fig:sec_usecase_rule} vyhodnocuje počet událostí typu \textit{$L_1$} v časovém okně pěti sekund.
 
 \begin{center}
-\begin{minipage}[H]{\linewidth}
+\begin{minipage}[H]{.95\linewidth}
 	\begin{mylisting}
-SELECT count(*) FROM Event(type='L1') in window (5 sec)
+SELECT count(*) FROM Event(type=L1) in window (5 sec)
 	\end{mylisting}
 	\captionof{figure}{Příklad pravidla}
 	\label{fig:sec_usecase_rule} 
 \end{minipage}
 \end{center}
+
+\subsection*{Poslat / přijmout data}
+Data, která jsou určena k analýze je potřeba odeslat na správný stroj. Každý uzel v systému je producentem dat, ale pouze některé jsou i konzumenty. Pro demonstraci popíšu pomocí pseudokodu posílání a přijímání dat na uzlu \textit{$V_4$} z obrázku \ref{fig:analysis_case_2}:
+
+\begin{center}
+\begin{minipage}[H]{.6\linewidth}
+	\begin{mylisting}
+send data: {type = L1} to node V1;			
+read data: {type = L2} from queue;			
+	\end{mylisting}
+	\captionof{figure}{Přijímání a posílání dat}
+	\label{fig:sec_usecase_rule} 
+\end{minipage}
+\end{center}
+
+\subsection*{Vyhodnotit data na základě pravidla}
+Přijatá data jsou analyzována a průběžně se vyhodnocuje jestli některá sekvence událostí odpovídá aktuálně nasazenému pravidlu. Pokud ano, je vytvořena nová, komplexní, událost, obsahující potřebná data pro adekvátní reakci. Adekvátní reakcí je myšleno vytvoření nové skupiny nebo vypsání události do logu.
+
+Zpracování komplexní události záleží na typu analyzovaných dat. Pokud jsou to hrubozrné události (nízká frekvence výskytu, ale vysoká důležitost) bude vytvořena nová skupina počítačů, které budou mezi sebou analyzovat jemnozrné události (vysoká frekvence výskytu, ale nízká důležitost). Naopak, pokud jsou to jemnozrné události, bude komplexní událost pouze zaznamenána do logu. Detailní popis jemnozrných a hrubozrných událostí je v kapitole \ref{sec:udalosti-v-systemu}.
+
+\subsection*{Vytvořit / rozpustit skupinu počítačů}
+Důvod vzniku nové skupiny je popsán v předchozím případě užití. Rozpuštění je vyvoláno uplynutím časového intervalu. Skupiny počítačů analyzující jemnozrné události jsou vytvářeny s časovou platností. Daný interval by měl stačit k analýze. Pokud dojde k detekci sledu událostí, který odpovídá aktuálně nasazenému pravidlu pro jemnozrnou analýzu, vzniklá komplexní událost je zapsána do logu.
 
 \chapter{Návrh}
 Tato kapitola postupně popisuje jak budou reálně splněny požadavky na systém uvedené v analýze. Stěžejní část kapitoly je volba technologií. U každé zvolené technologie je její popis a jak bude použita ve výsledném řešení.
