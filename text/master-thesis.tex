@@ -228,7 +228,7 @@ Uvažujme situaci, kdy necháme na síťovém uzlu aby analyzoval běžně znám
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.5\textwidth, height=0.20\textheight]{images/cloud-comparison.eps}
-    \caption{Srovnání přístupu zasílání dat do cloudu (v levo) a vytvoření cloudu přímo na koncových zařízeních (v pravo)}
+    \caption{Srovnání přístupu zasílání dat do cloudu (vlevo) a vytvoření cloudu přímo na koncových zařízeních (vpravo)}
     \label{fig:cloud-comparison}
 \end{figure}
 
@@ -308,19 +308,19 @@ Konfigurační soubor Mavenu je \textit{pom.xml}, ve kterém jsou uvedeny zásuv
 \label{sec:maven-usage}
 Kromě definování závislostí je Maven v projektu použit na vytvoření modulů. Moduly jsou celkem čtyři a jsou navrženy tak, aby názvem i logikou odpovídaly účelu a nepřesahovaly své určení. Jsou to:
 \begin{itemize}
-  \item Producer -- slouží pro generování dat a jejich posílání do Kafky. Data jsou generována v určitých časových intervalech a jejich struktura je přesně daná. Syntax a sémantika vzorových dat je popsána v kapitole \ref{sec:udalosti-v-systemu}. Při reálném použití by byl tento modul přepsán nebo nahrazen za takový, který bude reálná data číst z nějakého systémového nebo aplikačního logu.
-  \item Consumer -- tento modul čte data z Kafky a analyzuje je za pomocí nástroje Esper \ref{sec:esper}. Události, které Esper vyhodnotí slouží v DEM jako řídící zprávy pro přechod do dalšího stavu. Případně jsou události pouze zapsány do logu.
-  \item MainApp -- modul obsahuje spustitelnou třídu a je tak vstupním bodem programu. Také se zde zpracovávají všechny řídící události ze ZooKeeperu \ref{sec:zookeeper} a rozhoduje se jaká vlákna (konzument nebo producent) se mají vytvořit nebo zastavit.
+  \item Producer -- slouží pro generování dat a jejich posílání do aplikačního rámce Kafka. Data jsou generována v určitých časových intervalech a jejich struktura je přesně daná. Syntax a sémantika vzorových dat je popsána v kapitole \ref{sec:udalosti-v-systemu}. Při reálném použití by byl tento modul přepsán nebo nahrazen za takový, který bude reálná data číst z nějakého systémového nebo aplikačního logu.
+  \item Consumer -- tento modul čte data z aplikačního rámce Kafka a analyzuje je za pomocí nástroje Esper \ref{sec:esper}. Události, které Esper vyhodnotí slouží v DEM jako řídící zprávy pro přechod do dalšího stavu. Případně jsou události pouze zapsány do logu.
+  \item MainApp -- modul obsahuje spustitelnou třídu a je tak vstupním bodem programu. Také se zde zpracovávají všechny řídící události z aplikačního rámce ZooKeeper \ref{sec:zookeeper} a rozhoduje se jaká vlákna (konzument nebo producent) se mají vytvořit nebo zastavit.
   \item AppData -- modul obsahuje několik výčtových typů, které jsou společné v celé aplikaci a jednu singleton \footnote{Singleton neboli jedináček je návrhový vzor, který je využívaný, když je potřeba mít pouze jednu instanci dané třídy.} třídu, která drží některá řídící data. Například ip adresu počítače. Tato data mají k dispozici všechny moduly.
 \end{itemize}
 Protože je veškerá komunikace řízena událostmi a zasíláním zpráv, moduly jsou na sobě relativně nezávislé a v případě potřeby je možné je zaměnit za jiné. 
 
 \subsection{Apache Kafka}
-Apache Kafka je systém pro zasílání zpráv. [\ref{bib_5}] Klastr Kafky může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem Kafky je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive přepážkou (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet přepážek. Přepážka je menší jednotka než téma. Každé téma může být replikováno mezi brokery.
+Apache Kafka je systém pro zasílání zpráv. [\ref{bib_5}] Kafka klastr může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem aplikačního rámce Kafka je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive přepážkou (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet přepážek. Přepážka je menší jednotka než téma. Každé téma může být replikováno mezi brokery.
 
 \subsection*{Konzument a producent}
 
-Do kafky data zapisují \textit{producenti} a na druhé straně z ní data čtou \textit{konzumenti} (angl. producer and consumer). Zapisování dat producentem je přímočaré. Producent rozhoduje do kterého tématu či přepážky se má zpráva zapsat. Zprávy jsou ukládány do fronty, tedy způsobem FIFO \footnote{FIFO -- první zapsán, první přečten (angl. first in first out)}. Čtení zpráv závisí na aktuálním stavu. Konzumenty je možné seskupovat do skupin a podle toho se pak rozlišuje způsob čtení zpráv na "queuing" a "publish-subscribe". V modelu "queue" je zpráva poslána vždy jednomu z konzumentů. Naopak v modelu "publish-subscribe" je každá zpráva poslána všem konzumentům. V dokumentaci Kafky se říká [\ref{bib_5}]:
+Do Kafka klastru data zapisují \textit{producenti} a na druhé straně z ní data čtou \textit{konzumenti} (angl. producer and consumer). Zapisování dat producentem je přímočaré. Producent rozhoduje do kterého tématu či přepážky se má zpráva zapsat. Zprávy jsou ukládány do fronty, tedy způsobem FIFO \footnote{FIFO -- první zapsán, první přečten (angl. first in first out)}. Čtení zpráv závisí na aktuálním stavu. Konzumenty je možné seskupovat do skupin a podle toho se pak rozlišuje způsob čtení zpráv na "queuing" a "publish-subscribe". V modelu "queue" je zpráva poslána vždy jednomu z konzumentů. Naopak v modelu "publish-subscribe" je každá zpráva poslána všem konzumentům. V Kafka dokumentaci se říká [\ref{bib_5}]:
 \begin{itemize}
   \item Pokud jsou všichni konzumenti ve stejné skupině, pak Kafka funguje v modelu "queue".
   \item Pokud je každý konzument v jiné skupině, pak je Kafka v modelu "publish-subscribe". Všechny zprávy jsou distribuovány všem konzumentům \footnote{Broadcast}.
@@ -329,7 +329,7 @@ Do kafky data zapisují \textit{producenti} a na druhé straně z ní data čtou
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.65\textwidth, height=0.45\textheight]{images/kafka.png}
-    \caption{Znázornění základního schématu Kafky}
+    \caption{Znázornění základního schématu aplikačního rámce Kafka}
     \label{fig:kafka}
 \end{figure}
 
@@ -347,19 +347,19 @@ Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačí
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.55\textwidth, height=0.3\textheight]{images/kafka-impl.png}
-    \caption{Struktura Kafky při iniciálním spuštění}
+    \caption{Struktura aplik. rámce Kafka při iniciálním spuštění}
     \label{fig:kafka-impl}
 \end{figure}
 
 \newpage
 \subsection{Apache ZooKeeper}
 \label{sec:zookeeper}
-ZooKeeper je další z rodiny "open-source" Apache technologií. Je to centralizovaná služba pro správu konfiguračních dat, pojmenování a poskytování synchronizace distribuovaných uzlů. [\ref{bib_7}]
+ZooKeeper (dále také jako "ZK") je další z rodiny "open-source" Apache technologií. Je to centralizovaná služba pro správu konfiguračních dat, pojmenování a poskytování synchronizace distribuovaných uzlů. [\ref{bib_7}]
 
-ZooKeeper je navržen, tak aby jej bylo jednoduché použít. Je napsán v Javě a poskytuje konektory pro Javu a pro C. Struktura datového modelu je podobná stromovému uspořádání souborového systému. Datový model ZooKeeperu je sestaven z uzlů zvaných \textit{znodes}. Na rozdíl od klasického souborového systému, který je navržen pro dlouhodobé ukládání dat, ZooKeeper data drží v paměti, a tak může dosahovat nízkého zpoždění a vysoké propustnosti. Pro ilustraci, uvažujme jednoduchý příklad: Každý znode může obsahovat data (až do limitu 1MB). V takovém případě znode reprezentuje soubor (řekněme textový) v souborovém systému. V ZooKeeperu může mít každý uzel nula až N potomků. Pak znode vystupuje obdobně jako složka v souborovém systému. Každý znode může zároveň obsahovat data a mít potomky.
+ZK je navržen, tak aby jej bylo jednoduché použít. Je napsán v Javě a poskytuje konektory pro Javu a pro C. Struktura datového modelu je podobná stromovému uspořádání souborového systému. Datový model ZK je sestaven z uzlů zvaných \textit{znodes}. Na rozdíl od klasického souborového systému, který je navržen pro dlouhodobé ukládání dat, ZK data drží v paměti, a tak může dosahovat nízkého zpoždění a vysoké propustnosti. Pro ilustraci, uvažujme jednoduchý příklad: Každý znode může obsahovat data (až do limitu 1MB). V takovém případě znode reprezentuje soubor (řekněme textový) v souborovém systému. V ZK může mít každý uzel nula až N potomků. Pak znode vystupuje obdobně jako složka v souborovém systému. Každý znode může zároveň obsahovat data a mít potomky.
 
 \subsection*{Garance}
-Obdobně jako Kafka a naprostá většina distribuovaných systémů, musí i ZooKeeper poskytovat určité garance běhu v distribuovaném prostředí.
+Obdobně jako Kafka a naprostá většina distribuovaných systémů, musí i ZK poskytovat určité garance běhu v distribuovaném prostředí.
 
 \begin{itemize}
   \item Sekvenční konzistence -- změny na uzlu jsou aplikovány v takovém pořadí v jakém byly odeslány (modifikace dat, odebrání nebo přidání potomka, apod).
@@ -369,7 +369,7 @@ Obdobně jako Kafka a naprostá většina distribuovaných systémů, musí i Zo
 \end{itemize}
 
 \subsection*{API}
-ZooKeeper nabízí uživateli (programátorovi) velice jednoduché rozhraní, pro manipulaci s jednotlivými uzly. Sestává se z těchto operací:
+ZK nabízí uživateli (programátorovi) velice jednoduché rozhraní, pro manipulaci s jednotlivými uzly. Sestává se z těchto operací:
 \begin{itemize}
   \item Vytvoření (create)
   \item Smazání (delete)
@@ -383,7 +383,7 @@ ZooKeeper nabízí uživateli (programátorovi) velice jednoduché rozhraní, pr
 Kromě operace \textit{sync} jsou v této práci použity všechny.
 
 \subsection*{Pozorovatelé}
-Pozorovatelé \footnote{Z anglického slova \textit{Watches}. Jde o konkrétní implementaci návrhového vzoru "observable". [\ref{bib_8}]} jsou nedílnou součástí téměř každého událostmi řízeného systému. Stejně tak, je tomu u ZooKeeperu. Na znode je možné zaregistrovat dva druhy pozorovatelů:
+Pozorovatelé \footnote{Z anglického slova \textit{Watches}. Jde o konkrétní implementaci návrhového vzoru "observable". [\ref{bib_8}]} jsou nedílnou součástí téměř každého událostmi řízeného systému. Stejně tak, je tomu u ZK. Na znode je možné zaregistrovat dva druhy pozorovatelů:
 
 \begin{itemize}
   \item Datový pozorovatel -- změní stav, když jsou změněna data v uzlu. Tzn někdo zavolal operaci "zapsání dat". Změna stavu obsahuje nově nastavená data
@@ -391,11 +391,11 @@ Pozorovatelé \footnote{Z anglického slova \textit{Watches}. Jde o konkrétní 
 \end{itemize}
 
 \subsection*{Apache Curator}
-Aplikační rámec \textit{Curator}	je nástroj vytvořený společností Neflix pro jednodušší práci se ZooKeeperem. Rozhraní ZooKeeperu se potýká s několika problémy, jako je například nedostatečné ošetření výpadků konektivity nebo selhání operace. Proto byl navržen \textit{Curator}, který se osvědčil a později přešel pod licenci \textit{Apache}. Poskytuje následující benefity:
+Aplikační rámec \textit{Curator}	je nástroj vytvořený společností Neflix pro jednodušší práci se ZK. Rozhraní ZK se potýká s několika problémy, jako je například nedostatečné ošetření výpadků konektivity nebo selhání operace. Proto byl navržen \textit{Curator}, který se osvědčil a později přešel pod licenci \textit{Apache}. Poskytuje následující benefity:
 
 \begin{itemize}
-  \item Komplexnější rozhraní pro jednodušší práci se ZooKeeperem. \ref{code:curator}
-  \item Automatické připojení na instanci ZooKeeperu a automatické opravy výpadků.
+  \item Komplexnější rozhraní pro jednodušší práci se ZK. \ref{code:curator}
+  \item Automatické připojení na instanci ZK a automatické opravy výpadků.
   \item Kompletní a dobře otestovaná implementace některých složitějších operací.
 \end{itemize}
 
@@ -408,18 +408,18 @@ curatorFramework.delete()
 
  
 \subsection*{Použití}
-ZooKeeper je použit pro řízení běhu celého procesu DEM. Jeho hlavní úlohou je distribuce řídících dat mezi jednotlivými výpočetními jednotkami. Druhou funkcí, která logicky vychází ze stromové struktury datového modelu, je reflexe aktuálního stavu aplikace.
+ZK je použit pro řízení běhu celého procesu DEM. Jeho hlavní úlohou je distribuce řídících dat mezi jednotlivými výpočetními jednotkami. Druhou funkcí, která logicky vychází ze stromové struktury datového modelu, je reflexe aktuálního stavu aplikace.
 
 Je důležité zmínit, že cesta ve stromové struktuře je určena jednoznačným textovým identifikátorem. Jednotlivé uzly jsou pak odděleny lomítkem. Na obrázku \ref{fig:zookeeper-impl} můžeme vidět strukturu uzlů, při iniciálním spuštění DEM. Příklad identifikátoru prvního uzlu z druhé vrstvy je \textit{"/root/ip1/ip1"}, druhého uzlu z první vrstvy \textit{"/root/ip2"}, atd.
 
-Obrázek \ref{fig:zookeeper-impl} dále znázorňuje logickou strukturu DEM. První vrstva reprezentuje konzumenty a druhá vrstva producenty. Jinak řečeno "kdo komu posílá data". Podstatné je, uvědomit si, že strom zobrazuje pouze virtuální stav. Aplikace jako taková běží na daném stroji vždy jen jednou a strom pak reprezentuje spíše množství běžících vláken a jejich úlohu. Jak je vidět z obrázku \ref{fig:zookeeper-impl}, v DEM existují 4 producenti (jeden na každém fyzickém stroji) a jeden konzument (fyzický stroj s \textit{ip1}). To odpovídá stavu Kafky z obrázku \ref{fig:kafka-impl}.
+Obrázek \ref{fig:zookeeper-impl} dále znázorňuje logickou strukturu DEM. První vrstva reprezentuje konzumenty a druhá vrstva producenty. Jinak řečeno "kdo komu posílá data". Podstatné je, uvědomit si, že strom zobrazuje pouze virtuální stav. Aplikace jako taková běží na daném stroji vždy jen jednou a strom pak reprezentuje spíše množství běžících vláken a jejich úlohu. Jak je vidět z obrázku \ref{fig:zookeeper-impl}, v DEM existují 4 producenti (jeden na každém fyzickém stroji) a jeden konzument (fyzický stroj s \textit{ip1}). To odpovídá stavu aplik. rámce Kafka z obrázku \ref{fig:kafka-impl}.
 
 Výhody stromové struktury jsou zřejmé. U každého uzlu se dá zjistit jaké má potomky (které stroje posílají data a kam). Změna cíle, kam má stroj posílat data, je na úrovni rozhraní triviální. Stačí přesunout uzel v druhé vrstvě pod jiného rodiče.
 
 \begin{figure}[H]
 	\centering
     \includegraphics[width=1\textwidth, height=0.22\textheight]{images/zookeeper-impl.png}
-    \caption{Stromová struktura uzlů v Zookeeperu při iniciálním spuštění.}
+    \caption{Stromová struktura uzlů v ZK při iniciálním spuštění.}
     \label{fig:zookeeper-impl}
 \end{figure}
 
@@ -440,10 +440,10 @@ Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technol
     Požadavek & Technologie \\
     \midrule
     Posílání zpráv mezi stroji & Kafka \\
-    Libovolný počet připojených uzlů & ZooKeeper + Kafka \\
-    Nasazení nového pravidla & ZooKeeper \\
-    Definování chování jednotlivých strojů & ZooKeeper \\
-    Vytvořit nebo rozpustit skupinu strojů & ZooKeeper \\
+    Libovolný počet připojených uzlů & ZK + Kafka \\
+    Nasazení nového pravidla & ZK \\
+    Definování chování jednotlivých strojů & ZK \\
+    Vytvořit nebo rozpustit skupinu strojů & ZK \\
     Nalezení určitého vzoru (pattern) v datech & Esper \\
     Propojit technologie do funkčního celku & Java + Maven \\
     \bottomrule
@@ -461,11 +461,11 @@ Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technol
 
 \section{Události v systému}
 \label{sec:udalosti-v-systemu}
-Povaha a struktura vyhodnocovaných dat je neopomenutelnou součástí každého systému, tedy i tohoto. Pro potřeby analýzy zavedeme dva druhy událostí, \textbf{hrubozrné} a \textbf{jemnozrné}. Hrubozrné jsou události, které nenastávají příliš často, ale mají v systému důležitý význam. Jemnozrné naopak.
+Povaha a struktura vyhodnocovaných dat je neopomenutelnou součástí každého systému, tedy i tohoto. Pro potřeby analýzy zavedeme dva druhy událostí, \textit{hrubozrné} a \textit{jemnozrné}. Hrubozrné jsou události, které nenastávají příliš často, ale mají v systému důležitý význam. Jemnozrné naopak.
 
 Jak je nastíněno v kapitole \label{sec:analysis}, budeme se zabývat analýzou síťové komunikace. Základem je zde samozřejmě proud paketů. Příchozí pakety mohou mimo jiné znamenat pro daný stoj bezpečnostní hrozbu. Například při útoku \textit{SYN flood} je restart (kolaps) stroje způsoben zahlcením pakety s příznakem \textit{SYN}. Zde můžeme za hrubozrnou událost považovat signalizaci restartu stroje. Jemnozrné události jsou pak jednotlivé pakety.
 
-Principem analýzy je identifikace strojů s výskytem stejných hrubozrných událostí a pustit na nich analýzu jemnozrných událostí, která ma za cíl odhalit příčinu.
+Principem analýzy je identifikace strojů s výskytem stejných hrubozrných událostí a pustit na nich analýzu jemnozrných událostí, která má za cíl odhalit příčinu.
  
 \subsection*{Hrubozrnné}
 Hrubozrné události mají komplexní povahu. Jsou tedy výsledkem nějakého složitějšího procesu. Ve výše uvedeném příkladě šlo o restart počítače způsobený cíleným útokem. Jiným příkladem může být chybová zpráva v aplikaci (angl. error log). Pokud je aplikace zasažena \textit{DoS} útokem, pak je hrubozrnou událostí její nedostupnost. V DEM jsou hrubozrné události reprezentovány štítkem \textbf{LEVEL1}.
@@ -477,9 +477,9 @@ Tento druh událostí se vyskytuje běžně a sama o sobě nemá událost prakti
 Předchozí kapitoly Analýza a Návrh shrnují požadavky na systém a technologie, za pomoci kterých budou požadavky splněny. V Návrhu je také popsáno jak bude konkrétně daná technologie použita. Tato kapitola navazuje samotnou implementací a testováním. Je zde popsán běh programu od úplného začátku, tedy správné konfigurace, až po ukázky výstupu. 
 
 \section{Konfigurace}
-Jak Kafka, tak ZooKeeper nabízejí velkou variabilitu v konfiguraci. Oficiální dokumentace obou technologií obsahují dobrý popis konfigurace. Proto je tato kapitola věnována pouze konkrétním ukázkám konfigurací v DEM.
+Jak Kafka, tak ZK nabízejí velkou variabilitu v konfiguraci. Oficiální dokumentace obou technologií obsahují dobrý popis konfigurace. Proto je tato kapitola věnována pouze konkrétním ukázkám konfigurací v DEM.
 
-Pro spuštění Kafky je důležitý soubor \textit{server.properties}. Obsahuje množství atributů, které se dají modifikovat. Většinu z nich není potřeba upravovat. Měnil jsem pouze \textit{broker id}, \textit{název stroje (host name)} a \textit{seznam ZooKeeper instancí}. Výňatek z konfiguračního souboru s upravenými hodnotami je na obrázku \ref{fig:kafka-conf}.
+Pro spuštění aplik. rámce Kafka je důležitý soubor \textit{server.properties}. Obsahuje množství atributů, které se dají modifikovat. Většinu z nich není potřeba upravovat. Měnil jsem pouze \textit{broker id}, \textit{název stroje (host name)} a \textit{seznam ZK instancí}. Výňatek z konfiguračního souboru s upravenými hodnotami je na obrázku \ref{fig:kafka-conf}.
 
 \begin{center}
 \begin{minipage}[H]{\linewidth}
@@ -488,12 +488,12 @@ broker.id=0
 host.name=147.251.43.181
 zookeeper.connect=147.251.43.181:2181,147.251.43.130:2181
 	\end{mylisting}
-	\captionof{figure}{Výňatek z konfiguračního souboru Kafky}
+	\captionof{figure}{Výňatek z konfiguračního souboru aplik. rámce Kafka}
 	\label{fig:kafka-conf} 
 \end{minipage}
 \end{center}
 
-U ZooKeeperu je potřeba upravit dva konfigurační soubory. První je \textit{zoo.cfg}. V něm se nastavují ip adresy a porty ostatních ZooKeeper instancí. Také se nastaví složka do které se ukládají dočasné soubory a je zde i druhý z konfiguračních souborů \textit{myid}. Soubor \textit{myid} obsahuje pouze jedno číslo, které jednoznačně identifikuje instanci a musí být unikátní.
+U ZK je potřeba upravit dva konfigurační soubory. První je \textit{zoo.cfg}. V něm se nastavují ip adresy a porty ostatních ZK instancí. Také se nastaví složka do které se ukládají dočasné soubory a je zde i druhý z konfiguračních souborů \textit{myid}. Soubor \textit{myid} obsahuje pouze jedno číslo, které jednoznačně identifikuje instanci a musí být unikátní.
 
 \begin{center}
 \begin{minipage}[H]{\linewidth}
@@ -511,7 +511,7 @@ server.2=147.251.43.130:2888:3888
 server.3=147.251.43.150:2888:3888
 server.4=147.251.43.138:2888:3888
 	\end{mylisting}
-	\captionof{figure}{Ukázka konfiguračního souboru ZooKeeperu}
+	\captionof{figure}{Ukázka konfiguračního souboru aplikačního rámce ZooKeeper}
 	\label{fig:zk-conf} 
 \end{minipage}
 \end{center}
@@ -535,13 +535,13 @@ HDD: 20GB
 \label{sec:implementation}
 Pro implementaci byla zvolena Java (konkrétně ve verzi 1.8), protože všechny použité technologie mají dobrá API pro Javu a většina příkladů je právě v Javě. Dalším důvodem je také to, že Java se dobře hodí pro běh aplikací tohoto druhu, protože má dobrou práci s vlákny. Posledním, méně důležitým, důvodem je popularita Javy a snadná čitelnost kódu.
 
-Aplikace je z pohledu počtu řádků poměrně malá, ale je kompletně řízena událostmi. Posílání zpráv v Kafce je asynchronní a ZooKeeper i Esper jsou ze své podstaty událostmi řízené aplikační rámce (angl. frameworky). Proto je architektura pro přehlednost členěna do logických modulů. Jednotlivé moduly jsou podrobně popsány v kapitole \ref{sec:maven-usage}.
+Aplikace je z pohledu počtu řádků poměrně malá, ale je kompletně řízena událostmi. Posílání zpráv v aplikačním rámci Kafa je asynchronní a ZooKeeper i Esper jsou ze své podstaty událostmi řízené aplikační rámce (angl. frameworky). Proto je architektura pro přehlednost členěna do logických modulů. Jednotlivé moduly jsou podrobně popsány v kapitole \ref{sec:maven-usage}.
 
-Implementace probíhala iterativním vývojem. Nejdříve bylo potřeba nastudovat technologie a zvolit vhodnou konfiguraci. Dále jsem vyzkoušel jednoduchou implementaci základního API Kafky a posílání zpráv na jenom stroji. Dalším logickým krokem bylo vyzkoušet komunikaci mezi dvěma různými počítači v síti. V tomto bodě jsem mohl přidat vyhodnocení vzorů událostí pomocí Esperu.
+Implementace probíhala iterativním vývojem. Nejdříve bylo potřeba nastudovat technologie a zvolit vhodnou konfiguraci. Dále jsem vyzkoušel jednoduchou implementaci základního Kafka API a posílání zpráv na jenom stroji. Dalším logickým krokem bylo vyzkoušet komunikaci mezi dvěma různými počítači v síti. V tomto bodě jsem mohl přidat vyhodnocení vzorů událostí pomocí aplikačního rámce Esper.
 
-Aplikace byla tedy nachystána na přidání více počítačů a testování distribuovaného chování. Napsal jsem několik skriptů pro automatizaci vývoje. Skripty jsou součástí práce jako elektronická příloha. Když aplikace zvládala posílání zpráv mezi čtyřmi testovacími stroji mohl jsem začít pracovat na poslední a nejsložitější iteraci. Tou byla integrace ZooKeeperu. Na základě vyhodnoceného vzoru událostí ZooKeeper automaticky sdružuje počítače do pracovních skupin. Skupiny také ruší a umožňuje nasazení nových pravidel pro analýzu.
+Aplikace byla tedy nachystána na přidání více počítačů a testování distribuovaného chování. Napsal jsem několik skriptů pro automatizaci vývoje. Skripty jsou součástí práce jako elektronická příloha. Když aplikace zvládala posílání zpráv mezi čtyřmi testovacími stroji mohl jsem začít pracovat na poslední a nejsložitější iteraci. Tou byla integrace aplikačního rámce ZooKeeper. Na základě vyhodnoceného vzoru událostí ZK automaticky sdružuje počítače do pracovních skupin. Skupiny také ruší a umožňuje nasazení nových pravidel pro analýzu.
 
-ZooKeeper je jádrem algoritmu. Na každém uzlu je navěšen posluchač, který zaznamenává změny dat. Aplikace je řízena tím, že je do příslušného uzlu vložen nový datový objekt, který obsahuje akci a příslušná data. Například akce \textit{CREATE} znamená vytvoření nového vlákna, které bude reprezentovat konzumenta dat nebo datového producenta. Ukázka datového objektu je na obrázku \ref{fig:json-example}.
+ZK je jádrem algoritmu. Na každém uzlu je navěšen posluchač, který zaznamenává změny dat. Aplikace je řízena tím, že je do příslušného uzlu vložen nový datový objekt, který obsahuje akci a příslušná data. Například akce \textit{CREATE} znamená vytvoření nového vlákna, které bude reprezentovat konzumenta dat nebo datového producenta. Ukázka datového objektu je na obrázku \ref{fig:json-example}.
 
 \begin{center}
 \begin{minipage}[H]{.8\linewidth}
@@ -568,37 +568,37 @@ Seznam hlavních řídících akcí pro ZooKeeper:
   \item STOP\_PRODUCER -- zastaví producenta (stopne a zabije vlákno)
   \item STOP\_CONSUMER -- zastaví konzumenta (stopne a zabije vlákno)
   \item SET\_EP\_RULE -- nastaví v uzlu nové pravidlo pro analýzu
-  \item DELETEd\_SELF -- smaže sama sebe (ZooKeeper uzel) včetně zabití všech konzumentů a producentů, které v rámci daného uzlu běží
+  \item DELETEd\_SELF -- smaže sama sebe (ZK uzel) včetně zabití všech konzumentů a producentů, které v rámci daného uzlu běží
 \end{itemize}
 
 \subsection{Spuštění}
-Před spuštěním algoritmu, tedy analýzy dat, je potřeba nastartovat Kafku. Záleží na počtu replikací Kafky. V našem případě je Kafka pouze jako jedna instance. Kafka běží přímo na jednom ze strojů. Dále na každém stroji spustíme ZooKeeper. ZooKeeper potřebuje ke správnému fungování, aby bylo online více než n/2 uzlů, kde n je celkový počet uzlů, které jsou v clusteru. V této práci probíhá testování na čtyřech strojích, tedy pro ZooKeeper musí být online nejméně tři. Jakmile jsou spuštěny tři stroje, ZooKeeper zvolí řídící instanci.
+Před spuštěním algoritmu, tedy analýzy dat, je potřeba nastartovat aplik. rámec Kafka. Záleží na počtu replikací. V našem případě je Kafka pouze jako jedna instance. Kafka běží přímo na jednom ze strojů. Dále na každém stroji spustíme ZK. ZK potřebuje ke správnému fungování, aby bylo online více než n/2 uzlů, kde n je celkový počet uzlů, které jsou v clusteru. V této práci probíhá testování na čtyřech strojích, tedy pro ZK musí být online nejméně tři. Jakmile jsou spuštěny tři stroje, ZK zvolí řídící instanci.
 
 Při spuštění samotné Java aplikace je potřeba zadat několik vstupních parametrů:
 
 \begin{itemize}
-  \item \textbf{ip}  -- ip adresa stroje. Slouží také jako jednoznačný identifikátor v ZooKeeperu
-  \item \textbf{zklist} -- seznam adres, kde běží jednotlivé instance ZooKeeperu. Prvky v seznamu jsou odděleny čárkou (bez mezery). List potřebuje aplikační rámec Curator [\ref{bib_9}] pro připojení k ZooKeeperu.
+  \item \textbf{ip}  -- ip adresa stroje. Slouží také jako jednoznačný identifikátor v ZK
+  \item \textbf{zklist} -- seznam adres, kde běží jednotlivé instance ZK. Prvky v seznamu jsou odděleny čárkou (bez mezery). List potřebuje aplikační rámec Curator [\ref{bib_9}] pro připojení k ZK.
   \item \textbf{m} -- označuje mód ve kterém je aplikace spuštěna. Jsou možné dva módy:
   \begin{itemize}
-  	\item[*] \textbf{producer} -- aplikace je spuštěna jako producent. To znamená, že se zapojí do ZooKeeper stromu, zaregistruje příslušné posluchače a začne posílat data do Kafky. Do tématu, pojmenovaného podle ip adresy.
-  	\item[*] \textbf{combined} -- aplikace je spuštěna jako producent i konzument. Kromě producenta je vytvořen i konzument, který přijímá data z Kafky z tématu podle ip adresy. Data předává na analýzu Esperu.
+  	\item[*] \textbf{producer} -- aplikace je spuštěna jako producent. To znamená, že se zapojí do ZK stromu, zaregistruje příslušné posluchače a začne posílat data do aplik. rámce Kafka. Do tématu, pojmenovaného podle ip adresy.
+  	\item[*] \textbf{combined} -- aplikace je spuštěna jako producent i konzument. Kromě producenta je vytvořen i konzument, který přijímá data z aplik. rámce Kafka z tématu podle ip adresy. Data předává na analýzu do aplikačního rámce Esper.
   \end{itemize}
 \end{itemize}
 
-V aplikaci je nastaveno výchozí pravidlo, podle kterého se mají data analyzovat. Jakmile je aplikace úspěšně spuštěna, začne produkovat, případně i konzumovat a analyzovat data. Spuštění každé jedné aplikace znamená, že se v ZooKeeperu vytvoří dva nové uzly, tak jak je vidět na obrázku  \ref{fig:app-start}. Postupně se buduje strom až do finálního stavu, který je vidět na obrázku \ref{fig:zookeeper-impl}.
+V aplikaci je nastaveno výchozí pravidlo, podle kterého se mají data analyzovat. Jakmile je aplikace úspěšně spuštěna, začne produkovat, případně i konzumovat a analyzovat data. Spuštění každé jedné aplikace znamená, že se v ZK vytvoří dva nové uzly, tak jak je vidět na obrázku  \ref{fig:app-start}. Postupně se buduje strom až do finálního stavu, který je vidět na obrázku \ref{fig:zookeeper-impl}.
 
 \begin{figure}[H]
 	\centering
     \includegraphics[width=.4\linewidth, height=.18\textheight]{images/app-start.png}
-    \caption{Postupné přidávání uzlů do ZooKeeper stromu}
+    \caption{Postupné přidávání uzlů do ZK stromu}
     \label{fig:app-start}
 \end{figure}
 
 \subsection{Přechody mezi stavy}
 V předchozí kapitole jsem rozvedl jak probíhá spuštění aplikace do jakého stavu se po spuštění dostane. Tato kapitola se bude podrobněji věnovat tomu, v jakých stavech se může DEM nacházet. Schválně zde zmiňuji DEM, protože předchozí kapitola se věnovala hlavně spuštění z pohledu jedné instance. Zde jsou naproti tomu popsány stavy více z globálního pohledu.
 
-Jakmile je spuštěn konzument, automaticky všechny události předává do Esperu, který je vyhodnocuje. Uvažujme pravidlo, které detekuje příchozích pěti událostí během tří sekund. Každý z počítačů svou aktivitou toto kritérium splní. Jakmile Esper detekuje splnění pravidla, vytvoří událost. Událost je v aplikaci zpracována. Pokud je aktivní jen jeden počítač, nemá smysl spouštět detailní analýzu. Naopak v případě, že vyhodnocení pravidla způsobilo více počítačů, je žádoucí na této podmnožině spustit detailní analýzu.
+Jakmile je spuštěn konzument, automaticky všechny události předává do aplik. rámce Esper, který je vyhodnocuje. Uvažujme pravidlo, které detekuje příchozích pěti událostí během tří sekund. Každý z počítačů svou aktivitou toto kritérium splní. Jakmile Esper detekuje splnění pravidla, vytvoří událost. Událost je v aplikaci zpracována. Pokud je aktivní jen jeden počítač, nemá smysl spouštět detailní analýzu. Naopak v případě, že vyhodnocení pravidla způsobilo více počítačů, je žádoucí na této podmnožině spustit detailní analýzu.
 
 Přechod do nového stavu začíná volbou nového konzumenta. Tedy počítače, který bude analyzovat proud jemnozrných událostí. Pro volbu jsem zvolil postup, kdy je nalezen první takový počítač, který ještě neprovádí žádnou analýzu. Díky zvolené ZooKeeper struktuře je to jednoduché. Stačí projít první úroveň a hledat uzel, který ještě nemá žádné potomky. Takovému uzlu je nejdříve poslána akce \textit{CREATE}\footnote{Řídící akce ze seznamu z kapitoly \ref{sec:implementation}}, aby spustil vlákno s konzumentem. Pak tolik akcí \\ \textit{CREATE\_CHILDREN\_PRODUCER}, kolik strojů je určených k jemnozrné analýze. Samozřejmě součástí každé akce jsou i potřebná data (ip adresa počítače apod.).
 
@@ -607,22 +607,22 @@ Na obrázku \ref{fig:zookeeper-state-1} je vidět příklad, kdy byly pro jemnoz
 \begin{figure}[H]
 	\centering
     \includegraphics[width=.6\linewidth, height=.2\textheight]{images/zookeeper-state-1.png}
-    \caption{Ukázka ZooKeeper stromu při současné analýze jemnozrných a hrubozrných událostí}
+    \caption{Ukázka ZK stromu při současné analýze jemnozrných a hrubozrných událostí}
     \label{fig:zookeeper-state-1}
 \end{figure}
 
-Jak už bylo řečeno dříve, ZooKeeper reprezentuje logickou strukturu. Na obrázku \ref{fig:kafka-state-1} je znázorněn odpovídající stav v Kafce. Protože už existují dva konzumenti, jsou v Kafce zaregistrována dvě témata.
+Jak už bylo řečeno dříve, ZooKeeper reprezentuje logickou strukturu. Na obrázku \ref{fig:kafka-state-1} je znázorněn odpovídající stav v aplikačním rámci Kafa. Protože už existují dva konzumenti, jsou v aplik. rámci Kafka zaregistrována dvě témata.
 
 \begin{figure}[H]
 	\centering
     \includegraphics[width=.5\linewidth, height=.3\textheight]{images/kafka-state-1.png}
-    \caption{Ukázka stavu Kafky při současné analýze jemnozrných a hrubozrných událostí. Zkratky \textit{J} a \textit{H} na obrázku znamenají jemnozrné a hrubozrné události.}
+    \caption{Ukázka stavu aplik. rámce Kafka při současné analýze jemnozrných a hrubozrných událostí. Zkratky \textit{J} a \textit{H} na obrázku znamenají jemnozrné a hrubozrné události.}
     \label{fig:kafka-state-1}
 \end{figure}
 
 V aktuálním stavu se tedy zároveň analyzují hrubozrné i jmenozrné události. Cílem další hrubozrné analýzy je odhalit jestli danému pravidlu neodpovídají ještě další počítače. Samozřejmě, pokud bude v průběhu jemnozrné analýzy vyhodnocen stejný vzor (stejná sada počítačů), pak se znovu jemnozrná analýza nespouští. Cílem jemnozrné analýzy je odhalit příčinu vzniku nestandardní situace. Logicky jsou tedy na uzlech \textit{ip1} a  \textit{ip2} nasazena jiná pravidla detekující vzory událostí.
 
-Jak jemnozrná, tak hrubozrná pravidla jsou omezena časovou platností. Po uplynutí této doby je hrubozrná analýza zastavena a DEM čeká na nasazení jiného (nebo stejného) pravidla. V případě jemnozrné analýzy je celá práce ukončena a je potřeba "uklidit". To znamená zastavit vlákna s producenty i konzumentem a smazat příslušné uzly v "druhé vrstvě" ZooKeeper stromu. Tak aby se DEM dostal do stavu z obrázku \ref{fig:zookeeper-impl}.
+Jak jemnozrná, tak hrubozrná pravidla jsou omezena časovou platností. Po uplynutí této doby je hrubozrná analýza zastavena a DEM čeká na nasazení jiného (nebo stejného) pravidla. V případě jemnozrné analýzy je celá práce ukončena a je potřeba "uklidit". To znamená zastavit vlákna s producenty i konzumentem a smazat příslušné uzly v "druhé vrstvě" ZK stromu. Tak aby se DEM dostal do stavu z obrázku \ref{fig:zookeeper-impl}.
 
 Do uzlu, který zpracovává hrubozrné události je možné kdykoli nasadit nové pravidlo pro detekci vzorů událostí.
 
@@ -645,7 +645,7 @@ Protože bylo z počátku složité uchopit celou myšlenku, začal jsem testova
 \end{minipage}
 \end{center}
 
-V této fázi bylo hlavním cílem zjistit jestli Esper správně detekuje vzor událostí. S velkými problémy jsem se setkal při vytváření uzlů v ZooKeeperu. Někdy se uzly vytvářely duplicitně, někdy se vytvořily pod špatným rodičem. Nějakou dobu také trvalo zvolit správný postup vytváření a rušení vláken konzumentů a producentů aby nic nezůstalo "viset v paměti". Jeden příklad za všechny: Když je na uzel v ZooKeeperu navěšen nějaký posluchač a uzel je smazán, neznamená to, že se posluchač stane neaktivním a zruší se. Je ho potřeba explicitně vyjmout z kolekce a až potom smazat uzel. Jinak vznikají duplicity v posluchačích a akce jsou vyhodnoceny vícekrát.
+V této fázi bylo hlavním cílem zjistit jestli Esper správně detekuje vzor událostí. S velkými problémy jsem se setkal při vytváření uzlů v ZK. Někdy se uzly vytvářely duplicitně, někdy se vytvořily pod špatným rodičem. Nějakou dobu také trvalo zvolit správný postup vytváření a rušení vláken konzumentů a producentů aby byla správně uvolňována paměť. Jeden příklad za všechny: Když je na uzel v ZK navěšen nějaký posluchač a uzel je smazán, neznamená to, že se posluchač stane neaktivním a zruší se. Je ho potřeba explicitně vyjmout z kolekce a až potom smazat uzel. Jinak vznikají duplicity v posluchačích a akce jsou vyhodnoceny vícekrát.
 
 Jakmile byly vyřešeny problémy při jednotlivých akcích, bylo potřeba vymyslet reálnější datový model, který bude ukazovat myšlenku hrubozrné a jemnozrné analýzy. Proto jsem datový objekt rozšířil o další vlastnosti. Viz obrázek \ref{fig:data-example-2}. Myšlenka analýzy je tedy taková, že v akcích úrovně jedna se hledá vzor, který by nasvědčoval útoku. Pokud je takový vzor nalezen, je nad podezřelými počítači spuštěna detailní (jemnozrná analýza). Ta spočívá v počítání všech událostí úrovně dva. Pokud jejich počet v určitém časovém okně přesáhne daný limit, je "útok" prohlášen za reálný a zpráva je zapsána do logu.
 
@@ -736,7 +736,7 @@ Tato kapitola má za cíl demonstrovat reálný běh aplikace na testovacích st
 První snímek na obrázku \ref{fig:deploy-rule-screen} ukazuje dva počítače \textit{<ip1>} a \textit{<ip2>} při nasazování pravidla pro hrubozrnou analýzu. Na snímku jsou vyznačeny čtyři významné body:
 
 \begin{enumerate}
-  \item Nasazení pravidla v ZooKeeper konzoli. Pravidlo má za cíl detekovat útok \textit{syn flood}.
+  \item Nasazení pravidla v ZK konzoli. Pravidlo má za cíl detekovat útok \textit{syn flood}.
   \item Aplikace spuštěná na stroji \textit{<ip1>} analyzuje hrubozrné události. Druhý bod na snímku ukazuje, že pravidlu vyhověly dva počítače. To způsobilo, že se zvolil vhodný kandidát pro jemnozrnou analýzu (\textit{<ip2>}) a poslala se mu řídící instrukce s daty.
   \item Třetí bod ukazuje přijetí řídící akce na druhém stroji a spuštění vlákna producenta. 
   \item V tomto bodě je vidět, že hrubozrná analýza na stroji \textit{<ip1>} stále pokračuje a vyhodnotila znovu stejný vzor událostí. Ale skupina pro jemnozrnou analýzu už byla vytvořena, takže se znovu nevytváří.
@@ -762,7 +762,7 @@ Na posledním snímku \ref{fig:clean-up-screen} je vidět postupné zastavován�
 
 \begin{enumerate}
   \item zastavení vlákna producenta
-  \item smazání uzlu v ZooKeeper stromu
+  \item smazání uzlu v ZK stromu
   \item zastavení vlákna konzumenta
 \end{enumerate}
 
@@ -784,23 +784,23 @@ Nejdříve uvedu kompletní seznam. Každému bodu je následně věnován odsta
 	\item Momentální nemožnost spustit více konzumentů na jednom stroji (Více konzumentů).
 	\item Monitoring a spouštění jednotlivých uzlů (Monitoring).
 	\item Dynamické přidávání nových uzlů do hierarchie (Přidávání uzlů).
-	\item Výpadky některých uzlů. Zookeeper je na to připraven, Kafka také, ale není jasné do jakého stavu se dostane stromová hierarchie ZooKeeperu (Výpadky).
+	\item Výpadky některých uzlů. Zookeeper je na to připraven, Kafka také, ale není jasné do jakého stavu se dostane stromová hierarchie ZK (výpadky).
 \end{itemize}
 
 \subsection*{Více konzumentů}
-Tím, že témata v Kafce jsou členěna podle ip adres počítačů, není možné mít na jenom stroji více než jednoho konzumenta. Kdyby to tak bylo, četli by oba ze stejného tématu a "kradli si zprávy". Teoreticky by bylo možné aby se konzumenti dívali na obsah zpráv a podle toho je posílali do některé z instancí Esperu, ale takové řešení je příliš náchylné k chybám a těžko se škáluje.
+Tím, že jsou témata v aplikačním rámci Kafka členěna podle ip adres počítačů, není možné mít na jenom stroji více než jednoho konzumenta. Kdyby to tak bylo, četli by oba ze stejného tématu a "kradli si zprávy". Teoreticky by bylo možné aby se konzumenti dívali na obsah zpráv a podle toho je posílali do některé z instancí aplik. rámce Esper, ale takové řešení je příliš náchylné k chybám a těžko se škáluje.
 
 Vhodným řešením by bylo přidat ke každému tématu i přepážky, které by rozlišovaly druh zpráv. V případě této práce by v každém tématu byly dvě přepážky. Jedna pro jemnozrné (\textit{LEVEL2}) a druhá pro hrubozrné události (\textit{LEVEL1}). Přepážky je možné dynamicky přidávat a tím mít možnost na jednom stroji analyzovat události množství různých typů.
 
 \subsection*{Monitoring}
-Pokud by algoritmus nasazen do produkčního prostředí, byl by zároveň potřeba zavést  důsledný monitoring. Nejen to, jestli všechny instance pracují správně, ale také jaká pravidla jsou aktuálně nasazena a na jakých strojích. Dále vytížení Kafky. Objemy zpracovávaných dat. Atd.
+Pokud by algoritmus nasazen do produkčního prostředí, byl by zároveň potřeba zavést  důsledný monitoring. Nejen to, jestli všechny instance pracují správně, ale také jaká pravidla jsou aktuálně nasazena a na jakých strojích. Dále vytížení aplikačního rámce Kafka. Objemy zpracovávaných dat. Atd.
 
 \subsection*{Přidávání uzlů}
-Uvažoval jsem nad tím, jak by se dalo do systému dynamicky přidávat další stroje. Celá architektura je na to připravená. Jediný problém je u ZooKeeperu. Jeho konfigurace je statická a zároveň se seznam adres předává i jako vstupní parametr při startu aplikace. Před verzí \textit{3.5.0} bylo jedinou možností napsat skript, který bude postupně provádět rekonfiguraci. Od verze \textit{3.5.0} má ZooKeeper v dokumentaci [\ref{bib_7}] popsán mechanizmus pro dynamickou rekonfiguraci\footnote{Konkrétní část dokumentace: \\
+Uvažoval jsem nad tím, jak by se dalo do systému dynamicky přidávat další stroje. Celá architektura je na to připravená. Jediný problém je u ZK. Jeho konfigurace je statická a zároveň se seznam adres předává i jako vstupní parametr při startu aplikace. Před verzí \textit{3.5.0} bylo jedinou možností napsat skript, který bude postupně provádět rekonfiguraci. Od verze \textit{3.5.0} má ZooKeeper v dokumentaci [\ref{bib_7}] popsán mechanizmus pro dynamickou rekonfiguraci\footnote{Konkrétní část dokumentace: \\
 https://zookeeper.apache.org/doc/trunk/zookeeperReconfig.html}.
 
 \subsection*{Výpadky}
-V rámci testování jsem zkoušel jak se aplikace vzpamatuje z výpadků některých uzlů. Chování nebylo příliš predikovatelné. Záleželo na tom v jaké fázi analýzy došlo k výpadku. Jestli byla spuštěna jemnozrná analýza nebo nikoliv. Pravidelně se opakovaly dva problémy. V ZooKeeperu zůstal zaregistrovaný některý z posluchačů a při obnově se stal znovu aktivním a tím docházelo k duplicitnímu zpracování řídících akcí. Druhým problémem byly nesmazané uzly ze ZooKeeper stromu, který se používá jako reprezentace stavu DEM.
+V rámci testování jsem zkoušel jak se aplikace vzpamatuje z výpadků některých uzlů. Chování nebylo příliš predikovatelné. Záleželo na tom v jaké fázi analýzy došlo k výpadku. Jestli byla spuštěna jemnozrná analýza nebo nikoliv. Pravidelně se opakovaly dva problémy. V ZK zůstal zaregistrovaný některý z posluchačů a při obnově se stal znovu aktivním a tím docházelo k duplicitnímu zpracování řídících akcí. Druhým problémem byly nesmazané uzly ze ZooKeeper stromu, který se používá jako reprezentace stavu DEM.
 
 \chapter{Závěr}
 TODO - dopsat

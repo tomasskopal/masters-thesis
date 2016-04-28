@@ -38,7 +38,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.2}\slshape Shrnut\IeC {\'\i }}{20}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}\slshape Ud\IeC {\'a}losti v syst\IeC {\'e}mu}{22}{section.5.3}
+\contentsline {section}{\numberline {5.3}\slshape Ud\IeC {\'a}losti v syst\IeC {\'e}mu}{21}{section.5.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {6}\bfseries Nasazen\IeC {\'\i }}{23}{chapter.6}
 \defcounter {refsection}{0}\relax 

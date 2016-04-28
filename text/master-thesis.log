@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  28 APR 2016 23:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  28 APR 2016 23:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2397,7 +2397,7 @@ Package epstopdf Info: Source file: <images/cloud-comparison.eps>
 (epstopdf)                    size: 19477 bytes
 (epstopdf)             Output file: <images/cloud-comparison-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-04-28 23:03:06
+(epstopdf)                    date: 2016-04-28 23:08:23
 (epstopdf)                    size: 8444 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/cloud-comparison-ep
 s-converted-to.pdf images/cloud-comparison.eps>
@@ -2610,7 +2610,14 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [19
+]
+<images/zookeeper-impl.png, id=394, 571.736pt x 186.296pt>
+File: images/zookeeper-impl.png Graphic file (type png)
+
+<use images/zookeeper-impl.png>
+Package pdftex.def Info: images/zookeeper-impl.png used on input line 421.
+(pdftex.def)             Requested size: 361.35587pt x 120.23247pt.
+ [19
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2632,19 +2639,18 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-<images/zookeeper-impl.png, id=406, 571.736pt x 186.296pt>
-File: images/zookeeper-impl.png Graphic file (type png)
-
-<use images/zookeeper-impl.png>
-Package pdftex.def Info: images/zookeeper-impl.png used on input line 421.
-(pdftex.def)             Requested size: 361.35587pt x 120.23247pt.
-
 Underfull \hbox (badness 10000) in alignment at lines 450--450
 [][][][]
  []
 
+<images/app-architecture.png, id=407, 420.772pt x 448.877pt>
+File: images/app-architecture.png Graphic file (type png)
 
-Underfull \vbox (badness 3657) has occurred while \output is active []
+<use images/app-architecture.png>
+Package pdftex.def Info: images/app-architecture.png used on input line 457.
+(pdftex.def)             Requested size: 252.94667pt x 311.50627pt.
+
+Underfull \vbox (badness 1584) has occurred while \output is active []
 
  [20
 color push 0 g 0 G
@@ -2654,20 +2660,13 @@ color push 0 g 0 G
 color pop
 color pop
 color push 0 g 0 G
-color pop
- <./images/zookeeper-impl.png>]
-<images/app-architecture.png, id=413, 420.772pt x 448.877pt>
-File: images/app-architecture.png Graphic file (type png)
-
-<use images/app-architecture.png>
-Package pdftex.def Info: images/app-architecture.png used on input line 457.
-(pdftex.def)             Requested size: 252.94667pt x 311.50627pt.
- [21
 color push 0 g 0 G
 color pop
-color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
+ <./images/zookeeper-impl.png>] [21
+color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color push 0 g 0 G
@@ -2703,7 +2702,7 @@ Package caption Warning: The option `hypcap=true' will be ignored for this
 See the caption package documentation for explanation.
 
 
-Underfull \vbox (badness 1648) has occurred while \output is active []
+Underfull \vbox (badness 3690) has occurred while \output is active []
 
  [23
 color push 0 g 0 G
@@ -2852,6 +2851,8 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
+color push 0 g 0 G
+color pop
 ] <images/app-start.png, id=485, 313.17pt x 186.296pt>
 File: images/app-start.png Graphic file (type png)
 
@@ -2859,8 +2860,6 @@ File: images/app-start.png Graphic file (type png)
 Package pdftex.def Info: images/app-start.png used on input line 593.
 (pdftex.def)             Requested size: 144.54257pt x 98.36685pt.
  [27
-color push 0 g 0 G
-color pop
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2886,7 +2885,7 @@ File: images/kafka-state-1.png Graphic file (type png)
 Package pdftex.def Info: images/kafka-state-1.png used on input line 618.
 (pdftex.def)             Requested size: 180.67136pt x 163.95465pt.
 
-Underfull \vbox (badness 1960) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [28
 color push 0 g 0 G
@@ -3807,7 +3806,7 @@ Package logreq Info: Writing requests to 'master-thesis.run.xml'.
 Here is how much of TeX's memory you used:
  46339 strings out of 493089
  859216 string characters out of 6134842
- 1347041 words of memory out of 5000000
+ 1347039 words of memory out of 5000000
  48654 multiletter control sequences out of 15000+600000
  87796 words of font info for 146 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -3824,7 +3823,7 @@ c/lm/lmtt10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/lm/lmtt1
 local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplri.pfb></usr/local
 /texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texliv
 e/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on master-thesis.pdf (46 pages, 667969 bytes).
+Output written on master-thesis.pdf (46 pages, 667038 bytes).
 PDF statistics:
  742 PDF objects out of 1000 (max. 8388607)
  626 compressed objects within 7 object streams
