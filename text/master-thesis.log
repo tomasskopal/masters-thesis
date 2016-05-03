@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  3 MAY 2016 18:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  3 MAY 2016 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2350,12 +2350,16 @@ Package epstopdf Info: Source file: <images/analysis_case_1.eps>
 (epstopdf)                    size: 15736 bytes
 (epstopdf)             Output file: <images/analysis_case_1-eps-converted-to.pd
 f>
-(epstopdf)                    date: 2016-04-29 00:08:42
-(epstopdf)                    size: 7988 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/analysis_case_1-eps
 -converted-to.pdf images/analysis_case_1.eps>
 (epstopdf)             \includegraphics on input line 205.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/analysis_case_1-eps-converted-to.pdf image
+s/analysis_case_1.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/analysis_case_1-eps-converted-to.pd
+f>
+(epstopdf)                    date: 2016-05-03 18:52:55
+(epstopdf)                    size: 7988 bytes.
 <images/analysis_case_1-eps-converted-to.pdf, id=255, 152.57pt x 92.345pt>
 File: images/analysis_case_1-eps-converted-to.pdf Graphic file (type pdf)
 
@@ -2368,12 +2372,16 @@ Package epstopdf Info: Source file: <images/analysis_case_2.eps>
 (epstopdf)                    size: 16344 bytes
 (epstopdf)             Output file: <images/analysis_case_2-eps-converted-to.pd
 f>
-(epstopdf)                    date: 2016-04-29 00:08:42
-(epstopdf)                    size: 8113 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/analysis_case_2-eps
 -converted-to.pdf images/analysis_case_2.eps>
 (epstopdf)             \includegraphics on input line 214.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/analysis_case_2-eps-converted-to.pdf image
+s/analysis_case_2.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/analysis_case_2-eps-converted-to.pd
+f>
+(epstopdf)                    date: 2016-05-03 18:52:55
+(epstopdf)                    size: 8113 bytes.
 
 <images/analysis_case_2-eps-converted-to.pdf, id=257, 152.57pt x 92.345pt>
 File: images/analysis_case_2-eps-converted-to.pdf Graphic file (type pdf)
@@ -2397,12 +2405,16 @@ Package epstopdf Info: Source file: <images/cloud-comparison.eps>
 (epstopdf)                    size: 19477 bytes
 (epstopdf)             Output file: <images/cloud-comparison-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-04-29 00:08:43
-(epstopdf)                    size: 8444 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/cloud-comparison-ep
 s-converted-to.pdf images/cloud-comparison.eps>
 (epstopdf)             \includegraphics on input line 230.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/cloud-comparison-eps-converted-to.pdf imag
+es/cloud-comparison.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/cloud-comparison-eps-converted-to.p
+df>
+(epstopdf)                    date: 2016-05-03 18:52:56
+(epstopdf)                    size: 8444 bytes.
 
 <images/cloud-comparison-eps-converted-to.pdf, id=272, 533.995pt x 331.2375pt>
 File: images/cloud-comparison-eps-converted-to.pdf Graphic file (type pdf)
@@ -2529,12 +2541,15 @@ Package epstopdf Info: Source file: <images/kafka.eps>
 (epstopdf)                    date: 2016-04-28 23:52:41
 (epstopdf)                    size: 26864 bytes
 (epstopdf)             Output file: <images/kafka-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-04-29 00:08:43
-(epstopdf)                    size: 11107 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/kafka-eps-converted
 -to.pdf images/kafka.eps>
 (epstopdf)             \includegraphics on input line 331.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/kafka-eps-converted-to.pdf images/kafka.ep
+s)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/kafka-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-05-03 18:52:57
+(epstopdf)                    size: 11107 bytes.
  <images/kafka-eps-converted-to.pdf, id=349, 364.36125pt x 354.32375pt>
 File: images/kafka-eps-converted-to.pdf Graphic file (type pdf)
 
@@ -2562,12 +2577,15 @@ Package epstopdf Info: Source file: <images/kafka-impl.eps>
 (epstopdf)                    date: 2016-04-28 23:53:05
 (epstopdf)                    size: 27841 bytes
 (epstopdf)             Output file: <images/kafka-impl-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-04-29 00:08:44
-(epstopdf)                    size: 11982 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/kafka-impl-eps-conv
 erted-to.pdf images/kafka-impl.eps>
 (epstopdf)             \includegraphics on input line 349.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/kafka-impl-eps-converted-to.pdf images/kaf
+ka-impl.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/kafka-impl-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-05-03 18:52:57
+(epstopdf)                    size: 11982 bytes.
  <images/kafka-impl-eps-converted-to.pdf, id=364, 427.5975pt x 324.21124pt>
 File: images/kafka-impl-eps-converted-to.pdf Graphic file (type pdf)
 
@@ -2643,12 +2661,16 @@ Package epstopdf Info: Source file: <images/zookeeper-impl.eps>
 (epstopdf)                    size: 19972 bytes
 (epstopdf)             Output file: <images/zookeeper-impl-eps-converted-to.pdf
 >
-(epstopdf)                    date: 2016-04-29 00:08:44
-(epstopdf)                    size: 9352 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/zookeeper-impl-eps-
 converted-to.pdf images/zookeeper-impl.eps>
 (epstopdf)             \includegraphics on input line 421.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/zookeeper-impl-eps-converted-to.pdf images
+/zookeeper-impl.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/zookeeper-impl-eps-converted-to.pdf
+>
+(epstopdf)                    date: 2016-05-03 18:52:57
+(epstopdf)                    size: 9352 bytes.
 
 <images/zookeeper-impl-eps-converted-to.pdf, id=403, 572.1375pt x 188.705pt>
 File: images/zookeeper-impl-eps-converted-to.pdf Graphic file (type pdf)
@@ -2688,12 +2710,16 @@ Package epstopdf Info: Source file: <images/app-architecture.eps>
 (epstopdf)                    size: 51270 bytes
 (epstopdf)             Output file: <images/app-architecture-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-04-29 00:08:45
-(epstopdf)                    size: 19401 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/app-architecture-ep
 s-converted-to.pdf images/app-architecture.eps>
 (epstopdf)             \includegraphics on input line 457.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/app-architecture-eps-converted-to.pdf imag
+es/app-architecture.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/app-architecture-eps-converted-to.p
+df>
+(epstopdf)                    date: 2016-05-03 18:52:58
+(epstopdf)                    size: 19401 bytes.
 
 <images/app-architecture-eps-converted-to.pdf, id=416, 421.575pt x 450.68375pt>
 File: images/app-architecture-eps-converted-to.pdf Graphic file (type pdf)
@@ -2910,12 +2936,15 @@ Package epstopdf Info: Source file: <images/app-start.eps>
 (epstopdf)                    date: 2016-04-28 23:51:56
 (epstopdf)                    size: 14212 bytes
 (epstopdf)             Output file: <images/app-start-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-04-29 00:08:45
-(epstopdf)                    size: 7492 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/app-start-eps-conve
 rted-to.pdf images/app-start.eps>
 (epstopdf)             \includegraphics on input line 593.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/app-start-eps-converted-to.pdf images/app-
+start.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/app-start-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-05-03 18:52:58
+(epstopdf)                    size: 7492 bytes.
  <images/app-start-eps-converted-to.pdf, id=511, 314.17375pt x 188.705pt>
 File: images/app-start-eps-converted-to.pdf Graphic file (type pdf)
 
@@ -2940,12 +2969,16 @@ Package epstopdf Info: Source file: <images/zookeeper-state-1.eps>
 (epstopdf)                    size: 18464 bytes
 (epstopdf)             Output file: <images/zookeeper-state-1-eps-converted-to.
 pdf>
-(epstopdf)                    date: 2016-04-29 00:08:46
-(epstopdf)                    size: 8703 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/zookeeper-state-1-e
 ps-converted-to.pdf images/zookeeper-state-1.eps>
 (epstopdf)             \includegraphics on input line 609.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/zookeeper-state-1-eps-converted-to.pdf ima
+ges/zookeeper-state-1.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/zookeeper-state-1-eps-converted-to.
+pdf>
+(epstopdf)                    date: 2016-05-03 18:52:59
+(epstopdf)                    size: 8703 bytes.
 
 <images/zookeeper-state-1-eps-converted-to.pdf, id=526, 454.69875pt x 240.9pt>
 File: images/zookeeper-state-1-eps-converted-to.pdf Graphic file (type pdf)
@@ -2959,12 +2992,16 @@ Package epstopdf Info: Source file: <images/kafka-state-1.eps>
 (epstopdf)                    size: 33327 bytes
 (epstopdf)             Output file: <images/kafka-state-1-eps-converted-to.pdf>
 
-(epstopdf)                    date: 2016-04-29 00:08:46
-(epstopdf)                    size: 13151 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/kafka-state-1-eps-c
 onverted-to.pdf images/kafka-state-1.eps>
 (epstopdf)             \includegraphics on input line 618.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/kafka-state-1-eps-converted-to.pdf images/
+kafka-state-1.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/kafka-state-1-eps-converted-to.pdf>
+
+(epstopdf)                    date: 2016-05-03 18:52:59
+(epstopdf)                    size: 13151 bytes.
 
 <images/kafka-state-1-eps-converted-to.pdf, id=528, 427.5975pt x 319.1925pt>
 File: images/kafka-state-1-eps-converted-to.pdf Graphic file (type pdf)
@@ -3071,12 +3108,16 @@ Package epstopdf Info: Source file: <images/pc-data-distribution.eps>
 (epstopdf)                    size: 32007 bytes
 (epstopdf)             Output file: <images/pc-data-distribution-eps-converted-
 to.pdf>
-(epstopdf)                    date: 2016-04-29 00:08:47
-(epstopdf)                    size: 13485 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/pc-data-distributio
 n-eps-converted-to.pdf images/pc-data-distribution.eps>
 (epstopdf)             \includegraphics on input line 674.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/pc-data-distribution-eps-converted-to.pdf 
+images/pc-data-distribution.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/pc-data-distribution-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2016-05-03 18:53:00
+(epstopdf)                    size: 13485 bytes.
 
 <images/pc-data-distribution-eps-converted-to.pdf, id=572, 302.12875pt x 106.39
 75pt>
@@ -3571,12 +3612,16 @@ Package epstopdf Info: Source file: <images/deployment-diagram.eps>
 (epstopdf)                    size: 30843 bytes
 (epstopdf)             Output file: <images/deployment-diagram-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-05-03 18:41:34
-(epstopdf)                    size: 12780 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/deployment-diagram-
 eps-converted-to.pdf images/deployment-diagram.eps>
 (epstopdf)             \includegraphics on input line 740.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(repstopdf --outfile=images/deployment-diagram-eps-converted-to.pdf im
+ages/deployment-diagram.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/deployment-diagram-eps-converted-to
+.pdf>
+(epstopdf)                    date: 2016-05-03 18:53:00
+(epstopdf)                    size: 12780 bytes.
 
 <images/deployment-diagram-eps-converted-to.pdf, id=616, 372.39125pt x 406.5187
 5pt>
@@ -3903,49 +3948,49 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-Underfull \hbox (badness 4940) in paragraph at lines 894--895
+Underfull \hbox (badness 4940) in paragraph at lines 895--896
 []\T1/qpl/m/n/12 (+20) Celeda, Pa-vel. Ne-twork Traf-fic Ana-ly-sis for Cyber S
 ecu-
  []
 
 
-Underfull \hbox (badness 5563) in paragraph at lines 894--895
+Underfull \hbox (badness 5563) in paragraph at lines 895--896
 \T1/qpl/m/n/12 (+20) rity. Brno, 2013. Ma-sa-ryk Uni-ver-zity. [on-line]. Do-st
 upné
  []
 
 
-Underfull \hbox (badness 1082) in paragraph at lines 894--895
+Underfull \hbox (badness 1082) in paragraph at lines 895--896
 \T1/qpl/m/n/12 (+20) z: []$\T1/lmtt/m/n/12 https : / / is . muni . cz / do / re
 ct / habilitace / 1433 / 44368572 /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 905--906
+Underfull \hbox (badness 10000) in paragraph at lines 906--907
 []$\T1/lmtt/m/n/12 http : / / grids . ucs . indiana . edu / ptliupages / public
 ations /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 914--915
+Underfull \hbox (badness 10000) in paragraph at lines 915--916
 []\T1/qpl/m/n/12 (+20) Official Go-o-gle do-cu-men-tation [on-line]. Do-stupné 
 z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 914--915
+Underfull \hbox (badness 10000) in paragraph at lines 915--916
 []$\T1/lmtt/m/n/12 https : / / support . google . com / analytics / answer / 16
 62518 ?
  []
 
 
-Underfull \hbox (badness 7832) in paragraph at lines 926--927
+Underfull \hbox (badness 7832) in paragraph at lines 927--928
 []\T1/qpl/m/n/12 (+20) Process real-time big data with Twit-ter Storm [on-line]
 .
  []
 
 
-Underfull \hbox (badness 2865) in paragraph at lines 926--927
+Underfull \hbox (badness 2865) in paragraph at lines 927--928
 \T1/qpl/m/n/12 (+20) Do-stupné z: []$\T1/lmtt/m/n/12 http : / / www . ibm . com
  / developerworks / library /
  []
@@ -3962,7 +4007,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.927 
+l.928 
       
 color push 0 g 0 G
 color pop
@@ -3975,7 +4020,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.927 
+l.928 
       
 color push 0 g 0 G
 color pop
@@ -3986,7 +4031,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.927 
+l.928 
       
 color push 0 g 0 G
 color pop
@@ -3997,7 +4042,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.927 
+l.928 
       
 color push 0 g 0 G
 color pop
@@ -4017,11 +4062,11 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 933.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 933.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 934.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 934.
 (./master-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 933.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 933.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 934.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 934.
 Package rerunfilecheck Info: File `master-thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 3A68F16259089DEFEF59FC1C899B9C19;1997.
 
@@ -4055,7 +4100,7 @@ c/lm/lmtt10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/lm/lmtt1
 local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplri.pfb></usr/local
 /texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texliv
 e/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on master-thesis.pdf (48 pages, 440462 bytes).
+Output written on master-thesis.pdf (48 pages, 440451 bytes).
 PDF statistics:
  856 PDF objects out of 1000 (max. 8388607)
  726 compressed objects within 8 object streams
