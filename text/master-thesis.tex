@@ -731,25 +731,113 @@ by source, level having count(*) > 7"
 \end{center}
 
 \section{Demo}
-Tato kapitola má za cíl demonstrovat reálný běh aplikace na testovacích strojích. Všechny výstupy aplikace jsou logovány do souboru. Myslím si, že vhodným způsobem ukázky běhu programu jsou snímky obrazovky jejich výstupů. Aby byly snímky snadno pochopitelné, jsou v nich zvýrazněné a okomentované důležité prvky.
+Tato kapitola má za cíl demonstrovat reálný běh aplikace na testovacích strojích. Všechny výstupy aplikace jsou logovány do souboru. Myslím si, že vhodným způsobem ukázky běhu programu jsou konkrétní výňatky z \textit{log} souborů. Každá ukázka je popsána, aby byly výstupy snadno pochopitelné.
 
-První snímek na obrázku \ref{fig:deploy-rule-screen} ukazuje dva počítače \textit{<ip1>} a \textit{<ip2>} při nasazování pravidla pro hrubozrnou analýzu. Na snímku jsou vyznačeny čtyři významné body:
+Před samotnou demonstrací běhu programu ještě uvádím diagram nasazení \ref{fig:deployment-diagram}. Ten dává jasnou představu o tom, které technologie jsou v jednotlivých uzlech nasazeny a v jakém jsou vztahu.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.75\linewidth, height=.5\textheight]{images/deployment-diagram.eps}
+    \caption{Diagram nasazení}
+    \label{fig:deployment-diagram}
+\end{figure}
+
+V diagramu nasazení jsou nad jeho rámec uvedeny i konkrétní ip adresy strojů. Ip adresy jsou součástí logů a jsou tedy i součástí demonstrace.
+
+Postupně budu na třech ukázkách demonstrovat běh aplikace v následujícím scénáři:
 
 \begin{enumerate}
-  \item Nasazení pravidla v ZK konzoli. Pravidlo má za cíl detekovat útok \textit{syn flood}.
-  \item Aplikace spuštěná na stroji \textit{<ip1>} analyzuje hrubozrné události. Druhý bod na snímku ukazuje, že pravidlu vyhověly dva počítače. To způsobilo, že se zvolil vhodný kandidát pro jemnozrnou analýzu (\textit{<ip2>}) a poslala se mu řídící instrukce s daty.
-  \item Třetí bod ukazuje přijetí řídící akce na druhém stroji a spuštění vlákna producenta. 
+  \item Nasazení pravidla pro hrubozrnou analýzu.
+  \item Detekce hrubozrných událostí na dvou počítačích.
+  \item Spuštění jemnozrné analýzy pro tyto dva počítače.
+  \item Potvrzení potenciálního útoku při jemnozrné analýze.
+  \item Návrat aplikace do iniciálního stavu.
+\end{enumerate}
+
+První ukázka \ref{fig:deploy-rule-example} obsahuje výpis ze dvou počítačů \textit{<ip1>} a \textit{<ip2>} při nasazování pravidla pro hrubozrnou analýzu. Postupně je uveden výpis událostí na obou počítačích. Podrobný popis každého ze čtyř bodů je pod ukázkou.
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+1. zk-cli console:
+[zk: 147.251.43.181:2181] set /root/147.251.43.181
+{"action":"SET_EP_RULE","rule":"SYN_FLOOD"}
+
+2. PC<ip1>:
+INFO - Event received.
+INFO - Bean: /root/147.251.43.181/147.251.43.181
+INFO - Bean: /root/147.251.43.181/147.251.43.130
+INFO - New Parent: 147.251.43.130
+INFO - Create new consumer at: /root/147.251.43.130
+INFO - Set data at node: /root/147.251.43.181
+INFO - Set data at node: /root/147.251.43.130
+
+3. PC<ip1> & PC<ip2>:
+INFO - Evaluated action will be: CREATE_CHILDREN_PRODUCER.
+	Data: {"parent":"147.251.43.130", "level": "LEVEL2"}
+
+4. PC<ip1>:
+INFO - Event received.
+INFO - New Parent: null
+	\end{mylisting}
+	\captionof{figure}{Nasazení pravidla na hrubozrnou analýzu}
+	\label{fig:deploy-rule-example}
+\end{minipage}
+\end{center}
+
+Popis jednotlivých bodů z ukázky \ref{fig:deploy-rule-example}:
+\begin{enumerate}
+  \item Nasazení pravidla v ZK konzoli. Pravidlo\footnote{Detail pravidla je na ukázce \ref{fig:syn_flood_rule}} má za cíl detekovat útok \textit{syn flood}.
+  \item Aplikace spuštěná na stroji \textit{<ip1>} analyzuje hrubozrné události. Druhý bod ukazuje, že pravidlu vyhověly dva počítače. Byl zvolen vhodný kandidát pro jemnozrnou analýzu (\textit{<ip2>}). Dále jsou poslány řídící instrukce s daty oběma počítačům. \textit{<Ip2>} se stane konzumentem i producentem, \textit{<ip1>} se stane pouze producentem.
+  \item Třetí bod ukazuje přijetí řídící akce na obou počítačích. V objektu jsou i nezbytná data. V ukázce je vidět, pro zjednodušení, pouze cíl (\textit{parent}) pro posílání dat a typ dat, která se mají posílat (\textit{level}).
   \item V tomto bodě je vidět, že hrubozrná analýza na stroji \textit{<ip1>} stále pokračuje a vyhodnotila znovu stejný vzor událostí. Ale skupina pro jemnozrnou analýzu už byla vytvořena, takže se znovu nevytváří.
 \end{enumerate}
 
+Druhá ukázka \ref{fig:match-pattern-example} znázorňuje detekci vzoru při jemnozrné analýze na PC \textit{<ip2>}. Pravidlo\footnote{Detail pravidla je na ukázce \ref{fig:level_2_rule}} vyhodnocuje události v plovoucím časovém okně pět vteřin. Během těchto pěti vteřin, ve kterých Esper analyzoval příchozí událostí bylo detekováno osm a jedenáct výskytů. To je více než minimální hranice sedm událostí, kterou specifikuje pravidlo. Jednoduše řečeno, útok \textit{syn flood} je potvrzen.
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+PC<ip2>:
+INFO - Event received - level 2. Printing info. PC count: 2
+INFO - Event data. Source:
+	/root/147.251.43.130/147.251.43.130, count: 8
+INFO - Event data. Source:
+	/root/147.251.43.130/147.251.43.181, count: 11
+	\end{mylisting}
+	\captionof{figure}{Detekce vzoru při jemnozrné analýze}
+	\label{fig:match-pattern-example}
+\end{minipage}
+\end{center}
+
+Na posledním snímku \ref{fig:clean-up-example} je vidět postupné zastavování jemnozrné analýzy na počítači \textit{<ip2>}. Tím se DEM vrací do výchozího stavu z obrázku \ref{fig:kafka-impl}. Odshora jsou vypsány události:
+
+\begin{enumerate}
+  \item zastavení vlákna producenta (je také provedena na počítači \textit{<ip1>})
+  \item smazání uzlu v ZK stromu
+  \item zastavení vlákna konzumenta
+\end{enumerate}
+
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+PC<ip2>:
+INFO - Evaluated action will be: STOP_PRODUCER
+INFO - Deleting node: /root/147.251.43.130/147.251.43.130
+INFO - Evaluated action will be: STOP_CONSUMER
+	\end{mylisting}
+	\captionof{figure}{Postupné zastavování jemnozrné analýzy}
+	\label{fig:clean-up-example}
+\end{minipage}
+\end{center}
+
+\iffalse
 \begin{figure}[H]
 	\centering
     \includegraphics[width=\linewidth, height=.3\textheight]{images/deploy-rule-screen.png}
     \caption{Nasazení pravidla na hrubozrnou analýzu}
     \label{fig:deploy-rule-screen}
 \end{figure}
-
-Druhý snímek na obrázku \ref{fig:match-pattern-screen} ukazuje detekování vzoru při jemnozrné analýze. Je vidět, že během pěti vteřin, ve kterých Esper analyzoval příchozí událostí bylo detekováno osm výskytů. To je více než minimální hranice sedm událostí, kterou specifikuje pravidlo. Jednoduše řečeno, útok \textit{syn flood} je potvrzen.
 
 \begin{figure}[H]
 	\centering
@@ -758,20 +846,13 @@ Druhý snímek na obrázku \ref{fig:match-pattern-screen} ukazuje detekování v
     \label{fig:match-pattern-screen}
 \end{figure}
 
-Na posledním snímku \ref{fig:clean-up-screen} je vidět postupné zastavování jemnozrné analýzy na počítači \textit{<ip2>}. Tím se DEM vrací do výchozího stavu z obrázku \ref{fig:kafka-impl}. Odshora jsou označeny:
-
-\begin{enumerate}
-  \item zastavení vlákna producenta
-  \item smazání uzlu v ZK stromu
-  \item zastavení vlákna konzumenta
-\end{enumerate}
-
 \begin{figure}[H]
 	\centering
     \includegraphics[width=.8\linewidth, height=.15\textheight]{images/clean-up-screen.png}
     \caption{Postupné zastavování jemnozrné analýzy}
     \label{fig:clean-up-screen}
 \end{figure}
+\fi
 
 \section{Známá omezení}
 Pomocí navrhovaného řešení je možné analyzovat širokou škálu událostí. Nejen dopady síťové komunikace, ale i síťový provoz jako takový. Dále je možné řešení nasadit například na analýzu aplikačních logů.

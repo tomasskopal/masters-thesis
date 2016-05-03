@@ -1,4 +1,5 @@
-"select source, count(*) as cnt, level from
-IncommingEvent(level='LEVEL2').win:time_batch(5 sec) group
-by source, level having count(*) > 7"
+PC<ip2>:
+INFO - Evaluated action will be: STOP_PRODUCER
+INFO - Deleting node: /root/147.251.43.130/147.251.43.130
+INFO - Evaluated action will be: STOP_CONSUMER
 	

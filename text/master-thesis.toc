@@ -54,6 +54,6 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {6.4}\slshape Demo}{33}{section.6.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.5}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{35}{section.6.5}
+\contentsline {section}{\numberline {6.5}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{37}{section.6.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {7}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{38}{chapter.7}
+\contentsline {chapter}{\numberline {7}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{40}{chapter.7}
