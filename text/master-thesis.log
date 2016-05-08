@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  8 MAY 2016 15:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.22)  8 MAY 2016 19:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1994,6 +1994,9 @@ LaTeX Warning: Label `A' multiply defined.
 
 LaTeX Warning: Label `A' multiply defined.
 
+
+LaTeX Warning: Label `C' multiply defined.
+
 )
 \openout1 = `master-thesis.aux'.
 
@@ -2378,51 +2381,101 @@ color pop
 color pop
 color push 0 g 0 G
 color pop
- <./images/samsa-job-detail.png>] [8
+ <./images/samsa-job-detail.png>]
+\openout4 = `master-thesis.listing'.
+
+ (./master-thesis.listing)
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 230.
+See the caption package documentation for explanation.
+
+Package epstopdf Info: Source file: <images/cave-concept.eps>
+(epstopdf)                    date: 2016-05-08 19:34:53
+(epstopdf)                    size: 40406 bytes
+(epstopdf)             Output file: <images/cave-concept-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-05-08 19:31:57
+(epstopdf)                    size: 21492 bytes
+(epstopdf)             Command: <repstopdf --outfile=images/cave-concept-eps-co
+nverted-to.pdf images/cave-concept.eps>
+(epstopdf)             \includegraphics on input line 239.
+runsystem(repstopdf --outfile=images/cave-concept-eps-converted-to.pdf images/c
+ave-concept.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <images/cave-concept-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-05-08 19:35:14
+(epstopdf)                    size: 21522 bytes.
+<images/cave-concept-eps-converted-to.pdf, id=285, 575.14874pt x 147.55125pt>
+File: images/cave-concept-eps-converted-to.pdf Graphic file (type pdf)
+
+<use images/cave-concept-eps-converted-to.pdf>
+Package pdftex.def Info: images/cave-concept-eps-converted-to.pdf used on input
+ line 239.
+(pdftex.def)             Requested size: 361.3627pt x 109.30103pt.
+ [8
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-]
+color push 0 g 0 G
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color pop
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
+] [9
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color push 0 g 0 G
+color pop
+color pop
+color push 0 g 0 G
+color pop
+ <./images/cave-concept-eps-converted-to.pdf>]
 Kapitola 4.
 Package epstopdf Info: Source file: <images/analysis_case_1.eps>
 (epstopdf)                    date: 2016-04-27 18:25:27
 (epstopdf)                    size: 15736 bytes
 (epstopdf)             Output file: <images/analysis_case_1-eps-converted-to.pd
 f>
-(epstopdf)                    date: 2016-05-03 18:52:55
+(epstopdf)                    date: 2016-05-08 19:31:57
 (epstopdf)                    size: 7988 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/analysis_case_1-eps
 -converted-to.pdf images/analysis_case_1.eps>
-(epstopdf)             \includegraphics on input line 234.
+(epstopdf)             \includegraphics on input line 257.
 Package epstopdf Info: Output file is already uptodate.
-<images/analysis_case_1-eps-converted-to.pdf, id=285, 152.57pt x 92.345pt>
+<images/analysis_case_1-eps-converted-to.pdf, id=310, 152.57pt x 92.345pt>
 File: images/analysis_case_1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/analysis_case_1-eps-converted-to.pdf>
 Package pdftex.def Info: images/analysis_case_1-eps-converted-to.pdf used on in
-put line 234.
+put line 257.
 (pdftex.def)             Requested size: 144.54257pt x 81.97118pt.
 Package epstopdf Info: Source file: <images/analysis_case_2.eps>
 (epstopdf)                    date: 2016-04-27 18:28:19
 (epstopdf)                    size: 16344 bytes
 (epstopdf)             Output file: <images/analysis_case_2-eps-converted-to.pd
 f>
-(epstopdf)                    date: 2016-05-03 18:52:55
+(epstopdf)                    date: 2016-05-08 19:31:58
 (epstopdf)                    size: 8113 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/analysis_case_2-eps
 -converted-to.pdf images/analysis_case_2.eps>
-(epstopdf)             \includegraphics on input line 243.
+(epstopdf)             \includegraphics on input line 266.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/analysis_case_2-eps-converted-to.pdf, id=287, 152.57pt x 92.345pt>
+<images/analysis_case_2-eps-converted-to.pdf, id=312, 152.57pt x 92.345pt>
 File: images/analysis_case_2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/analysis_case_2-eps-converted-to.pdf>
 Package pdftex.def Info: images/analysis_case_2-eps-converted-to.pdf used on in
-put line 243.
+put line 266.
 (pdftex.def)             Requested size: 144.54257pt x 81.97118pt.
- [9
+ [10
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2437,21 +2490,21 @@ Package epstopdf Info: Source file: <images/cloud-comparison.eps>
 (epstopdf)                    size: 19477 bytes
 (epstopdf)             Output file: <images/cloud-comparison-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-05-03 18:52:56
+(epstopdf)                    date: 2016-05-08 19:31:58
 (epstopdf)                    size: 8444 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/cloud-comparison-ep
 s-converted-to.pdf images/cloud-comparison.eps>
-(epstopdf)             \includegraphics on input line 259.
+(epstopdf)             \includegraphics on input line 282.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/cloud-comparison-eps-converted-to.pdf, id=302, 533.995pt x 331.2375pt>
+<images/cloud-comparison-eps-converted-to.pdf, id=328, 533.995pt x 331.2375pt>
 File: images/cloud-comparison-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/cloud-comparison-eps-converted-to.pdf>
 Package pdftex.def Info: images/cloud-comparison-eps-converted-to.pdf used on i
-nput line 259.
+nput line 282.
 (pdftex.def)             Requested size: 180.6759pt x 109.2986pt.
- [10
+ [11
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2460,7 +2513,7 @@ color pop
 color pop
 color push 0 g 0 G
 color pop
- <./images/analysis_case_2-eps-converted-to.pdf>] [11
+ <./images/analysis_case_2-eps-converted-to.pdf>] [12
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2472,13 +2525,13 @@ color pop
 color push 0 g 0 G
 color pop
  <./images/cloud-comparison-eps-converted-to.pdf>]
-<images/usecase.png, id=329, 702.625pt x 486.81876pt>
+<images/usecase.png, id=354, 702.625pt x 486.81876pt>
 File: images/usecase.png Graphic file (type png)
  <use images/usecase.png>
-Package pdftex.def Info: images/usecase.png used on input line 279.
+Package pdftex.def Info: images/usecase.png used on input line 302.
 (pdftex.def)             Requested size: 325.21628pt x 245.91953pt.
 
-[12
+[13
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2493,22 +2546,22 @@ color pop
  (./master-thesis.listing)
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 298.
+(caption)                particular \caption on input line 321.
 See the caption package documentation for explanation.
 
 \openout4 = `master-thesis.listing'.
 
 (./master-thesis.listing)
-Overfull \hbox (9.94269pt too wide) in paragraph at lines 311--311
+Overfull \hbox (9.94269pt too wide) in paragraph at lines 334--334
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 312.
+(caption)                particular \caption on input line 335.
 See the caption package documentation for explanation.
 
-[13
+[14
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2533,14 +2586,14 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [14
+] [15
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
 Kapitola 5.
-[15
+[16
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2551,7 +2604,7 @@ color pop
 Overfull \vbox (4.06474pt too high) has occurred while \output is active []
 
 
-[16
+[17
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2573,16 +2626,16 @@ Package epstopdf Info: Source file: <images/kafka.eps>
 (epstopdf)                    size: 11107 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/kafka-eps-converted
 -to.pdf images/kafka.eps>
-(epstopdf)             \includegraphics on input line 361.
+(epstopdf)             \includegraphics on input line 384.
 Package epstopdf Info: Output file is already uptodate.
- <images/kafka-eps-converted-to.pdf, id=378, 364.36125pt x 354.32375pt>
+ <images/kafka-eps-converted-to.pdf, id=403, 364.36125pt x 354.32375pt>
 File: images/kafka-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/kafka-eps-converted-to.pdf>
 Package pdftex.def Info: images/kafka-eps-converted-to.pdf used on input line 3
-61.
+84.
 (pdftex.def)             Requested size: 234.87498pt x 245.92719pt.
- [17
+ [18
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2606,19 +2659,19 @@ Package epstopdf Info: Source file: <images/kafka-impl.eps>
 (epstopdf)                    size: 11982 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/kafka-impl-eps-conv
 erted-to.pdf images/kafka-impl.eps>
-(epstopdf)             \includegraphics on input line 379.
+(epstopdf)             \includegraphics on input line 402.
 Package epstopdf Info: Output file is already uptodate.
- <images/kafka-impl-eps-converted-to.pdf, id=393, 427.5975pt x 324.21124pt>
+ <images/kafka-impl-eps-converted-to.pdf, id=418, 427.5975pt x 324.21124pt>
 File: images/kafka-impl-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/kafka-impl-eps-converted-to.pdf>
 Package pdftex.def Info: images/kafka-impl-eps-converted-to.pdf used on input l
-ine 379.
+ine 402.
 (pdftex.def)             Requested size: 198.73943pt x 163.95047pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [18
+ [19
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2630,7 +2683,7 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-[19
+[20
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2639,7 +2692,7 @@ color pop
 color pop
 color push 0 g 0 G
 color pop
- <./images/kafka-impl-eps-converted-to.pdf>] [20
+ <./images/kafka-impl-eps-converted-to.pdf>] [21
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2652,7 +2705,7 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [21
+] [22
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2687,17 +2740,17 @@ Package epstopdf Info: Source file: <images/zookeeper-impl.eps>
 (epstopdf)                    size: 9352 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/zookeeper-impl-eps-
 converted-to.pdf images/zookeeper-impl.eps>
-(epstopdf)             \includegraphics on input line 451.
+(epstopdf)             \includegraphics on input line 474.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/zookeeper-impl-eps-converted-to.pdf, id=433, 572.1375pt x 188.705pt>
+<images/zookeeper-impl-eps-converted-to.pdf, id=459, 572.1375pt x 188.705pt>
 File: images/zookeeper-impl-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/zookeeper-impl-eps-converted-to.pdf>
 Package pdftex.def Info: images/zookeeper-impl-eps-converted-to.pdf used on inp
-ut line 451.
+ut line 474.
 (pdftex.def)             Requested size: 361.35646pt x 120.22945pt.
- [22
+ [23
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2719,7 +2772,7 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-Underfull \hbox (badness 10000) in alignment at lines 480--480
+Underfull \hbox (badness 10000) in alignment at lines 503--503
 [][][][]
  []
 
@@ -2728,23 +2781,23 @@ Package epstopdf Info: Source file: <images/app-architecture.eps>
 (epstopdf)                    size: 51270 bytes
 (epstopdf)             Output file: <images/app-architecture-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-05-03 18:52:58
+(epstopdf)                    date: 2016-05-08 19:31:59
 (epstopdf)                    size: 19401 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/app-architecture-ep
 s-converted-to.pdf images/app-architecture.eps>
-(epstopdf)             \includegraphics on input line 487.
+(epstopdf)             \includegraphics on input line 510.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/app-architecture-eps-converted-to.pdf, id=446, 421.575pt x 450.68375pt>
+<images/app-architecture-eps-converted-to.pdf, id=471, 421.575pt x 450.68375pt>
 File: images/app-architecture-eps-converted-to.pdf Graphic file (type pdf)
 <use images/app-architecture-eps-converted-to.pdf>
 Package pdftex.def Info: images/app-architecture-eps-converted-to.pdf used on i
-nput line 487.
+nput line 510.
 (pdftex.def)             Requested size: 252.94695pt x 311.52226pt.
 
 Underfull \vbox (badness 1584) has occurred while \output is active []
 
- [23
+ [24
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2757,7 +2810,7 @@ color pop
 color pop
 color push 0 g 0 G
 color pop
- <./images/zookeeper-impl-eps-converted-to.pdf>] [24
+ <./images/zookeeper-impl-eps-converted-to.pdf>] [25
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2766,7 +2819,7 @@ color pop
 color pop
 color push 0 g 0 G
 color pop
- <./images/app-architecture-eps-converted-to.pdf>] [25
+ <./images/app-architecture-eps-converted-to.pdf>] [26
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2778,25 +2831,25 @@ Kapitola 6.
 (./master-thesis.listing)
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 521.
+(caption)                particular \caption on input line 544.
 See the caption package documentation for explanation.
 
 \openout4 = `master-thesis.listing'.
 
 (./master-thesis.listing)
-Overfull \hbox (20.6207pt too wide) in paragraph at lines 543--543
+Overfull \hbox (20.6207pt too wide) in paragraph at lines 566--566
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 544.
+(caption)                particular \caption on input line 567.
 See the caption package documentation for explanation.
 
 
 Underfull \vbox (badness 3690) has occurred while \output is active []
 
- [26
+ [27
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2818,10 +2871,10 @@ color pop
 (./master-thesis.listing)
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 559.
+(caption)                particular \caption on input line 582.
 See the caption package documentation for explanation.
 
-[27
+[28
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2854,10 +2907,10 @@ color pop
  (./master-thesis.listing)
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 588.
+(caption)                particular \caption on input line 611.
 See the caption package documentation for explanation.
 
-[28
+[29
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2915,12 +2968,12 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-Overfull \hbox (5.25789pt too wide) in paragraph at lines 599--600
+Overfull \hbox (5.25789pt too wide) in paragraph at lines 622--623
 []\T1/qpl/m/n/12 (-20) STOP_CONSUMER -- za-staví kon-zu-menta (stopne a za-bije
  vlákno) 
  []
 
-[29
+[30
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2950,20 +3003,20 @@ Package epstopdf Info: Source file: <images/app-start.eps>
 (epstopdf)                    date: 2016-04-28 23:51:56
 (epstopdf)                    size: 14212 bytes
 (epstopdf)             Output file: <images/app-start-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-05-03 18:52:58
+(epstopdf)                    date: 2016-05-08 19:32:00
 (epstopdf)                    size: 7492 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/app-start-eps-conve
 rted-to.pdf images/app-start.eps>
-(epstopdf)             \includegraphics on input line 623.
+(epstopdf)             \includegraphics on input line 646.
 Package epstopdf Info: Output file is already uptodate.
- <images/app-start-eps-converted-to.pdf, id=540, 314.17375pt x 188.705pt>
+ <images/app-start-eps-converted-to.pdf, id=566, 314.17375pt x 188.705pt>
 File: images/app-start-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/app-start-eps-converted-to.pdf>
 Package pdftex.def Info: images/app-start-eps-converted-to.pdf used on input li
-ne 623.
+ne 646.
 (pdftex.def)             Requested size: 144.53606pt x 98.36615pt.
- [30
+ [31
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -2984,15 +3037,15 @@ pdf>
 (epstopdf)                    size: 8703 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/zookeeper-state-1-e
 ps-converted-to.pdf images/zookeeper-state-1.eps>
-(epstopdf)             \includegraphics on input line 639.
+(epstopdf)             \includegraphics on input line 662.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/zookeeper-state-1-eps-converted-to.pdf, id=556, 454.69875pt x 240.9pt>
+<images/zookeeper-state-1-eps-converted-to.pdf, id=582, 454.69875pt x 240.9pt>
 File: images/zookeeper-state-1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/zookeeper-state-1-eps-converted-to.pdf>
 Package pdftex.def Info: images/zookeeper-state-1-eps-converted-to.pdf used on 
-input line 639.
+input line 662.
 (pdftex.def)             Requested size: 216.81671pt x 109.29721pt.
 Package epstopdf Info: Source file: <images/kafka-state-1.eps>
 (epstopdf)                    date: 2016-04-28 23:53:37
@@ -3003,20 +3056,20 @@ Package epstopdf Info: Source file: <images/kafka-state-1.eps>
 (epstopdf)                    size: 13151 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/kafka-state-1-eps-c
 onverted-to.pdf images/kafka-state-1.eps>
-(epstopdf)             \includegraphics on input line 648.
+(epstopdf)             \includegraphics on input line 671.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/kafka-state-1-eps-converted-to.pdf, id=558, 427.5975pt x 319.1925pt>
+<images/kafka-state-1-eps-converted-to.pdf, id=584, 427.5975pt x 319.1925pt>
 File: images/kafka-state-1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use images/kafka-state-1-eps-converted-to.pdf>
 Package pdftex.def Info: images/kafka-state-1-eps-converted-to.pdf used on inpu
-t line 648.
+t line 671.
 (pdftex.def)             Requested size: 180.6728pt x 163.95006pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [31
+ [32
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3030,7 +3083,7 @@ color pop
  <./images/zookeeper-state-1-eps-converted-to.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [32
+ [33
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3043,16 +3096,16 @@ color pop
 \openout4 = `master-thesis.listing'.
 
  (./master-thesis.listing)
-Overfull \hbox (9.86278pt too wide) in paragraph at lines 672--672
+Overfull \hbox (9.86278pt too wide) in paragraph at lines 695--695
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 673.
+(caption)                particular \caption on input line 696.
 See the caption package documentation for explanation.
 
-[33
+[34
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3089,15 +3142,15 @@ color pop
  (./master-thesis.listing)
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 694.
+(caption)                particular \caption on input line 717.
 See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 1297) in paragraph at lines 694--694
+Underfull \hbox (badness 1297) in paragraph at lines 717--717
 []\T1/qpl/m/n/12 (+20) Obrázek 6.9: |[]Ukázka da-to-vého ob-jektu z
  []
 
-LaTeX Font Info:    Try loading font information for T1+lmss on input line 700.
+LaTeX Font Info:    Try loading font information for T1+lmss on input line 723.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -3115,17 +3168,17 @@ to.pdf>
 (epstopdf)                    size: 13485 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/pc-data-distributio
 n-eps-converted-to.pdf images/pc-data-distribution.eps>
-(epstopdf)             \includegraphics on input line 704.
+(epstopdf)             \includegraphics on input line 727.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/pc-data-distribution-eps-converted-to.pdf, id=602, 302.12875pt x 106.39
+<images/pc-data-distribution-eps-converted-to.pdf, id=627, 302.12875pt x 106.39
 75pt>
 File: images/pc-data-distribution-eps-converted-to.pdf Graphic file (type pdf)
  <use images/pc-data-distribution-eps-converted-to.pdf>
 Package pdftex.def Info: images/pc-data-distribution-eps-converted-to.pdf used 
-on input line 704.
+on input line 727.
 (pdftex.def)             Requested size: 234.87575pt x 109.3049pt.
- [34
+ [35
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3182,55 +3235,55 @@ color pop
 \openout4 = `master-thesis.listing'.
 
  (./master-thesis.listing)
-Overfull \hbox (3.3745pt too wide) in paragraph at lines 719--719
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 742--742
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 720.
+(caption)                particular \caption on input line 743.
 See the caption package documentation for explanation.
 
 \openout4 = `master-thesis.listing'.
 
 (./master-thesis.listing)
-Overfull \hbox (3.3745pt too wide) in paragraph at lines 731--731
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 754--754
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 732.
+(caption)                particular \caption on input line 755.
 See the caption package documentation for explanation.
 
 \openout4 = `master-thesis.listing'.
 
 (./master-thesis.listing)
-Overfull \hbox (3.3745pt too wide) in paragraph at lines 743--743
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 766--766
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 744.
+(caption)                particular \caption on input line 767.
 See the caption package documentation for explanation.
 
 \openout4 = `master-thesis.listing'.
 
 (./master-thesis.listing)
-Overfull \hbox (3.3745pt too wide) in paragraph at lines 757--757
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 780--780
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 758.
+(caption)                particular \caption on input line 781.
 See the caption package documentation for explanation.
 
 
 Underfull \vbox (badness 1466) has occurred while \output is active []
 
- [35
+ [36
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3611,24 +3664,24 @@ Package epstopdf Info: Source file: <images/deployment-diagram.eps>
 (epstopdf)                    size: 30843 bytes
 (epstopdf)             Output file: <images/deployment-diagram-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-05-03 18:53:00
+(epstopdf)                    date: 2016-05-08 19:32:01
 (epstopdf)                    size: 12780 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/deployment-diagram-
 eps-converted-to.pdf images/deployment-diagram.eps>
-(epstopdf)             \includegraphics on input line 771.
+(epstopdf)             \includegraphics on input line 794.
 Package epstopdf Info: Output file is already uptodate.
 
-<images/deployment-diagram-eps-converted-to.pdf, id=645, 372.39125pt x 406.5187
+<images/deployment-diagram-eps-converted-to.pdf, id=670, 372.39125pt x 406.5187
 5pt>
 File: images/deployment-diagram-eps-converted-to.pdf Graphic file (type pdf)
  <use images/deployment-diagram-eps-converted-to.pdf>
 Package pdftex.def Info: images/deployment-diagram-eps-converted-to.pdf used on
- input line 771.
+ input line 794.
 (pdftex.def)             Requested size: 271.01942pt x 273.25937pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [36
+ [37
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3740,7 +3793,7 @@ color pop
 color push 0 g 0 G
 color pop
 ]
-[37
+[38
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3764,16 +3817,16 @@ color pop
 
 
 (./master-thesis.listing)
-Overfull \hbox (3.3745pt too wide) in paragraph at lines 813--813
+Overfull \hbox (3.3745pt too wide) in paragraph at lines 836--836
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 814.
+(caption)                particular \caption on input line 837.
 See the caption package documentation for explanation.
 
-[38
+[39
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3850,17 +3903,17 @@ color pop
 \openout4 = `master-thesis.listing'.
 
  (./master-thesis.listing)
-Overfull \hbox (9.12323pt too wide) in paragraph at lines 838--838
+Overfull \hbox (9.12323pt too wide) in paragraph at lines 861--861
 [][] 
  []
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 839.
+(caption)                particular \caption on input line 862.
 See the caption package documentation for explanation.
 
 
-Overfull \hbox (2.17459pt too wide) in paragraph at lines 847--848
+Overfull \hbox (2.17459pt too wide) in paragraph at lines 870--871
 []\T1/qpl/m/n/12 (-20) zastavení vlákna pro-du-centa (je také pro-ve-dena na po
 -£í-ta£i \T1/qpl/m/it/12 <ip1>\T1/qpl/m/n/12 (-20) ) 
  []
@@ -3870,10 +3923,10 @@ Overfull \hbox (2.17459pt too wide) in paragraph at lines 847--848
 (./master-thesis.listing)
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 860.
+(caption)                particular \caption on input line 883.
 See the caption package documentation for explanation.
 
-[39
+[40
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3900,7 +3953,7 @@ color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [40
+] [41
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3927,62 +3980,62 @@ color pop
 Overfull \vbox (0.58017pt too high) has occurred while \output is active []
 
 
-[41
+[42
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
-] [42
+] [43
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
 Kapitola 7.
-[43
+[44
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
-Underfull \hbox (badness 4940) in paragraph at lines 905--906
+Underfull \hbox (badness 4940) in paragraph at lines 928--929
 []\T1/qpl/m/n/12 (+20) Celeda, Pa-vel. Ne-twork Traf-fic Ana-ly-sis for Cyber S
 ecu-
  []
 
 
-Underfull \hbox (badness 5563) in paragraph at lines 905--906
+Underfull \hbox (badness 5563) in paragraph at lines 928--929
 \T1/qpl/m/n/12 (+20) rity. Brno, 2013. Ma-sa-ryk Uni-ver-zity. [on-line]. Do-st
 upné
  []
 
 
-Underfull \hbox (badness 1082) in paragraph at lines 905--906
+Underfull \hbox (badness 1082) in paragraph at lines 928--929
 \T1/qpl/m/n/12 (+20) z: []$\T1/lmtt/m/n/12 https : / / is . muni . cz / do / re
 ct / habilitace / 1433 / 44368572 /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 916--917
+Underfull \hbox (badness 10000) in paragraph at lines 939--940
 []$\T1/lmtt/m/n/12 http : / / grids . ucs . indiana . edu / ptliupages / public
 ations /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 925--926
+Underfull \hbox (badness 10000) in paragraph at lines 948--949
 []\T1/qpl/m/n/12 (+20) Official Go-o-gle do-cu-men-tation [on-line]. Do-stupné 
 z:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 925--926
+Underfull \hbox (badness 10000) in paragraph at lines 948--949
 []$\T1/lmtt/m/n/12 https : / / support . google . com / analytics / answer / 16
 62518 ?
  []
 
-[44
+[45
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -3994,7 +4047,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.940 P
+l.963 P
        Process real-time big data with Twitter Storm [online]. DostupnÃ© z: ...
 color push 0 g 0 G
 color pop
@@ -4007,7 +4060,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.940 P
+l.963 P
        Process real-time big data with Twitter Storm [online]. DostupnÃ© z: ...
 color push 0 g 0 G
 color pop
@@ -4018,7 +4071,7 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.940 P
+l.963 P
        Process real-time big data with Twitter Storm [online]. DostupnÃ© z: ...
 color push 0 g 0 G
 color pop
@@ -4029,47 +4082,53 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.940 P
+l.963 P
        Process real-time big data with Twitter Storm [online]. DostupnÃ© z: ...
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
 color pop
 ]
-Underfull \hbox (badness 7832) in paragraph at lines 940--941
+Underfull \hbox (badness 7832) in paragraph at lines 963--964
 []\T1/qpl/m/n/12 (+20) Process real-time big data with Twit-ter Storm [on-line]
 .
  []
 
 
-Underfull \hbox (badness 2865) in paragraph at lines 940--941
+Underfull \hbox (badness 2865) in paragraph at lines 963--964
 \T1/qpl/m/n/12 (+20) Do-stupné z: []$\T1/lmtt/m/n/12 http : / / www . ibm . com
  / developerworks / library /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 943--944
+Underfull \hbox (badness 10000) in paragraph at lines 966--967
 []\T1/qpl/m/n/12 (+20) Real time in-si-ghts into Lin-ke-dIn's per-for-mance
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 943--944
+Underfull \hbox (badness 10000) in paragraph at lines 966--967
 \T1/qpl/m/n/12 (+20) using Apache Samsa [on-line]. 2014. Do-stupné
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 943--944
+Underfull \hbox (badness 10000) in paragraph at lines 966--967
 \T1/qpl/m/n/12 (+20) z: []$\T1/lmtt/m/n/12 https : / / engineering . linkedin .
  com / samza /
  []
 
 
-Overfull \hbox (32.4672pt too wide) in paragraph at lines 943--944
+Overfull \hbox (32.4672pt too wide) in paragraph at lines 966--967
 \T1/lmtt/m/n/12 real-[]time-[]insights-[]linkedins-[]performance-[]using-[]apac
 he-[]samza$[]
  []
 
-[45
+pdfTeX warning (ext4): destination with the same identifier (name{cite.C}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.972 C
+       CUGOLA, Gianpaolo, Alessandro MARGARA, Mauro PEZZE a Matteo PRADELLA....
+[46
 color push 0 g 0 G
 color pop
 pdfTeX warning (ext4): destination with the same identifier (name{cite.A}) has 
@@ -4077,8 +4136,12 @@ been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.948 \chapter
+l.977 \chapter
               {PÅ™Ã­loha}
+color push 0 g 0 G
+color pop
+color push 0 g 0 G
+color pop
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -4089,28 +4152,28 @@ color push 0 g 0 G
 color pop
 ]
 P\v {r}\'{\i }loha A.
-<images/deploy-rule-screen.png, id=796, 1374.13374pt x 487.8225pt>
+<images/deploy-rule-screen.png, id=826, 1374.13374pt x 487.8225pt>
 File: images/deploy-rule-screen.png Graphic file (type png)
 
 <use images/deploy-rule-screen.png>
-Package pdftex.def Info: images/deploy-rule-screen.png used on input line 954.
+Package pdftex.def Info: images/deploy-rule-screen.png used on input line 983.
 (pdftex.def)             Requested size: 361.33406pt x 158.48088pt.
 
-<images/match-pattern-screen.png, id=797, 841.1425pt x 207.77625pt>
+<images/match-pattern-screen.png, id=827, 841.1425pt x 207.77625pt>
 File: images/match-pattern-screen.png Graphic file (type png)
 
 <use images/match-pattern-screen.png>
-Package pdftex.def Info: images/match-pattern-screen.png used on input line 961
+Package pdftex.def Info: images/match-pattern-screen.png used on input line 990
 .
 (pdftex.def)             Requested size: 325.20776pt x 76.50822pt.
 
-<images/clean-up-screen.png, id=798, 842.14626pt x 294.09875pt>
+<images/clean-up-screen.png, id=828, 842.14626pt x 294.09875pt>
 File: images/clean-up-screen.png Graphic file (type png)
 
 <use images/clean-up-screen.png>
-Package pdftex.def Info: images/clean-up-screen.png used on input line 968.
+Package pdftex.def Info: images/clean-up-screen.png used on input line 997.
 (pdftex.def)             Requested size: 289.07587pt x 76.50874pt.
- [46
+ [47
 color push 0 g 0 G
 color pop
 color push 0 g 0 G
@@ -4135,11 +4198,12 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 974.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 974.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1003.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1003.
 (./master-thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 974.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 974.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1003.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1003.
+
 Package rerunfilecheck Info: File `master-thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 5BEF54D6E847157C5FB02BB46EA259C3;2083.
 
@@ -4154,10 +4218,10 @@ Package logreq Info: Writing requests to 'master-thesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46449 strings out of 493089
- 861523 string characters out of 6134842
- 1347682 words of memory out of 5000000
- 48702 multiletter control sequences out of 15000+600000
+ 46472 strings out of 493089
+ 861955 string characters out of 6134842
+ 1347857 words of memory out of 5000000
+ 48716 multiletter control sequences out of 15000+600000
  87796 words of font info for 146 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  61i,10n,93p,10434b,1703s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -4173,10 +4237,10 @@ c/lm/lmtt10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/lm/lmtt1
 local/texlive/2015/texmf-dist/fonts/type1/public/tex-gyre/qplri.pfb></usr/local
 /texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texliv
 e/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on master-thesis.pdf (52 pages, 664299 bytes).
+Output written on master-thesis.pdf (53 pages, 686181 bytes).
 PDF statistics:
- 904 PDF objects out of 1000 (max. 8388607)
- 764 compressed objects within 8 object streams
- 277 named destinations out of 1000 (max. 500000)
- 28103 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 935 PDF objects out of 1000 (max. 8388607)
+ 787 compressed objects within 8 object streams
+ 283 named destinations out of 1000 (max. 500000)
+ 28108 words of extra memory for PDF output out of 29859 (max. 10000000)
 

@@ -202,7 +202,7 @@ Každý \textit{task} logicky používá stejný kód jako kterýkoli jiný \tex
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.5\textwidth, height=0.5\textheight]{images/samsa-job-detail.png}
-    \caption{Ukázka \textit{Samsa} úkolu (\textit{job}). Zdroj obrázku je oficiální dokumentace [\ref{bib_samsa}]}
+    \caption{Ukázka \textit{Samsa} úkolu (\textit{job}) [\ref{bib_samsa}]}.
     \label{fig:samsa-concept}
 \end{figure}
 
@@ -218,6 +218,29 @@ Druhou technologií pro distribuované zpracování dat, kterou přestavím, je 
 %https://is.muni.cz/auth/th/324532/fi_m/diplomovka.pdf
 \section{CAVE}
 %% http://dl.acm.org/citation.cfm?doid=2675743.2771834
+\textit{CAVE (Constraint-based Analysis of eVEnts)} [\ref{bib_cave}], je nová metodologie a nástroj pro vývojáře představený v roce 2015 na konferenci v Norském Oslu [\ref{bib_debs_conf}]. \textit{CAVE} je určen na analýzu chování aplikací, které zpracovávají události. \textit{CAVE} si klade za cíl identifikovat potenciální problémy pomocí detekce splnitelnosti vlastností, které vycházejí z charakteristik analyzovaného prostředí a množiny pravidel definovaných vývojářem. Navíc \textit{CAVE} automaticky generuje sekvence událostí, které daným vlastnostem nastavují pravdivostní hodnoty. Díky tomu může vývojář jednoduše vyzkoušet vyhodnocení pravidel, které vytvořil.
+
+Předpokladem je, že každá událost je charakterizována svým typem a množinou vlastností. Typ události definuje počet, pořadí a jména vlastností, které tvoří danou událost. Na příkladu \ref{fig:cave-event-example} je pravidlo s typem události \textit{Host} obsahující vlastnosti \textit{cpu\_load}, \textit{gpu\_load}.
+
+\begin{center}
+\begin{minipage}[H]{.97\linewidth}
+	\begin{mylisting}
+Host(cpu_load > 80 and gpu_load > 80 or cpu_load = 100)
+	\end{mylisting}
+	\captionof{figure}{Příklad pravidla [\ref{bib_cave}].}
+	\label{fig:cave-event-example} 
+\end{minipage}
+\end{center}
+
+Na obrázku \ref{fig:cave-concept} je znázorněn postup zpracování vstupních informací.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth, height=0.2\textheight]{images/cave-concept.eps}
+    \caption{Přehled přístupu \textit{CAVE} [\ref{bib_cave}]}.
+    \label{fig:cave-concept}
+\end{figure}
+
 \chapter{Analýza}
 \label{sec:analysis}
 
@@ -941,6 +964,12 @@ PProcess real-time big data with Twitter Storm [online]. Dostupné z: \url{http:
 
 \bibitem
 RReal time insights into LinkedIn's performance using Apache Samsa [online]. 2014. Dostupné z: \url{https://engineering.linkedin.com/samza/real-time-insights-linkedins-performance-using-apache-samza} \label{bib_samsa_case_study}
+
+\bibitem
+DDEBS 2015 [online]. Dostupné z: \url{http://dblp.uni-trier.de/db/conf/debs/debs2015.html} \label{bib_debs_conf}
+
+\bibitem
+CCUGOLA, Gianpaolo, Alessandro MARGARA, Mauro PEZZE a Matteo PRADELLA. Efficient analysis of event processing applications [online]. New York, 2015. Dostupné z: \url{http://dl.acm.org/citation.cfm?doid=2675743.277183} \label{bib_cave}
 
 \end{thebibliography}
 \appendix %% Start the appendices.
