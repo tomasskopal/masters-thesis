@@ -184,9 +184,38 @@ Zmíněné dvě vlastnosti nejsou jediné. Mezi vlastnosti distribuovaného zpra
 \end{itemize}
 
 \chapter{Nástroje pro distribuované zpracování událostí}
-TODO - dopsat
+Ve třetí kapitole představím dva existující nástroje a jeden nový přístup, jejichž použitím můžeme distribuovaně zpracovávat události. Cílem této práce je vytvoření nástroje pro detekci určitých vzorů v analyzovaných událostech v distribuovaném prostředí. Představení existujících nástrojů, které řeší podobnou problematiku, nám pomůže pochopit souvislosti. Také je možné v těchto technologiích najít inspiraci, jak řešit některá úskalí při práci v distribuovaném prostředí. Například odolnost systému proti výpadkům výpočetních uzlů.
+ 
 \section{Apache Samsa}
+První ze dvou technologií je Apache Samsa. Je to aplikační rámec sloužící k distribuovanému zpracování proudu dat. \textit{Samsa} splňuje všechny důležité vlastnosti pro operace v distribuovaném prostředí jako jsou vysoká míra tolerance chyb, rozšiřitelnost a odolnost proti výpadku. Projekt byl původně vyvíjený společností LinkedIn a později byl vydán pod hlavičkou \textit{Apache Software Foundation}. Tato kapitola popisuje základní strukturu a fungování aplikačního rámce Samsa. Zdrojem informací je oficiální dokumentace [\ref{bib_samsa}].
+
+\textit{Samsa} je postavena na dvou technologiích: \textit{Apache Kafka} a \textit{Apache Hadoop Yarn}. Aplikační rámec \textit{Kafka} se stará o posílání zpráv (angl. messaging) a \textit{Yarn} je zodpovědný za odolnost proti výpadkům.
+
+Princip zpracování dat je postaven na dvou pilířích. Těmi jsou datové proudy (angl. data stream) a úkoly (angl. job). Proud je složen z neměnitelných zpráv, které jsou podobného typu nebo jsou ze stejné kategorie. Příkladem datového proudu můžou být například všechna kliknutí na daný web nebo všechny log zprávy produkované nějakou aplikací. Abstrakce datového proudu koresponduje s \textit{tématy} v aplik. rámci \textit{Kafka}\footnote{Detailnější popis, co to jsou \textit{témata} je v kapitole [\ref{sec:kafka}]}. Každý proud může být zpracováván více konzumenty, proto mohou zprávy obsahovat unikátní klíče, které slouží k rozdělení do oddílů (angl. partitioning). Stejně jako se Kafka témata mohou dělit do oddílů.
+
+Jak bylo řečeno, druhým pilířem jsou úkoly. Úkol je jednotka práce, která zajišťuje transformaci množiny vstupních proudů na množinu výstupních proudů. Každý úkol se může dělit na menší výkonné jednotky zvané \textit{Task}. Protože \textit{task} i \textit{job} se do češtiny překládají shodně jako "úkol", budu dál v textu, kvůli přesnosti vyjádření, používat hlavně anglické ekvivalenty. Každý \textit{task} zpracovává data z jednoho nebo více oddílů z každého vstupního proudu.
+
+Dělení \textit{job} na \textit{task} a \textit{proud} na \textit{oddíl} je kvůli zvýšení možností paralelního zpracování. \textit{Task} zpracovává zprávy z každého oddílu sekvenčně. Neexistuje žádné definované řazení. To umožňuje nezávislý běh pro každý \textit{task}. \textit{Yarn} přiřazuje každý \textit{task} určitému stroji, proto \textit{job} jako celek může být spuštěn simultánně na více zařízeních.
+
+Každý \textit{task} logicky používá stejný kód jako kterýkoli jiný \textit{task} v rámci stejného úkolu (\textit{job}). Počet podúkolů (\textit{task}) je omezený počtem oddílů, které vstupují do daného úkolu (\textit{job}). Výše popsaný princip demonstruje obrázek \ref{fig:samsa-concept}, na kterém jsou zpracovávány dva vstupní proudy se dvěma oddíly.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.5\textwidth, height=0.5\textheight]{images/samsa-job-detail.png}
+    \caption{Ukázka \textit{Samsa} úkolu (\textit{job}). Zdroj obrázku je oficiální dokumentace [\ref{bib_samsa}]}
+    \label{fig:samsa-concept}
+\end{figure}
+
+Po představení základního konceptu aplikačního rámce \textit{Samsa}, přejdu k příkladu použití. Příklad dobře demonstruje nasazení správné technologie na distribuované zpracování dat. Příklad je přepisem případové studie [\ref{bib_samsa_case_study}] společnosti \textit{LinkedIn}.
+
+Každý web si lze představit jako kompozici velkého množství jednoduchých akcí. U větších webů, jako je ten společnosti \textit{LinkedIn} to platí dvojnásob. Jsou například akce: "načtení nových notifikací", "načtení seznamu navrhovaných přátel", atd. Každá z těchto akcí vyvolává sérii aplikačních volání. Počínaje dotazem na nějaké rozhraní (typicky \textit{REST}) a konče databázovým dotazem. Každý dotaz je opatřen unikátním číslem, které se předává a je tak možné sestavit celý strom. Díky tomu je možné zjistit, které části kódu se volají zbytečně. Architektura společnosti je distribuovaná a aby byla data vypovídající, je potřeba sestavený strom neustále aktualizovat. Také \textit{LinkedIn} zpracovává velké množství dat, proto je vhodné výpočet distribuovat.
+
+Informace o probíhajících dotazech se spolu s unikátním identifikátorem posílá do aplik. rámce \textit{Kafka}.\textit{Samsa} je pak odtud čte. Následné zpracování se sestává ze dvou \textit{Samsa} úkolů (\textit{job}). První \textit{job} připravuje události, které jsou přijímány z \textit{Kafka} témat. Původní unikátní čísla u zpráv transformuje do jiného tvaru. Zatímco druhý \textit{job} následně shromažďuje zprávy se stejným identifikátorem a vytváří výsledný strom.
+
 \section{Apache Storm}
+Druhou technologií pro distribuované zpracování dat, kterou přestavím, je \textit{Apache Storm}.
+%https://is.muni.cz/auth/th/410496/fi_b/bakalarska_praca.pdf
+%https://is.muni.cz/auth/th/324532/fi_m/diplomovka.pdf
 \section{CAVE}
 %% http://dl.acm.org/citation.cfm?doid=2675743.2771834
 \chapter{Analýza}
@@ -316,6 +345,7 @@ Kromě definování závislostí je Maven v projektu použit na vytvoření modu
 Protože je veškerá komunikace řízena událostmi a zasíláním zpráv, moduly jsou na sobě relativně nezávislé a v případě potřeby je možné je zaměnit za jiné. 
 
 \subsection{Apache Kafka}
+\label{sec:kafka}
 Apache Kafka je systém pro zasílání zpráv. [\ref{bib_5}] Kafka klastr může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem aplikačního rámce Kafka je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive přepážkou (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet přepážek. Přepážka je menší jednotka než téma. Každé téma může být replikováno mezi brokery.
 
 \subsection*{Konzument a producent}
@@ -731,6 +761,7 @@ by source, level having count(*) > 7"
 \end{center}
 
 \section{Demo}
+\label{sec:demo}
 Tato kapitola má za cíl demonstrovat reálný běh aplikace na testovacích strojích. Všechny výstupy aplikace jsou logovány do souboru. Myslím si, že vhodným způsobem ukázky běhu programu jsou konkrétní výňatky z \textit{log} souborů. Každá ukázka je popsána, aby byly výstupy snadno pochopitelné.
 
 Před samotnou demonstrací běhu programu ještě uvádím diagram nasazení \ref{fig:deployment-diagram}. Ten dává jasnou představu o tom, které technologie jsou v jednotlivých uzlech nasazeny a v jakém jsou vztahu.
@@ -831,29 +862,8 @@ INFO - Evaluated action will be: STOP_CONSUMER
 \end{minipage}
 \end{center}
 
-\iffalse
-TODO: odstranit odsud komentar, presunout obrazky do prilohy a zminit zde, ze jednotlive textove ukazky je mozne si prohlednout v priloze jako snimky obrazovky
-\begin{figure}[H]
-	\centering
-    \includegraphics[width=\linewidth, height=.3\textheight]{images/deploy-rule-screen.png}
-    \caption{Nasazení pravidla na hrubozrnou analýzu}
-    \label{fig:deploy-rule-screen}
-\end{figure}
+Data, použitá v ukázkách jsem zvýraznil také na snímcích obrazovky, které jsou součástí přílohy \ref{sec:appendix-a} této práce.
 
-\begin{figure}[H]
-	\centering
-    \includegraphics[width=.9\linewidth, height=.15\textheight]{images/match-pattern-screen.png}
-    \caption{Detekce vzoru při jemnozrné analýze}
-    \label{fig:match-pattern-screen}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-    \includegraphics[width=.8\linewidth, height=.15\textheight]{images/clean-up-screen.png}
-    \caption{Postupné zastavování jemnozrné analýzy}
-    \label{fig:clean-up-screen}
-\end{figure}
-\fi
 
 \section{Známá omezení}
 Pomocí navrhovaného řešení je možné analyzovat širokou škálu událostí. Nejen dopady síťové komunikace, ale i síťový provoz jako takový. Dále je možné řešení nasadit například na analýzu aplikačních logů.
@@ -924,11 +934,41 @@ GGAMMA, Erich, Richard HELM, Ralph JOHNSON a John VLISSIDES. GANG OF FOUR. \text
 AApache Curator [online]. Dostupné z: \url{http://curator.apache.org/index.html} \label{bib_9}
 
 \bibitem
+AApache Samsa [online]. Dostupné z: \url{https://samza.apache.org} \label{bib_samsa}
+
+\bibitem
 PProcess real-time big data with Twitter Storm [online]. Dostupné z: \url{http://www.ibm.com/developerworks/library/os-twitterstorm/} \label{bib_distributed_computing}
 
-
+\bibitem
+RReal time insights into LinkedIn's performance using Apache Samsa [online]. 2014. Dostupné z: \url{https://engineering.linkedin.com/samza/real-time-insights-linkedins-performance-using-apache-samza} \label{bib_samsa_case_study}
 
 \end{thebibliography}
 \appendix %% Start the appendices.
+
+\chapter{Příloha}
+\label{sec:appendix-a}
+V kapitole \ref{sec:demo} jsem vytvořil ukázky za pomocí dat z \textit{log} souborů. V této příloze jsou snímky obrazovky na kterých jsou zvýrazněny záznamy, které jsem v ukázkách použil. Snímky po řadě odpovídají jednotlivým ukázkám.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\linewidth, height=.29\textheight]{images/deploy-rule-screen.png}
+    \caption{Nasazení pravidla na hrubozrnou analýzu}
+    \label{fig:deploy-rule-screen}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.9\linewidth, height=.14\textheight]{images/match-pattern-screen.png}
+    \caption{Detekce vzoru při jemnozrné analýze}
+    \label{fig:match-pattern-screen}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.8\linewidth, height=.14\textheight]{images/clean-up-screen.png}
+    \caption{Postupné zastavování jemnozrné analýzy}
+    \label{fig:clean-up-screen}
+\end{figure}
+
 
 \end{document}
