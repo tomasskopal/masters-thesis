@@ -232,14 +232,42 @@ Host(cpu_load > 80 and gpu_load > 80 or cpu_load = 100)
 \end{minipage}
 \end{center}
 
-Na obrázku \ref{fig:cave-concept} je znázorněn postup zpracování vstupních informací.
+Na obrázku \ref{fig:cave-concept} je znázorněn postup zpracování vstupních informací. Na vstupu je vlastnost (angl. property), která má být kontrolována, množina \textit{CEP} pravidel a předpoklady dané prostředím. Vlastnost je zde žádoucí nebo nežádoucí cíl, který má být detekován. \textit{CAVE} vypočítá kdy může být vlastnost splněna a kdy ne na základě vstupních pravidel a proměnných prostředí.
 
 \begin{figure}[H]
 	\centering
     \includegraphics[width=\textwidth, height=0.2\textheight]{images/cave-concept.eps}
-    \caption{Přehled přístupu \textit{CAVE} [\ref{bib_cave}]}.
+    \caption{Přehled postupu zpracování v \textit{CAVE} [\ref{bib_cave}]}.
     \label{fig:cave-concept}
 \end{figure}
+
+\textit{CAVE} pracuje ve dvou krocích. V prvním přeloží danou vlastnost na konečný počet konfigurací. Každá konfigurace reprezentuje jedno řešení problému. Konfigurace je složena z proměnných a podmínek nad těmito proměnnými. Ve druhém kroku výpočtu, \textit{CAVE} využívá tzv "Constraint solver" k nalezení řešení pro alespoň jednu konfiguraci. Řešení spočívá v identifikaci takové sekvence událostí, která splní hledanou vlastnost (cíl). Pokud není žádná taková konfigurace nalezena, nemůže být samozřejmě nikdy hledaná vlastnost splněna.
+
+Pro lepší pochopení uvedu příklad. Nechť je vstupní množina \textit{CEP} pravidel pro jednoduchost složena z jednoho pravidla \textit{R}:
+
+\begin{center}
+\begin{minipage}[H]{.5\linewidth}
+	\begin{mylisting}
+R:
+A() := [X then Y(y > 0)]
+	\end{mylisting}
+	\captionof{figure}{Příklad pravidla [\ref{bib_cave}].}
+	\label{fig:cave-event-example-1} 
+\end{minipage}
+\end{center}
+
+Dále uvažujme jednoduchou vlastnost \textit{P1} která má za cíl zjistit jestli je možné detekovat alespoň jeden výskyt události typu \textit{A}.
+
+\begin{center}
+\begin{minipage}[H]{.5\linewidth}
+	\begin{mylisting}
+Property P1:
+A()
+	\end{mylisting}
+	\captionof{figure}{Příklad vlastnosti [\ref{bib_cave}].}
+	\label{fig:cave-event-example-2} 
+\end{minipage}
+\end{center}
 
 \chapter{Analýza}
 \label{sec:analysis}
