@@ -214,6 +214,7 @@ Informace o probíhajících dotazech se spolu s unikátním identifikátorem po
 
 \section{Apache Storm}
 Druhou technologií pro distribuované zpracování dat, kterou přestavím, je \textit{Apache Storm}.
+TODO - dopsat
 %https://is.muni.cz/auth/th/410496/fi_b/bakalarska_praca.pdf
 %https://is.muni.cz/auth/th/324532/fi_m/diplomovka.pdf
 \section{CAVE}
@@ -232,7 +233,7 @@ Host(cpu_load > 80 and gpu_load > 80 or cpu_load = 100)
 \end{minipage}
 \end{center}
 
-Na obrázku \ref{fig:cave-concept} je znázorněn postup zpracování vstupních informací. Na vstupu je vlastnost (angl. property), která má být kontrolována, množina \textit{CEP} pravidel a předpoklady dané prostředím. Vlastnost je zde žádoucí nebo nežádoucí cíl, který má být detekován. \textit{CAVE} vypočítá kdy může být vlastnost splněna a kdy ne na základě vstupních pravidel a proměnných prostředí.
+Na obrázku \ref{fig:cave-concept} je znázorněn postup zpracování vstupních informací. Na vstupu je vlastnost (property), která má být kontrolována, množina \textit{CEP} pravidel (rules) a předpoklady dané prostředím (assumptions). Vlastnost je zde žádoucí nebo nežádoucí cíl, který má být detekován. \textit{CAVE} vypočítá kdy může být vlastnost splněna a kdy ne na základě vstupních pravidel a proměnných prostředí.
 
 \begin{figure}[H]
 	\centering
@@ -258,16 +259,23 @@ A() := [X then Y(y > 0)]
 
 Dále uvažujme jednoduchou vlastnost \textit{P1} která má za cíl zjistit jestli je možné detekovat alespoň jeden výskyt události typu \textit{A}.
 
+Podle výše uvedeného pravidla \textit{CAVE} zjistí, že událost \textit{A} může být generována pouze z pravidla \textit{R}. Tedy, vlastnost \textit{P1} může být splněna pouze pokud se pravidlo \textit{R} vyvolalo alespoň jednou. To přivádí \textit{CAVE} k vytvoření konfigurace, která zahrnuje událost typu \textit{X} a událost typu \textit{Y}. Konfigurace definuje tři proměnné: \textit{X.timestamp, Y.timestamp}\footnote{\textit{timestamp} je v překladu "časová známka". Předpokládá se, že každá událost má iniciálně nastavený čas. Typicky jde o čas vzniku dané události.}, and \textit{Y.y}. Pravidlo \textit{R} pak definuje podmínky nad těmito proměnnými:
+
 \begin{center}
-\begin{minipage}[H]{.5\linewidth}
+\begin{minipage}[H]{.7\linewidth}
 	\begin{mylisting}
-Property P1:
-A()
+Y.y > 0 and X.timestamp < Y.timestamp
 	\end{mylisting}
-	\captionof{figure}{Příklad vlastnosti [\ref{bib_cave}].}
-	\label{fig:cave-event-example-2} 
+	\captionof{figure}{Resolvované podmínky [\ref{bib_cave}].}
+	\label{fig:cave-event-example-1} 
 \end{minipage}
 \end{center}
+
+Jak je znázorněno na obrázku \ref{fig:cave-concept}, \textit{CAVE} přikládá ke každé konfiguraci také podmínky definované aplikačním prostředím. V tomto případě prostředí limituje pouze vzdálenost mezi dvěma událostmi typu \textit{Y}.
+
+Zde končí fáze překladu. V následující fázi "constraint solver" vyhodnotí vygenerovanou konfiguraci jako splnitelnou a každé proměnné přiřadí konkrétní hodnotu se kterou bude klauzule splněna. V našem případě například: \textit{X.timestamp = 1}, \textit{Y.timestamp = 2}, \textit{Y.y = 1}.
+
+Problém detekování výskytu určité vlastnosti byl převeden na ekvivalentní problém jehož obsahem je zjišťování že alespoň jedna konfigurace vyhovuje zadání. Neboli problém splnitelnosti konečné množiny podmínek.
 
 \chapter{Analýza}
 \label{sec:analysis}
