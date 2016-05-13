@@ -514,9 +514,15 @@ Výhody stromové struktury jsou zřejmé. U každého uzlu se dá zjistit jaké
 
 \subsection{Esper}
 \label{sec:esper}
-TODO - dopsat
+Esper je "open source" nástroj pro komplexní zpracování událostí a zpracování proudu událostí\footnote{Zpracování proudu událostí, neboli anglicky \textit{event stream processing (ESP)}.} dostupný pod GNU GPL licencí\footnote{GNU GPL General Public Licence) je všeobecná veřejná licence - \url{https://www.gnu.org/licenses/gpl.html}}. Jedná se o velice užitečný nástroj, jehož největší předností je efektivita zpracování proudu událostí. V této kapitole popíšu základní princip jak Esper funguje a ukážu názorné ukázky použití. Základním zdrojem pro tuto kapitolu je oficiální dokumentace [\ref{bib_esper}]. Esper je napsaný v Javě, ale existuje i verze pro \textit{.NET}, zvaná \textit{NEsper}. Esper je primárně navržen na efektivní analýzu velkého množství událostí v reálném čase. S daty pracuje pouze v paměti a drží si minimální stav.
+
+Princip aplikačního rámce Esper je odvozen od \textit{SQL} standardu a nabízí možnosti agregace dat, detekci vzorů událostí nebo analýzu v plovoucím časovém okně. Základem je dotazovací jazyk zvaný "Event Processing Language (EPL)". \textit{EPL} je deklarativní\footnote{Deklarativní jazyky specifikují cíl a algoritmizace je ponechána programu (interpretu) daného jazyka.} jazyk určený na analýzu časově seřazených událostí a detekci definovaných vzorů v těchto událostech. \textit{EPL} nabízí kaluzule: \textit{SELECT, FROM, WHERE, GROUP BY, HAVING} a \textit{ORDER BY}, které jsou běžně známé z \textit{SQL}.
+
+Rychlost výpočtu dobře demonstruje příklad z dokumentace [\ref{bib_esper_power}]. Esper by měl zvládnout analyzovat na dvou jádrovém procesoru s taktem \textit{2GHz} okolo 500 000 zpráv za sekundu. Samozřejmě rychlost záleží na konkrétním použití. Esper umožňuje datový proud i modifikovat, nejen číst. Při takové operaci se logicky analýza značně zpomalí. Esper neumožňuje distribuci výpočtu, protože to by mělo dramatický dopad na zpoždění výpočtu. Přesto je možné Esper kombinovat s distribuovanými nástroji jako jsou \textit{Samsa} nebo \textit{Storm}. Nicméně oficiální doporučení jak zvýšit výkon je přidání výpočetní kapacity (CPU, RAM) a zvýšení počtu vláken (max 32).
 
 \subsection*{Použití}
+Protože je pro vývojáře \textit{EPL} ústředním prvkem celého nástroje Esper, udělám podrobný rozbor jednoho vzorového pravidla, na kterém přiblížím možnosti nástroje. Esper také bude nedílnou součástí aplikace DEM. Proto je v závěru kapitoly přehledný diagram, který zobrazuje Esper ve spolupráci s ostatními technologiemi.
+
 %% je potřeba detailne rozebrat jedno konkretni pravidlo, ktere pouzivam a vysvetlit jednotlive casti
 
 \section{Shrnutí}
@@ -981,7 +987,7 @@ AApache Maven [online]. Dostupné z: \url{http://maven.apache.org} \label{bib_4}
 AApache Kafka [online]. Dostupné z: \url{http://kafka.apache.org} \label{bib_5}
 
 \bibitem
-OOfficial Google documentation  [online]. Dostupné z: \url{https://support.google.com/analytics/answer/1662518?hl=en&ref_topic=3205717} \label{bib_6}
+AAttribution modeling overview. Official Google documentation [online]. Dostupné z: \url{https://support.google.com/analytics/answer/1662518?hl=en&ref_topic=3205717} \label{bib_6}
 
 \bibitem
 AApache ZooKeeper [online]. Dostupné z: \url{https://zookeeper.apache.org/} \label{bib_7}
@@ -1006,6 +1012,12 @@ DDEBS 2015 [online]. Dostupné z: \url{http://dblp.uni-trier.de/db/conf/debs/deb
 
 \bibitem
 CCUGOLA, Gianpaolo, Alessandro MARGARA, Mauro PEZZE a Matteo PRADELLA. Efficient analysis of event processing applications [online]. New York, 2015. Dostupné z: \url{http://dl.acm.org/citation.cfm?doid=2675743.277183} \label{bib_cave}
+
+\bibitem
+EEsper [online]. Dostupné z: \url{http://www.espertech.com/esper/} \label{bib_esper}
+
+\bibitem
+EEsper perforamnce [online]. Dostupné z: \url{http://www.espertech.com/esper/performance.php} \label{bib_esper_power}
 
 \end{thebibliography}
 \appendix %% Start the appendices.
