@@ -521,9 +521,40 @@ Princip aplikačního rámce Esper je odvozen od \textit{SQL} standardu a nabíz
 Rychlost výpočtu dobře demonstruje příklad z dokumentace [\ref{bib_esper_power}]. Esper by měl zvládnout analyzovat na dvou jádrovém procesoru s taktem \textit{2GHz} okolo 500 000 zpráv za sekundu. Samozřejmě rychlost záleží na konkrétním použití. Esper umožňuje datový proud i modifikovat, nejen číst. Při takové operaci se logicky analýza značně zpomalí. Esper neumožňuje distribuci výpočtu, protože to by mělo dramatický dopad na zpoždění výpočtu. Přesto je možné Esper kombinovat s distribuovanými nástroji jako jsou \textit{Samsa} nebo \textit{Storm}. Nicméně oficiální doporučení jak zvýšit výkon je přidání výpočetní kapacity (CPU, RAM) a zvýšení počtu vláken (max 32).
 
 \subsection*{Použití}
-Protože je pro vývojáře \textit{EPL} ústředním prvkem celého nástroje Esper, udělám podrobný rozbor jednoho vzorového pravidla, na kterém přiblížím možnosti nástroje. Esper také bude nedílnou součástí aplikace DEM. Proto je v závěru kapitoly přehledný diagram, který zobrazuje Esper ve spolupráci s ostatními technologiemi.
+Protože je pro vývojáře \textit{EPL} ústředním prvkem celého nástroje Esper, udělám podrobný rozbor jednoho vzorového pravidla (ukázka \ref{fig:esper_demo_rule}), na kterém přiblížím možnosti nástroje. Esper také bude nedílnou součástí aplikace DEM. Proto je v závěru kapitoly diagram aktivit, který demonstruje tok dat mezi aplikací a výpočetním jádrem (Esper).
 
-%% je potřeba detailne rozebrat jedno konkretni pravidlo, ktere pouzivam a vysvetlit jednotlive casti
+\begin{center}
+\begin{minipage}[H]{\linewidth}
+	\begin{mylisting}
+SELECT * FROM
+IncomingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
+flag = 'SYN' GROUP BY source HAVING count(*) > 3
+	\end{mylisting}
+	\captionof{figure}{Vzorové pravidlo nástorje Esper napsané v jazyce \textit{EPL}.}
+	\label{fig:esper_demo_rule} 
+\end{minipage}
+\end{center}
+
+Příklad \ref{fig:esper_demo_rule} ilustruje dotaz napsaný v jazyce \textit{EPL}, který vrátí výsledek (jeden řádek s daty) jakmile je v rámci plovoucího časového okna pěti sekund splněna sada podmínek. První podmínka je, že událost \textit{IncomingEvent} musí mít úroveň jedna (LEVEL1). Dále musí obsahovat atribut \textit{flag}, který nabývá hodnoty \textit{SYN}. Poslední částí výrazu jsou klauzule \textit{GROUP BY a HAVING}, které plní stejný účel jako v klasickém \textit{SQL}. Tedy v tomto případě seskupují události podle zdroje (source) a musí být detekovány více než tři události se stejným zdrojem.
+
+Pro jednoduchost uvažme proud událostí úrovně jedna a dvě, které mají stejný zdroj i příznak (flag) a události jsou generované s rozestupem jedné sekundy. Obrázek \ref{fig:esper_demo}. Pokud bychom v takovém proudu hledali výskyt pravidla \ref{fig:esper_demo_rule}, pak by vyhovovalo pouze pěti sekundové časové okno \textit{A}, jak je vidět na obrázku.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\linewidth, height=.13\textheight]{images/esper-demo.eps}
+    \caption{Ukázka detekce \textit{EPL} pravidla na proudu událostí}
+    \label{fig:esper_demo}
+\end{figure}
+
+Závěrem kapitoly uvádím aktivity diagram \ref{fig:esper_activity}, který reflektuje tok dat mezi Java aplikací a výpočetním jádrem aplik. rámce Esper. Proces v této fázi začíná čtením dat z aplik. rámce Kafka. Každá jednotlivá událost je přeposílána do nástroje Esper, který proud dat analyzuje. V tomto diagramu se předpokládá, že už je nasazeno nějaké pravidlo. Pokud Esper v proudu událostí detekuje hledaný vzor notifikuje posluchače v aplikaci (vznik nové komplexní události). Pro úplnost je ještě v diagramu obsažena i reakce na vzniklou komplexní událost. Ta se odvíjí od úrovně, kterou měly původní akce (\textit{LEVEL1 vs LEVEL2}).
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=.9\linewidth, height=.3\textheight]{images/esper-activity.eps}
+    \caption{Aktivity diagram znázorňující tok dat mezi aplikací a Esper výpočetním jádrem.}
+    \label{fig:esper_activity}
+\end{figure}
+
 
 \section{Shrnutí}
 Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technologie je použita při implementaci daného požadavku z analýzy. A návrh schématu. Schéma je znázorněno na čtyřech strojích.
@@ -779,7 +810,7 @@ Na jednotlivé typy útoků jsou nachystaná pravidla pro hrubozrnou analýzu, k
 \begin{minipage}[H]{\linewidth}
 	\begin{mylisting}
 SYN_FLOOD: "select source, count(*) as cnt, level from
-IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
+IncomingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
 flag = 'SYN' group by source, level having count(*) > 3"
 	\end{mylisting}
 	\captionof{figure}{Pravidlo pro detekci útoku 'syn flood' (záplava pakety SYN)}
@@ -791,7 +822,7 @@ flag = 'SYN' group by source, level having count(*) > 3"
 \begin{minipage}[H]{\linewidth}
 	\begin{mylisting}
 PORT_SCAN: "select source, count(*) as cnt, level from
-IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
+IncomingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
 port = '11' group by source, level having count(*) > 3"
 	\end{mylisting}
 	\captionof{figure}{Pravidlo pro detekci útoku 'port scan' (skenování portů)}
@@ -803,7 +834,7 @@ port = '11' group by source, level having count(*) > 3"
 \begin{minipage}[H]{\linewidth}
 	\begin{mylisting}
 PING_OF_DEATH: "select source, count(*) as cnt, level from
-IncommingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
+IncomingEvent(level='LEVEL1').win:time_batch(5 sec) WHERE
 size = '100' group by source, level having count(*) > 3"
 	\end{mylisting}
 	\captionof{figure}{Pravidlo pro detekci útoku 'ping of death' (ping smrti)}
@@ -817,7 +848,7 @@ Posledním pravidlem, je pravidlo pro analýzu jemnozrných událostí. Detekuje
 \begin{minipage}[H]{\linewidth}
 	\begin{mylisting}
 "select source, count(*) as cnt, level from
-IncommingEvent(level='LEVEL2').win:time_batch(5 sec) group
+IncomingEvent(level='LEVEL2').win:time_batch(5 sec) group
 by source, level having count(*) > 7"
 	\end{mylisting}
 	\captionof{figure}{Pravidlo pro analýzu jemnozrných událostí}
