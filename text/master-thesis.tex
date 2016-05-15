@@ -210,15 +210,43 @@ Po představení základního konceptu aplikačního rámce \textit{Samsa}, pře
 
 Každý web si lze představit jako kompozici velkého množství jednoduchých akcí. U větších webů, jako je ten společnosti \textit{LinkedIn} to platí dvojnásob. Jsou například akce: "načtení nových notifikací", "načtení seznamu navrhovaných přátel", atd. Každá z těchto akcí vyvolává sérii aplikačních volání. Počínaje dotazem na nějaké rozhraní (typicky \textit{REST}) a konče databázovým dotazem. Každý dotaz je opatřen unikátním číslem, které se předává a je tak možné sestavit celý strom. Díky tomu je možné zjistit, které části kódu se volají zbytečně. Architektura společnosti je distribuovaná a aby byla data vypovídající, je potřeba sestavený strom neustále aktualizovat. Také \textit{LinkedIn} zpracovává velké množství dat, proto je vhodné výpočet distribuovat.
 
-Informace o probíhajících dotazech se spolu s unikátním identifikátorem posílá do aplik. rámce \textit{Kafka}.\textit{Samsa} je pak odtud čte. Následné zpracování se sestává ze dvou \textit{Samsa} úkolů (\textit{job}). První \textit{job} připravuje události, které jsou přijímány z \textit{Kafka} témat. Původní unikátní čísla u zpráv transformuje do jiného tvaru. Zatímco druhý \textit{job} následně shromažďuje zprávy se stejným identifikátorem a vytváří výsledný strom.
+Informace o probíhajících dotazech se spolu s unikátním identifikátorem posílá do aplik. rámce \textit{Kafka}. \textit{Samsa} je pak odtud čte. Následné zpracování se sestává ze dvou \textit{Samsa} úkolů (\textit{job}). První \textit{job} připravuje události, které jsou přijímány z \textit{Kafka} témat. Původní unikátní čísla u zpráv transformuje do jiného tvaru. Zatímco druhý \textit{job} následně shromažďuje zprávy se stejným identifikátorem a vytváří výsledný strom.
 
 \section{Apache Storm}
-Druhou technologií pro distribuované zpracování dat, kterou přestavím, je \textit{Apache Storm}.
-TODO - dopsat
-%https://is.muni.cz/auth/th/410496/fi_b/bakalarska_praca.pdf
-%https://is.muni.cz/auth/th/324532/fi_m/diplomovka.pdf
+Druhou technologií pro distribuované zpracování dat, kterou přestavím, je \textit{Apache Storm}. Je to otevřený software určený k zpracování proudu událostí v reálném čase. Byl vyvinut společností Twitter a nyní je dostupný pod licencí \textit{Apache Software Foundation}.
+
+Hlavní předností u \textit{Apache Storm} je vysoká míra tolerance chyb. Když jakákoli komponenta selže je garantováno, že systém bude dál plynule běžet. Úkoly z chybné komponenty jsou automaticky přeřazeny ostatním komponentám. \textit{Storm} má také vysokou míru škálovatelnosti. To znamená, že s přidáním dalších počítačů do platformy, jsou některé úkoly z vytížených komponent automaticky přeřazeny na nový stroj. Poslední důležitou vlastností, je spolehlivost. Je zaručeno, že každá zpráva bude zpracována, i když dojde k výpadkům v komunikaci. Garance doručení zpráv funguje na podobném principu jako protokol \textit{TCP}. Je možné tuto vlastnost vypnout a tím zvýšit rychlost zpracování [\ref{bib_storm}].
+
+Architektura \textit{Apache Storm} se sestává ze dvou druhů uzlů. Mohou běžet simultánně na jednom počítači nebo na více. Jsou to:
+
+\begin{itemize}
+\item Nimbus -- Ve \textit{Storm} klastru běží právě jeden \textit{Nimbus}. Je to hlavní síťový uzel, který je zodpovědný za distribuci kódu, přiděluje úlohy jednotlivým pracovním uzlům a monitoruje chyby. Jinak řešeno \textit{Nimbus} se stará aby celý klastr fungoval a byl rovnoměrně vytížený.
+\item Supervisor -- Je to uzel, který se řídí instrukcemi, které posílá \textit{Nimbus}. V tomto uzlu běží vlákna, zvaná \textit{workers}, která provádí úkoly přidělené řídícím uzlem.
+\end{itemize}
+
+\textit{Storm} využívá aplikační rámec \textit{ZooKeeper} ke koordinaci mezi hlavním uzlem (\textit{Nimbus}) a pracovními uzly (\textit{Supervisor}). \textit{Nimbus} je bezstavový, proto \textit{ZooKeeper} musí monitorovat stav pracovních uzlů a udržovat stav celého klastru. ZooKeeper může běžet v jedné nebo ve více instancích.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.9\textwidth, height=0.25\textheight]{images/storm-architecture.eps}
+    \caption{Architektura aplikačního rámce \textit{Storm}}
+    \label{fig:storm-architecture}
+\end{figure}
+
+Topologie \textit{Storm} clusteru je určena jako orientovaný acyklický graf, jehož hrany jsou datové toky a uzly jsou komponenty. Komponenta je vždy typu \textit{Spout} nebo typu \textit{Bolt}. \textit{Spout} čte data z externího (logy, rozhraní aplikace, apod.) zdroje a posílá je dál do topologie. Všechna "business" logika je soustředěna do komponent typu \textit{bolt}. Jak je vidět z obrázku \ref{fig:storm-topology}, každý \textit{Bolt} může na svém výstupu generovat nový datový proud.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.75\textwidth, height=0.2\textheight]{images/storm-topology.eps}
+    \caption{Ukázka topologie ve \textit{Storm} klastru. Obrázek znázorňuje tři různé komponenty typu \textit{Spout}, které čtou data ze tří různých zdrojů. Dále několik komponent typu \textit{Bold}, které datové proudy zpracovávají [\ref{bib_storm_doc}].}
+    \label{fig:storm-topology}
+\end{figure}
+
+Hlavní datová struktura v aplik. rámci \textit{Storm} je tzv \textit{tuple}. Je to seznam hodnot, kde každá hodnota může být jiného typu. Typy nemusí být předem definované, protože \textit{tuple} je dynamicky typovaný. Sekvence objektů \textit{tuple} tvoří datový proud (angl. \textit{stream}).
+
+\textit{Apache Storm} má mnoho využití. Jedním z nich je například nepřetržité zpracování dat (angl. \textit{continuous computation}). Díky tomu, je možné zpracovaná data zobrazovat téměř ve stejném čase kdy byla emitována. Druhým příkladem využití je analýza velkého množství dat. Díky distribuovanému výpočtu je možné analyzovat velké množství dat s nízkým zpožděním. [\ref{bib_storm_usage}]
+
 \section{CAVE}
-%% http://dl.acm.org/citation.cfm?doid=2675743.2771834
 \textit{CAVE (Constraint-based Analysis of eVEnts)} [\ref{bib_cave}], je nová metodologie a nástroj pro vývojáře představený v roce 2015 na konferenci v Norském Oslu [\ref{bib_debs_conf}]. \textit{CAVE} je určen na analýzu chování aplikací, které zpracovávají události. \textit{CAVE} si klade za cíl identifikovat potenciální problémy pomocí detekce splnitelnosti vlastností, které vycházejí z charakteristik analyzovaného prostředí a množiny pravidel definovaných vývojářem. Navíc \textit{CAVE} automaticky generuje sekvence událostí, které daným vlastnostem nastavují pravdivostní hodnoty. Díky tomu může vývojář jednoduše vyzkoušet vyhodnocení pravidel, které vytvořil.
 
 Předpokladem je, že každá událost je charakterizována svým typem a množinou vlastností. Typ události definuje počet, pořadí a jména vlastností, které tvoří danou událost. Na příkladu \ref{fig:cave-event-example} je pravidlo s typem události \textit{Host} obsahující vlastnosti \textit{cpu\_load}, \textit{gpu\_load}.
@@ -233,7 +261,7 @@ Host(cpu_load > 80 and gpu_load > 80 or cpu_load = 100)
 \end{minipage}
 \end{center}
 
-Na obrázku \ref{fig:cave-concept} je znázorněn postup zpracování vstupních informací. Na vstupu je vlastnost (property), která má být kontrolována, množina \textit{CEP} pravidel (rules) a předpoklady dané prostředím (assumptions). Vlastnost je zde žádoucí nebo nežádoucí cíl, který má být detekován. \textit{CAVE} vypočítá kdy může být vlastnost splněna a kdy ne na základě vstupních pravidel a proměnných prostředí.
+Na obrázku \ref{fig:cave-concept} je znázorněn postup zpracování vstupních informací. Na vstupu je vlastnost (property), která má být kontrolována, množina \textit{CEP} pravidel (rules) a předpoklady dané prostředím (assumptions). Vlastnost je zde žádoucí nebo nežádoucí cíl, který má být detekován. \textit{CAVE} vypočítá kdy může být vlastnost splněna a kdy ne na základě vstupních pravidel a proměnných prostředí. 
 
 \begin{figure}[H]
 	\centering
@@ -382,10 +410,10 @@ Zpracování komplexní události záleží na typu analyzovaných dat. Pokud js
 Důvod vzniku nové skupiny je popsán v předchozím případě užití. Rozpuštění je vyvoláno uplynutím časového intervalu. Skupiny počítačů analyzující jemnozrné události jsou vytvářeny s časovou platností. Daný interval by měl stačit k analýze. Pokud dojde k detekci sledu událostí, který odpovídá aktuálně nasazenému pravidlu pro jemnozrnou analýzu, vzniklá komplexní událost je zapsána do logu.
 
 \chapter{Návrh}
-Tato kapitola postupně popisuje jak budou reálně splněny požadavky na systém uvedené v analýze. Stěžejní část kapitoly je volba technologií. U každé zvolené technologie je její popis a jak bude použita ve výsledném řešení.
+Tato kapitola postupně popisuje jak budou reálně splněny požadavky na systém uvedené v analýze. Stěžejní částí je volba technologií. U každé zvolené technologie je její popis a jak bude použita ve výsledném řešení.
 
 \section{Technologie}
-Tato kapitola podkapitola jednotlivé technologie, které jsou použity při implementaci algoritmu. Na konci každé subsekce je popis toho jak konkrétně je technologie použita v mém řešení.
+Výběr technologií nebyl náhodný. Byly mi doporučeny vedoucím práce. Každá z nich by se dala nahradit, ale myslím si, že právě tato kombinace (\textit{Java + Maven, Kafka, Esper, ZooKeepr}) je ideální, protože jsou si navzájem přizpůsobené. Namátkou zmíním některé vazby, které usnadňují vývoj: \textit{Esper, Kafka i ZooKeeper} mají rozhraní pro Javu, proto je \textit{Maven} ideální. \textit{Kafka} používá \textit{ZooKeeper} pro distribuci nastavení, apod.
 
 \subsection{Apache Maven}
 Apache Maven je nástroj pro správu, řízení a automatizaci sestavování aplikací (angl. build). Maven sám nemá žádné uživatelské rozhraní a běží pouze na příkazové řádce. Jeho účelem je usnadnit práci vývojáři tím, že definuje jednotný proces sestavení. \ref{bib_4} Také definuje strukturu aplikace, protože jednotlivé typy souborů hledá v určitých balíčcích. Například spustitelné Java soubory by měly být v adresáři \textit{src/maven/java}.
@@ -1006,7 +1034,6 @@ Event Processing in Distributed Enterprise Systems.} Addison-Wesley Professional
 
 \bibitem
 CCOULOURIS, George F. \textit{Distributed systems: concepts and design}. 5th ed. Boston: Addison-Wesley, c2012. ISBN 01-321-4301-1. \label{bib_2}
-%% Dostupné z: \url{https://azmuri.files.wordpress.com/2013/09/george-coulouris-distributed-systems-concepts-and-design-5th-edition.pdf}
 
 \bibitem
 KKAMBURUGAMUVE, Supun; FOX, Geoffrey; LEAKE, David and QIU, Judy. \textit{Survey of Distributed Stream Processing for Large Stream Sources}. Technical report, 2013. [online]. Dostupné z: \url{http://grids.ucs.indiana.edu/ptliupages/publications/survey_stream_processing.pdf} \label{bib_3}
@@ -1050,8 +1077,18 @@ EEsper [online]. Dostupné z: \url{http://www.espertech.com/esper/} \label{bib_e
 \bibitem
 EEsper perforamnce [online]. Dostupné z: \url{http://www.espertech.com/esper/performance.php} \label{bib_esper_power}
 
+\bibitem
+AApache Storm [online]. Dostupné z: \url{http://storm.apache.org} \label{bib_storm_doc}
+
+\bibitem
+LLEIBIUSKY, Jonathan, Gabriel EISBRUCH a Dario SIMONASSI. Getting Started with Storm. O’Reilly Media, 2012. ISBN 978-144-9324-018. \label{bib_storm}
+
+\bibitem
+CCompanies Using Apache Storm [online]. Dostupné z: \url{http://storm.apache.org/documentation/Powered-By.html} \label{bib_storm_usage}
+
+
 \end{thebibliography}
-\appendix %% Start the appendices.
+\appendix
 
 \chapter{Příloha}
 \label{sec:appendix-a}
