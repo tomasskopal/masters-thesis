@@ -136,10 +136,15 @@
 \usepackage{menukeys}
 \begin{document}
 \chapter{Úvod}
+Množství produkovaných dat se v dnešní době rapidně zvyšuje. Podle studie \textit{IDC}\footnote{IDC - International Data Corporation (\url{http://idc-czech.cz/cze/})} se množství digitálních dat zdvojnásobuje každé dva roky. Z toho 80\% uvnitř soukromých podniků [\ref{bib_big_data}].
 
-Obecně zadání práce říká, že má být vytvořen middleware pro distribuované zpracování vzorů událostí (angl. middleware solution for distributed event pattern matching). Z anglického popisu vychází zkratka MSFDEPM. Zjednodušením dostaneme "distributed event matching", neboli DEM. Pro účely této práce a snadnější orientaci budu popisované řešení identifikovat zkratkou \textit{DEM}.
+Analýzou interních dat lze nejen odhalit nečekané souvislosti a získat tak konkurenční výhodu, ale také identifikovat některé potenciální hrozby. Včasné detekování síťového útoku nebo kolapsu některého zařízení může společnosti ušetřit velké obnosy peněz.
 
-TODO - dopsat
+V případech, kdy chceme odhalit aktuálně hrozící problém je nutné analyzovat data v reálném čase. Častým řešením je sběr dat z centrálních uzlů v síti a jejich analýza. Cílem této práce je navrhnout softwarové řešení, které bude možno nasadit přímo na koncová zařízení, na kterých může vzniknout nějaký problém. Tento software bude umožňovat posílání dat mezi jednotlivými zařízeními a jejich analýzu přímo na některém z těchto uzlů. Důležitou vlastností bude detekování definovaných vzorů v datových proudech, neboli detekce komplexních událostí.
+
+Jádro práce je rozděleno do pěti kapitol. Ve druhé kapitole je obecně představen princip komplexního zpracování událostí. Protože budou události v navrhovaném řešení zpracovávány distribuovaně, jsou v druhé kapitole představeny některé existující nástroje, které jsou využívány k distribuovanému zpracování dat. Třetí kapitola má za cíl přiblížení tématu a některých základních principů. Čtvrtá kapitola se věnuje analýze požadavků na systém. V páté kapitole jsou popsány technologie, které budou použity při implementaci a které pomohou splnit požadavky vyjmenované ve čtvrté kapitole. V poslední, šesté, kapitole je postup nasazení software na čtyři testovací stroje.
+
+Zadání práce říká, že má být vytvořena vrstva, softwarový nástroj, pro distribuované zpracování vzorů událostí (angl. middleware solution for distributed event pattern matching). Z anglického popisu vychází zkratka MSFDEPM. Zjednodušením dostaneme "distributed event matching", neboli DEM. Pro účely této práce a snadnější orientaci budu popisované řešení identifikovat zkratkou \textit{DEM}.
 
 \chapter{Zpracování událostí}
 Se zvyšujícím se počtem zařízení, která jsou schopna produkovat data, se zvyšuje potřeba tato data analyzovat. Běžně rozšířeným způsobem je zpracování dat dávkově. Tedy, data se uloží a ve vhodnou dobu, typicky v noci, se analyzují.
@@ -1025,6 +1030,9 @@ TODO - dopsat
 
 
 \begin{thebibliography}{99}
+\bibitem
+MCCAFFERTY, Dennis. Surprising Statistics About Big Data [online]. 2014. Dostupné z: \url{http://www.baselinemag.com/analytics-big-data/slideshows/surprising-statistics-about-big-data.html} \label{bib_big_data}
+
 \bibitem
 CCeleda, Pavel. Network Traffic Analysis for Cyber Security. Brno, 2013. Masaryk Univerzity. [online]. Dostupné z: \url{https://is.muni.cz/do/rect/habilitace/1433/44368572/44368651/HP_kor.-verejna.pdf} \label{bib_celeda}
 
