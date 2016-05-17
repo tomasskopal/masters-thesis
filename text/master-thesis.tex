@@ -105,8 +105,8 @@
     advisor       = RNDr. Filip Nguyen,
     title         = {Distribuované Komplexní Zpracování Událostí},
     TeXtitle      = {Distribuované Komplexní Zpracování Událostí},
-    keywords      = {CEP, Kafka, ZooKeeper, analýza, distribuovaný},
-    TeXkeywords   = {CEP, Kafka, ZooKeeper, analýza, distribuovaný},
+    keywords      = {CEP, Kafka, ZooKeeper, Esper, analýza, distribuovaný},
+    TeXkeywords   = {CEP, Kafka, ZooKeeper, Esper, analýza, distribuovaný},
     date			 =	2016/05/30
 }
 \thesislong{abstract}{
@@ -995,6 +995,7 @@ Data, použitá v ukázkách jsem zvýraznil také na snímcích obrazovky, kter
 
 
 \section{Známá omezení}
+\label{sec:omezeni}
 Pomocí navrhovaného řešení je možné analyzovat širokou škálu událostí. Nejen dopady síťové komunikace, ale i síťový provoz jako takový. Dále je možné řešení nasadit například na analýzu aplikačních logů.
 
 Během testování jsem narazil na některá omezení, nedostatky nebo doporučení, která v této kapitole rozvedu. K některým situacím uvedu i konkrétní řešení. U některých je řešení předmětem dalšího rozvoje algoritmu nebo jeho podrobení výkonnostním testům.
@@ -1024,9 +1025,17 @@ https://zookeeper.apache.org/doc/trunk/zookeeperReconfig.html}.
 V rámci testování jsem zkoušel jak se aplikace vzpamatuje z výpadků některých uzlů. Chování nebylo příliš predikovatelné. Záleželo na tom v jaké fázi analýzy došlo k výpadku. Jestli byla spuštěna jemnozrná analýza nebo nikoliv. Pravidelně se opakovaly dva problémy. V ZK zůstal zaregistrovaný některý z posluchačů a při obnově se stal znovu aktivním a tím docházelo k duplicitnímu zpracování řídících akcí. Druhým problémem byly nesmazané uzly ze ZooKeeper stromu, který se používá jako reprezentace stavu DEM.
 
 \chapter{Závěr}
-TODO - dopsat
+Hlavním cílem práce bylo vytvoření software na detekci vzorů událostí v distribuovaném prostředí. Tento cíl byl splněn v plném rozsahu požadavků. Aplikace je nazvána DEM a úspěšná detekce vzorů v proudu událostí byla vyzkoušena na čtyřech virtuálních strojích na Fakultě informatiky Masarykovy univerzity.
 
-%%Závěr bude v tomto případě obsahovat obšírnější zhodnocení toho jak se povedlo splnit zadání. Že výsledkem práce je navržené řešení za použití kafky, zk, esperu, Javy.
+První část práce se věnuje úvodu do problematiky zpracování událostí. Je zde vysvětleno co znamená pojem "komplexní zpracování událostí". Druhá kapitola navazuje představením tří nástrojů, které řeší distribuované zpracování dat. U každého nástroje je vysvětlen princip na kterém pracuje. Díky tomu čtenář získá lepší přehled o tom, jak je možné distribuovaně zpracovávat události.
+
+Ve třetí kapitole je rozbor požadavků na systém. Protože má DEM za cíl analyzovat data jsou v této kapitole specifikovány očekávané vstupy a výstupy. Zbytek požadavků je modelován pomocí diagramu užití.
+
+Čtvrtá kapitola navazuje výběrem vhodných technologií a popisem architektury systému. Události jsou stěžejním prvkem při běhu aplikace. Proto je jejich sémantice věnována poslední část čtvrté kapitoly.
+
+V poslední, páté, je nasazení systému a demonstrace reálného běhu. První polovina kapitoly se věnuje tomu, co je potřebné pro správný běh a jak byl software implementován. Druhá polovina obsahuje popis testování a ukázku běhu aplikace. V závěru kapitoly jsem se věnoval diskusi omezení, na která jsem při vývoji narazil. U vyjmenovaných problémů jsem navrhl i možná řešení.
+
+Komplexní zpracování událostí je rozsáhlý vědní obor a DEM jej doplňuje o myšlenku zpracování událostí přímo na koncových uzlech. Vytvoření fungujícího výpočetního klastru pro produkční prostředí je velkým úkolem. Myslím si, že DEM je dobrým začátkem pro splnění tohoto cíle.
 
 
 \begin{thebibliography}{99}
