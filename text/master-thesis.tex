@@ -105,12 +105,16 @@
     advisor       = RNDr. Filip Nguyen,
     title         = {Distribuované Komplexní Zpracování Událostí},
     TeXtitle      = {Distribuované Komplexní Zpracování Událostí},
-    keywords      = {CEP, Kafka, ZooKeeper, Esper, analýza, distribuovaný},
-    TeXkeywords   = {CEP, Kafka, ZooKeeper, Esper, analýza, distribuovaný},
+    keywords      = {CEP, Kafka, ZooKeeper, Esper, analýza, distribuovaný, detekce vzorů, událost},
+    TeXkeywords   = {CEP, Kafka, ZooKeeper, Esper, analýza, distribuovaný, detekce vzorů, událost},
     date			 =	2016/05/30
 }
 \thesislong{abstract}{
-    Goal of this thesis is to develop a algorithm for distributed Event Pattern matching.. The application should be able to run any number of processing nodes. For the needs of this thesis, example of 4 nodes will be sufficient.
+Cílem práce je navrhnout softwarové řešení na detekování vzorů událostí v distribuovaném prostředí. Práce staví na principu komplexního zpracování událostí (Complex Event Processing). Danou aplikaci bude možné nasadit na libovolný počet zařízení. Každé zařízení bude moct být producentem i konzumentem proudu událostí. Události mohou být dvou typů. Zároveň bude možné na libovolné zařízení nasadit pravidlo pro detekování vzorů v proudu událostí. Platnost pravidla může být časově omezená. Při úspěšné detekci vzoru aplikace spustí příslušnou akci, která závisí na typu událostí. A to podrobnou analýzu na podmnožině uzlů nebo vypsání informací na výstup. Výsledné řešení bude otestováno na čtyřech strojích.
+}
+
+\thesislong{thanks}{
+Rád bych poděkoval RNDr. Filipu Nguyenovi za vedení mé práce, cenné rady a vstřícný přístup při konzultacích. Poděkování patří také mým rodičům, kteří mě během studia ze všech sil podporovali.
 }
 
 %% The following section sets up the bibliography.
@@ -140,7 +144,7 @@ Množství produkovaných dat se v dnešní době rapidně zvyšuje. Podle studi
 
 Analýzou interních dat lze nejen odhalit nečekané souvislosti a získat tak konkurenční výhodu, ale také identifikovat některé potenciální hrozby. Včasné detekování síťového útoku nebo kolapsu některého zařízení může společnosti ušetřit velké obnosy peněz.
 
-V případech, kdy chceme odhalit aktuálně hrozící problém je nutné analyzovat data v reálném čase. Častým řešením je sběr dat z centrálních uzlů v síti a jejich analýza. Cílem této práce je navrhnout softwarové řešení, které bude možno nasadit přímo na koncová zařízení, na kterých může vzniknout nějaký problém. Tento software bude umožňovat posílání dat mezi jednotlivými zařízeními a jejich analýzu přímo na některém z těchto uzlů. Důležitou vlastností bude detekování definovaných vzorů v datových proudech, neboli detekce komplexních událostí.
+V případech, kdy chceme odhalit aktuálně hrozící problém, je nutné analyzovat data v reálném čase. Častým řešením je sběr dat z centrálních uzlů v síti a jejich analýza. Cílem této práce je navrhnout softwarové řešení, které bude možno nasadit přímo na koncová zařízení, na nichž může vzniknout nějaký problém. Software bude umožňovat posílání dat mezi jednotlivými zařízeními a jejich analýzu přímo na některém z těchto uzlů. Důležitou vlastností bude detekování definovaných vzorů v datových proudech, neboli detekce komplexních událostí.
 
 Jádro práce je rozděleno do pěti kapitol. Ve druhé kapitole je obecně představen princip komplexního zpracování událostí. Protože budou události v navrhovaném řešení zpracovávány distribuovaně, jsou v druhé kapitole představeny některé existující nástroje, které jsou využívány k distribuovanému zpracování dat. Třetí kapitola má za cíl přiblížení tématu a některých základních principů. Čtvrtá kapitola se věnuje analýze požadavků na systém. V páté kapitole jsou popsány technologie, které budou použity při implementaci a které pomohou splnit požadavky vyjmenované ve čtvrté kapitole. V poslední, šesté, kapitole je postup nasazení software na čtyři testovací stroje.
 
@@ -154,8 +158,7 @@ Pokud však uvažujeme reálný provoz na síti, který se dnes v centrálních 
 
 Jednotkou zpracování dat je událost (angl. event). Událost je základním pojmem používaným v oblasti zpracování událostí. Je definována jako objekt, který reprezentuje záznam o aktivitě v daném systému. Událost může mít vlastnosti. Typickým příkladem takové vlastnosti je čas vzniku události, příčina jejího vzniku nebo její typ [\ref{bib_1}]. Jednoduchým příkladem události může být paket. Je to datová schránka, která obsahuje informace, které můžeme analyzovat. Samostatný paket nemá téměř žádnou vypovídající hodnotu, kdežto proud paketů je základem Internetu.
 
-Takový proud událostí skrývá množství dat, která je možné získat až při komplexní analýze, která zohledňuje více událostí v řadě. To nazýváme \textit{komplexní zpracování dat (angl. complex event processing neboli CEP)}
-
+Takový proud událostí skrývá množství dat, která je možné získat až při komplexní analýze. Komplexní analýza zohledňuje více událostí v řadě. To nazýváme \textit{komplexní zpracování dat (angl. complex event processing neboli CEP).}
 
 \section{CEP}
 
@@ -163,22 +166,22 @@ CEP je dynamický vědní obor, který se v poslední době hodně rozvíjí\foo
 
 Jak už bylo řečeno, množství událostí v systémech je enormní. Při jejich zpracování se setkáváme s pojmem \textit{komplexní událost}. Taková událost se může vyskytnout pouze jako reakce na sled jiných, dílčích, událostí. Dílčí události mohou spolu souviset mnoha různými způsoby, nejčastěji je však spojujeme na základě vlastností (čas vzniku, příčina vzniku, typ, atd).
 
-Příkladem komplexní události může být akce nakoupení produktu v internetovém obchodě. Je to v dnešní době elektronického marketingu velké téma. Běžnému uživateli Internetu je v mnoha kanálech (Facebook ads, Google ads, mailing) zobrazována reklama. Některý uživatel nakoupí produkt při prvním zobrazení určité reklamy. Jiný uživatel potřebuje reklamu vidět alespoň pětkrát, než nakoupí. Způsob jak tuto "cestu" měřit se jmenuje atribuční model [\ref{bib_6}]. Atribuční model je tak defacto soubor událostí, které vyvolaly konečnou, komplexní, událost. Tedy nákup produktu v obchodě. S roustoucím počtem zařízení, roste počet reklam a také se komplikují atribuční modely. Vhodnými technikami zpracování dílčích událostí (zobrazení reklamy, kliknutí na reklamu, nainstalování aplikace) lze například predikovat chování uživatele.
+Příkladem komplexní události může být akce nakoupení produktu v internetovém obchodě. Je to v dnešní době elektronického marketingu velké téma. Běžnému uživateli Internetu je v mnoha kanálech (Facebook ads, Google ads, mailing) zobrazována reklama. Některý uživatel nakoupí produkt při prvním zobrazení určité reklamy. Jiný uživatel potřebuje reklamu vidět alespoň pětkrát, než nakoupí. Způsob, jak tuto "cestu" měřit, se jmenuje atribuční model [\ref{bib_6}]. Atribuční model je tak defacto soubor událostí, které vyvolaly konečnou, komplexní, událost. Tedy nákup produktu v obchodě. S roustoucím počtem zařízení roste počet reklam a také se komplikují atribuční modely. Vhodnými technikami zpracování dílčích událostí (zobrazení reklamy, kliknutí na reklamu, nainstalování aplikace) lze například predikovat chování uživatele.
 
 CEP nabízí techniky pro definici a využití vztahů mezi událostmi. Může být využíván pro analýzu libovolného typu událostí v aplikaci, počítačové síti nebo v informačním systému. Jednou z těchto technik je i definování vlastních událostí, jakožto pravidla. Jinak řečeno, můžeme vytvořit vlastní reakci na soubor určitých událostí v našem systému. Touto cestou můžeme pochopit co se v našem systému odehrává.
 
 To zvyšuje míru flexibility. Uživatel může za pomocí CEP specifikovat taková pravidla, která jej aktuálně zajímají a jsou pro něj přínosem. Může analyzovat jak nízko-úrovňové, tak vysoko-úrovňové procesy. Různé druhy událostí mohou být v CEP monitorovány současně. Velkou výhodou je, že pravidla mohou být měněna, odebírána a přidávána za běhu, tedy bez výpadku systému.
 
-Zpracování proudu událostí a vyhodnocení, jestli se pravidlo vyskytlo, stojí samozřejmě určitý výpočetní výkon. V závislosti na typu a množství dat. Pokud je dat hodně (například analýza síťového provozu), musíme výpočet distribuovat.
+Zpracování proudu událostí a vyhodnocení, jestli se pravidlo vyskytlo, stojí samozřejmě určitý výpočetní výkon, v závislosti na typu a množství dat. Pokud je dat hodně (například analýza síťového provozu), musíme výpočet distribuovat.
  
 \section{Distribuované CEP}
-Úvodem kapitoly je potřeba jasně vymezit co v tomto kontextu chápeme pod pojmem "distribuovaný". Obecně se používají dva výklady:
+Úvodem kapitoly je potřeba jasně vymezit, co v tomto kontextu chápeme pod pojmem "distribuovaný". Obecně se používají dva výklady:
 \begin{itemize}
-  \item Distribuované zpracování událostí jako zpracování událostí z více heterogenních zdrojů (distribuovaný systém).~[\ref{bib_2}] Takový výpočet může běžet i na jenom stroji a samotná analýza většinou nebývá paralelní. Takto pojem používá i \textit{David Luckham} v knize \textit{The Power of Events} [\ref{bib_1}] v popisu obrázku \textit{1.1}.
-  \item Distribuované zpracování událostí jako výpočet rozdělený na více menších, méně náročných úloh za účelem rychlejšího zpracování s využitím paralelismu\footnote{Takto zpracovává data například Twitter [\ref{bib_distributed_computing}]. A to jejich distribucí pomocí nástroje \textit{Apache Storm}}. Dále v práci budeme pojem chápat právě takto.
+  \item Distribuované zpracování událostí jako zpracování událostí z více heterogenních zdrojů (distribuovaný systém).~[\ref{bib_2}] Výpočet může běžet i na jenom stroji a samotná analýza většinou nebývá paralelní. Takto pojem chápe i \textit{David Luckham} v knize \textit{The Power of Events} [\ref{bib_1}]. V knize to dobře demonstruje obrázek \textit{1.1}.
+  \item Distribuované zpracování událostí jako výpočet rozdělený na více menších, méně náročných úloh za účelem rychlejšího zpracování s využitím paralelismu\footnote{Takto zpracovává data například Twitter [\ref{bib_distributed_computing}]. A to jejich distribucí pomocí nástroje \textit{Apache Storm}}. Dále v práci budeme pojem chápat právě tímto způsobem.
 \end{itemize}
 
-Požadavky na distribuované zpracování událostí (DCEP) jsou v mnoha ohledech jiné než na zpracování centralizované. Dvě hlavní vlastnosti, které vyžadujeme jsou vysoká míra dostupnosti (angl. availability) a nízké zpoždění (angl. latency). Cílem je pak maximalizovat dostupnost a minimalizovat zpoždění. Bohužel u většiny návrhů platí, že tyto vlastnosti jsou závislé a zlepšení jedné, zhoršuje druhou. Zlepšení dostupnosti, zvýší zpoždění, protože potřebujeme více času na synchronizaci všech řídících informací. [\ref{bib_3}]
+Požadavky na distribuované zpracování událostí (DCEP) jsou v mnoha ohledech jiné než na zpracování centralizované. Dvě hlavní vlastnosti, které vyžadujeme, jsou vysoká míra dostupnosti (angl. availability) a nízké zpoždění (angl. latency). Cílem je pak maximalizovat dostupnost a minimalizovat zpoždění. Bohužel u většiny návrhů platí, že tyto vlastnosti jsou závislé a zlepšení jedné zhoršuje druhou. Zlepšení dostupnosti, zvýší zpoždění, protože potřebujeme více času na synchronizaci všech řídících informací. [\ref{bib_3}]
 
 Zmíněné dvě vlastnosti nejsou jediné. Mezi vlastnosti distribuovaného zpracování události můžeme dále zařadit:
 \begin{itemize}
@@ -189,7 +192,7 @@ Zmíněné dvě vlastnosti nejsou jediné. Mezi vlastnosti distribuovaného zpra
 \end{itemize}
 
 \chapter{Nástroje pro distribuované zpracování událostí}
-Ve třetí kapitole představím dva existující nástroje a jeden nový přístup, jejichž použitím můžeme distribuovaně zpracovávat události. Cílem této práce je vytvoření nástroje pro detekci určitých vzorů v analyzovaných událostech v distribuovaném prostředí. Představení existujících nástrojů, které řeší podobnou problematiku, nám pomůže pochopit souvislosti. Také je možné v těchto technologiích najít inspiraci, jak řešit některá úskalí při práci v distribuovaném prostředí. Například odolnost systému proti výpadkům výpočetních uzlů.
+Ve třetí kapitole představím dva existující nástroje a jeden nový přístup, jejichž použitím můžeme distribuovaně zpracovávat události. Cílem této práce je vytvoření nástroje pro detekci určitých vzorů v analyzovaných událostech v distribuovaném prostředí. Představení existujících nástrojů, které řeší podobnou problematiku, nám pomůže pochopit souvislosti. Také je možné v těchto technologiích najít inspiraci, jak řešit některá úskalí při práci v distribuovaném prostředí, například odolnost systému proti výpadkům výpočetních uzlů.
  
 \section{Apache Samsa}
 První ze dvou technologií je Apache Samsa. Je to aplikační rámec sloužící k distribuovanému zpracování proudu dat. \textit{Samsa} splňuje všechny důležité vlastnosti pro operace v distribuovaném prostředí jako jsou vysoká míra tolerance chyb, rozšiřitelnost a odolnost proti výpadku. Projekt byl původně vyvíjený společností LinkedIn a později byl vydán pod hlavičkou \textit{Apache Software Foundation}. Tato kapitola popisuje základní strukturu a fungování aplikačního rámce Samsa. Zdrojem informací je oficiální dokumentace [\ref{bib_samsa}].
@@ -206,21 +209,21 @@ Každý \textit{task} logicky používá stejný kód jako kterýkoli jiný \tex
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.5\textwidth, height=0.5\textheight]{images/samsa-job-detail.png}
+    \includegraphics[width=0.43\textwidth, height=0.4\textheight]{images/samsa-job-detail.png}
     \caption{Ukázka \textit{Samsa} úkolu (\textit{job}) [\ref{bib_samsa}]}.
     \label{fig:samsa-concept}
 \end{figure}
 
 Po představení základního konceptu aplikačního rámce \textit{Samsa}, přejdu k příkladu použití. Příklad dobře demonstruje nasazení správné technologie na distribuované zpracování dat. Příklad je přepisem případové studie [\ref{bib_samsa_case_study}] společnosti \textit{LinkedIn}.
 
-Každý web si lze představit jako kompozici velkého množství jednoduchých akcí. U větších webů, jako je ten společnosti \textit{LinkedIn} to platí dvojnásob. Jsou například akce: "načtení nových notifikací", "načtení seznamu navrhovaných přátel", atd. Každá z těchto akcí vyvolává sérii aplikačních volání. Počínaje dotazem na nějaké rozhraní (typicky \textit{REST}) a konče databázovým dotazem. Každý dotaz je opatřen unikátním číslem, které se předává a je tak možné sestavit celý strom. Díky tomu je možné zjistit, které části kódu se volají zbytečně. Architektura společnosti je distribuovaná a aby byla data vypovídající, je potřeba sestavený strom neustále aktualizovat. Také \textit{LinkedIn} zpracovává velké množství dat, proto je vhodné výpočet distribuovat.
+Každý web si lze představit jako kompozici velkého množství jednoduchých akcí. U větších webů, jako je ten společnosti \textit{LinkedIn} to platí dvojnásob. Jsou například akce: "načtení nových notifikací", "načtení seznamu navrhovaných přátel", atd. Každá z těchto akcí vyvolává sérii aplikačních volání. Počínaje dotazem na nějaké rozhraní (typicky \textit{REST}) a konče databázovým dotazem. Každý dotaz je opatřen unikátním číslem, které se předává a je tak možné sestavit celý strom. Díky tomu je možné zjistit, které části kódu se volají zbytečně. Architektura společnosti je distribuovaná a aby byla data vypovídající, je zapotřebí sestavený strom neustále aktualizovat. Také \textit{LinkedIn} zpracovává velké množství dat, proto je vhodné výpočet distribuovat.
 
 Informace o probíhajících dotazech se spolu s unikátním identifikátorem posílá do aplik. rámce \textit{Kafka}. \textit{Samsa} je pak odtud čte. Následné zpracování se sestává ze dvou \textit{Samsa} úkolů (\textit{job}). První \textit{job} připravuje události, které jsou přijímány z \textit{Kafka} témat. Původní unikátní čísla u zpráv transformuje do jiného tvaru. Zatímco druhý \textit{job} následně shromažďuje zprávy se stejným identifikátorem a vytváří výsledný strom.
 
 \section{Apache Storm}
-Druhou technologií pro distribuované zpracování dat, kterou přestavím, je \textit{Apache Storm}. Je to otevřený software určený k zpracování proudu událostí v reálném čase. Byl vyvinut společností Twitter a nyní je dostupný pod licencí \textit{Apache Software Foundation}.
+Druhou technologií pro distribuované zpracování dat, kterou přestavím, je \textit{Apache Storm}. Je to otevřený software určený ke zpracování proudu událostí v reálném čase. Byl vyvinut společností Twitter a nyní je dostupný pod licencí \textit{Apache Software Foundation}.
 
-Hlavní předností u \textit{Apache Storm} je vysoká míra tolerance chyb. Když jakákoli komponenta selže je garantováno, že systém bude dál plynule běžet. Úkoly z chybné komponenty jsou automaticky přeřazeny ostatním komponentám. \textit{Storm} má také vysokou míru škálovatelnosti. To znamená, že s přidáním dalších počítačů do platformy, jsou některé úkoly z vytížených komponent automaticky přeřazeny na nový stroj. Poslední důležitou vlastností, je spolehlivost. Je zaručeno, že každá zpráva bude zpracována, i když dojde k výpadkům v komunikaci. Garance doručení zpráv funguje na podobném principu jako protokol \textit{TCP}. Je možné tuto vlastnost vypnout a tím zvýšit rychlost zpracování [\ref{bib_storm}].
+Hlavní předností u \textit{Apache Storm} je vysoká míra tolerance chyb. Když jakákoli komponenta selže, je garantováno, že systém bude dál plynule běžet. Úkoly z chybné komponenty jsou automaticky přeřazeny ostatním komponentám. \textit{Storm} má také vysokou míru škálovatelnosti. To znamená, že s přidáním dalších počítačů do platformy, jsou některé úkoly z vytížených komponent automaticky přeřazeny na nový stroj. Poslední důležitou vlastností je spolehlivost. Je zaručeno, že každá zpráva bude zpracována, i když dojde k výpadkům v komunikaci. Garance doručení zpráv funguje na podobném principu jako protokol \textit{TCP}. Je možné tuto vlastnost vypnout a tím zvýšit rychlost zpracování [\ref{bib_storm}].
 
 Architektura \textit{Apache Storm} se sestává ze dvou druhů uzlů. Mohou běžet simultánně na jednom počítači nebo na více. Jsou to:
 
@@ -275,7 +278,7 @@ Na obrázku \ref{fig:cave-concept} je znázorněn postup zpracování vstupních
     \label{fig:cave-concept}
 \end{figure}
 
-\textit{CAVE} pracuje ve dvou krocích. V prvním přeloží danou vlastnost na konečný počet konfigurací. Každá konfigurace reprezentuje jedno řešení problému. Konfigurace je složena z proměnných a podmínek nad těmito proměnnými. Ve druhém kroku výpočtu, \textit{CAVE} využívá tzv "Constraint solver" k nalezení řešení pro alespoň jednu konfiguraci. Řešení spočívá v identifikaci takové sekvence událostí, která splní hledanou vlastnost (cíl). Pokud není žádná taková konfigurace nalezena, nemůže být samozřejmě nikdy hledaná vlastnost splněna.
+\textit{CAVE} pracuje ve dvou krocích. V prvním přeloží danou vlastnost na konečný počet konfigurací. Každá konfigurace reprezentuje jedno řešení problému. Konfigurace je složena z proměnných a podmínek nad těmito proměnnými. Ve druhém kroku výpočtu \textit{CAVE} využívá tzv.  "Constraint solver" k nalezení řešení pro alespoň jednu konfiguraci. Řešení spočívá v identifikaci takové sekvence událostí, která splní hledanou vlastnost (cíl). Pokud není žádná taková konfigurace nalezena, nemůže být samozřejmě nikdy hledaná vlastnost splněna.
 
 Pro lepší pochopení uvedu příklad. Nechť je vstupní množina \textit{CEP} pravidel pro jednoduchost složena z jednoho pravidla \textit{R}:
 
@@ -290,7 +293,7 @@ A() := [X then Y(y > 0)]
 \end{minipage}
 \end{center}
 
-Dále uvažujme jednoduchou vlastnost \textit{P1} která má za cíl zjistit jestli je možné detekovat alespoň jeden výskyt události typu \textit{A}.
+Dále uvažujme jednoduchou vlastnost \textit{P1}, která má za cíl zjistit, jestli je možné detekovat alespoň jeden výskyt události typu \textit{A}.
 
 Podle výše uvedeného pravidla \textit{CAVE} zjistí, že událost \textit{A} může být generována pouze z pravidla \textit{R}. Tedy, vlastnost \textit{P1} může být splněna pouze pokud se pravidlo \textit{R} vyvolalo alespoň jednou. To přivádí \textit{CAVE} k vytvoření konfigurace, která zahrnuje událost typu \textit{X} a událost typu \textit{Y}. Konfigurace definuje tři proměnné: \textit{X.timestamp, Y.timestamp}\footnote{\textit{timestamp} je v překladu "časová známka". Předpokládá se, že každá událost má iniciálně nastavený čas. Typicky jde o čas vzniku dané události.}, and \textit{Y.y}. Pravidlo \textit{R} pak definuje podmínky nad těmito proměnnými:
 
@@ -306,16 +309,16 @@ Y.y > 0 and X.timestamp < Y.timestamp
 
 Jak je znázorněno na obrázku \ref{fig:cave-concept}, \textit{CAVE} přikládá ke každé konfiguraci také podmínky definované aplikačním prostředím. V tomto případě prostředí limituje pouze vzdálenost mezi dvěma událostmi typu \textit{Y}.
 
-Zde končí fáze překladu. V následující fázi "constraint solver" vyhodnotí vygenerovanou konfiguraci jako splnitelnou a každé proměnné přiřadí konkrétní hodnotu se kterou bude klauzule splněna. V našem případě například: \textit{X.timestamp = 1}, \textit{Y.timestamp = 2}, \textit{Y.y = 1}.
+Zde končí fáze překladu. V následující fázi "constraint solver" \ vyhodnotí vygenerovanou konfiguraci jako splnitelnou a každé proměnné přiřadí konkrétní hodnotu, se kterou bude klauzule splněna. V našem případě například: \textit{X.timestamp = 1}, \textit{Y.timestamp = 2}, \textit{Y.y = 1}.
 
-Problém detekování výskytu určité vlastnosti byl převeden na ekvivalentní problém jehož obsahem je zjišťování že alespoň jedna konfigurace vyhovuje zadání. Neboli problém splnitelnosti konečné množiny podmínek.
+Problém detekování výskytu určité vlastnosti byl převeden na ekvivalentní problém jehož obsahem je zjišťování, že alespoň jedna konfigurace vyhovuje zadání. Neboli problém splnitelnosti konečné množiny podmínek.
 
 \chapter{Analýza}
 \label{sec:analysis}
 
 Tato kapitola popisuje požadavky na systém a zasazuje systém do prostředí ve kterém bude nasazen. Počátek kapitoly parafrázuje a rozvíjí zadání práce. Dále je diagram užití, který shrnuje funkční požadavky. Na konci kapitoly jsou na modelovém příkladě demonstrovány vstupy a výstupy systému.
 
-Cílem této práce je vytvoření software pro distribuované zpracování událostí, který bude schopen detekovat komplexní události na základě pravidel. Aplikace by měla být schopna zvládnout libovolný počet připojených uzlů. Síť propojených uzlů je možné reprezentovat grafem G(V, E), kde V jsou uzly grafu, neboli konkrétní počítače na kterých probíhá zpracování. E jsou pak orientované hrany grafu, které reprezentují informaci o tom který počítač posílá data kterému. Každá hrana je označena příznakem \textit{$L_i$}, který označuje typ události, která je po dané hraně posílána. Konkrétním příkladem tak může být událost \textit{$L_1$}, představující zprávu typu \textit{chyba}, která není tak častá, ale její závažnost je vyšší. A událost \textit{$L_2$}, představující zprávu typu \textit{upozornění}, která je častá, ale méně závažná.
+Cílem této práce je vytvoření software pro distribuované zpracování událostí, který bude schopen detekovat komplexní události na základě pravidel. Aplikace by měla být schopna zvládnout libovolný počet připojených uzlů. Síť propojených uzlů je možné reprezentovat grafem G(V, E), kde V jsou uzly grafu, neboli konkrétní počítače, na kterých probíhá zpracování. E jsou pak orientované hrany grafu, ty reprezentují informaci o tom který počítač posílá data kterému. Každá hrana je označena příznakem \textit{$L_i$}. Ten označuje typ události, která je po dané hraně posílána. Konkrétním příkladem tak může být událost \textit{$L_1$}, představující zprávu typu \textit{chyba}. Ta není tak častá, ale její závažnost je vyšší. A událost \textit{$L_2$}, představující zprávu typu \textit{upozornění}. Ta je naopak častá, ale méně závažná.
 
 Pravidla pro detekci komplexních událostí, budou mít časovou platnost. Po uplynutí daného času se pravidlo automaticky stane neaktivní. Pravidla bude také možné nasadit pouze na určitou podmnožinu uzlů V grafu G. Více o pravidlech v kapitole \ref{sec:usecase_rule}.
 
@@ -339,7 +342,7 @@ Po určitém počtu výskytů události \textit{$L_1$} je vytvořena nová skupi
 
 Typickým místem pro nasazení distribuovaného zpracování událostí je analýza síťové komunikace. To je také místo, kde bude DEM nasazen.
 
-Nejčastější případ, je ten, že přes jeden hlavní uzel probíhá většina komunikace. Podobně je tomu i v softwaru. Aplikační server zpracovává všechny klientské požadavky. Takový uzel je zdrojem dat, která chceme analyzovat. Vytváří sekvenční proud dat, který můžeme vhodně distribuovat do clusteru. Ten jej zpracovává.
+Nejčastější případ je ten, že přes jeden hlavní uzel probíhá většina komunikace. Podobně je tomu i v softwaru. Aplikační server zpracovává všechny klientské požadavky. Takový uzel je zdrojem dat, která chceme analyzovat. Vytváří sekvenční proud dat, který můžeme vhodně distribuovat do clusteru. Ten jej zpracovává.
 
 Problém nastane, když je množství produkovaných dat větší než je kapacita analyzujícího (analyzujících) počítačů. V takovém případě můžeme přidat výpočetní sílu nebo zvolit úplně jiný přístup k datové analýze.
 
@@ -349,7 +352,7 @@ Uvažujme situaci, kdy necháme na síťovém uzlu aby analyzoval běžně znám
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.5\textwidth, height=0.20\textheight]{images/cloud-comparison.eps}
-    \caption{Srovnání přístupu zasílání dat do cloudu (vlevo) a vytvoření cloudu přímo na koncových zařízeních (vpravo)}
+    \caption{Srovnání přístupu zasílání dat do klaudu (vlevo) a vytvoření klaud přímo na koncových zařízeních (vpravo)}
     \label{fig:cloud-comparison}
 \end{figure}
 
@@ -364,7 +367,7 @@ Cílem této kapitoly je jasně formulovat seznam požadavků, které má systé
 
 Požadavky jsou kladeny hlavně na variabilitu, možnost nasazení pravidel s časovou platností. Menší důraz je na výkon a proces nasazování.
 
-Na obrázku \ref{fig:usecase} je znázorněn diagram užití, který přehledně shrnuje požadavky na systém. Vystupují v něm dvě role. Uživatel, je zde člověk, který spouští analýzu. Druhou rolí je Algoritmus, který reprezentuje samotný software. Je zde uveden proto, aby bylo zřejmé jaké operace se od systému vyžadují.
+Na obrázku \ref{fig:usecase} je znázorněn diagram užití, který přehledně shrnuje požadavky na systém. Vystupují v něm dvě role. Uživatel je zde člověk, který spouští analýzu. Druhou rolí je Algoritmus, který reprezentuje samotný software. Je zde uveden proto, aby bylo zřejmé jaké operace se od systému vyžadují.
 
 \begin{figure}[H]
 	\centering
@@ -376,11 +379,11 @@ Na obrázku \ref{fig:usecase} je znázorněn diagram užití, který přehledně
 Dále následuje popis jednotlivých případů užití. Kvůli přehlednosti jsou nadpisy některých pravidel zkráceny.
 
 \subsection*{Spustit / zastavit aplikaci}
-Jak je z názvu patrné uživatel může spustit a zastavit aplikaci a s tím samozřejmě i analýzu. Je zde vhodné zdůraznit, že spuštění i zastavení by mělo být centralizované a jednoduché. To znamená kontrola pomocí jednoho skriptu. Tím se ušetří uživateli čas a předejde se některým chybám.
+Jak je z názvu patrné, uživatel může spustit a zastavit aplikaci a s tím samozřejmě i analýzu. Je zde vhodné zdůraznit, že spuštění i zastavení by mělo být centralizované a jednoduché. To znamená kontrola pomocí jednoho skriptu. Tím se ušetří uživateli čas a předejde se některým chybám.
 
 \subsection*{Nasadit / odebrat pravidlo}
 \label{sec:usecase_rule}
-Uzly, které budou přijímat data, je budou zároveň i analyzovat. Tím, že data mají charakter potenciálně nekonečného proudu, bude pro analýzu potřeba zvolit vhodný nástroj. Nástroj bude muset umět na základě definovaného pravidla vyhodnotit která z příchozích dat pravidlu vyhovují. Jak již bylo zmíněno dat může být opravdu hodně, proto vyhodnocování musí probíhat pouze v omezeném časovém intervalu. Demonstrace pravidla za použití pseudokódu na obrázku \ref{fig:sec_usecase_rule} vyhodnocuje počet událostí typu \textit{$L_1$} v časovém okně pěti sekund.
+Uzly, které budou přijímat data, je budou zároveň i analyzovat. Tím, že data mají charakter potenciálně nekonečného proudu, bude pro analýzu potřeba zvolit vhodný nástroj. Nástroj bude muset umět na základě definovaného pravidla vyhodnotit, která z příchozích dat pravidlu vyhovují. Jak již bylo, zmíněno dat může být opravdu hodně, proto vyhodnocování musí probíhat pouze v omezeném časovém intervalu. Demonstrace pravidla za použití pseudokódu na obrázku \ref{fig:usecase_rule} vyhodnocuje počet událostí typu \textit{$L_1$} v časovém okně pěti sekund.
 
 \begin{center}
 \begin{minipage}[H]{.95\linewidth}
@@ -388,7 +391,7 @@ Uzly, které budou přijímat data, je budou zároveň i analyzovat. Tím, že d
 SELECT count(*) FROM Event(type=L1) in window (5 sec)
 	\end{mylisting}
 	\captionof{figure}{Příklad pravidla}
-	\label{fig:sec_usecase_rule} 
+	\label{fig:usecase_rule} 
 \end{minipage}
 \end{center}
 
@@ -402,14 +405,14 @@ send data: {type = L1} to node V1;
 read data: {type = L2} from queue;			
 	\end{mylisting}
 	\captionof{figure}{Přijímání a posílání dat}
-	\label{fig:sec_usecase_rule} 
+	\label{fig:send_data_pseudo} 
 \end{minipage}
 \end{center}
 
 \subsection*{Vyhodnotit data na základě pravidla}
-Přijatá data jsou analyzována a průběžně se vyhodnocuje jestli některá sekvence událostí odpovídá aktuálně nasazenému pravidlu. Pokud ano, je vytvořena nová, komplexní, událost, obsahující potřebná data pro adekvátní reakci. Adekvátní reakcí je myšleno vytvoření nové skupiny nebo vypsání události do logu.
+Přijatá data jsou analyzována a průběžně se vyhodnocuje, zdali některá sekvence událostí odpovídá aktuálně nasazenému pravidlu. Pokud ano, je vytvořena nová, komplexní, událost, obsahující potřebná data pro adekvátní reakci. Adekvátní reakcí je myšleno vytvoření nové skupiny nebo vypsání události do logu.
 
-Zpracování komplexní události záleží na typu analyzovaných dat. Pokud jsou to hrubozrné události (nízká frekvence výskytu, ale vysoká důležitost) bude vytvořena nová skupina počítačů, které budou mezi sebou analyzovat jemnozrné události (vysoká frekvence výskytu, ale nízká důležitost). Naopak, pokud jsou to jemnozrné události, bude komplexní událost pouze zaznamenána do logu. Detailní popis jemnozrných a hrubozrných událostí je v kapitole \ref{sec:udalosti-v-systemu}.
+Zpracování komplexní události záleží na typu analyzovaných dat. Pokud jsou to hrubozrné události (nízká frekvence výskytu, ale vysoká důležitost), bude vytvořena nová skupina počítačů, které budou mezi sebou analyzovat jemnozrné události (vysoká frekvence výskytu, ale nízká důležitost). Naopak, pokud jsou to jemnozrné události, bude komplexní událost pouze zaznamenána do logu. Detailní popis jemnozrných a hrubozrných událostí je v kapitole \ref{sec:udalosti-v-systemu}.
 
 \subsection*{Vytvořit / rozpustit skupinu počítačů}
 Důvod vzniku nové skupiny je popsán v předchozím případě užití. Rozpuštění je vyvoláno uplynutím časového intervalu. Skupiny počítačů analyzující jemnozrné události jsou vytvářeny s časovou platností. Daný interval by měl stačit k analýze. Pokud dojde k detekci sledu událostí, který odpovídá aktuálně nasazenému pravidlu pro jemnozrnou analýzu, vzniklá komplexní událost je zapsána do logu.
@@ -418,7 +421,7 @@ Důvod vzniku nové skupiny je popsán v předchozím případě užití. Rozpu�
 Tato kapitola postupně popisuje jak budou reálně splněny požadavky na systém uvedené v analýze. Stěžejní částí je volba technologií. U každé zvolené technologie je její popis a jak bude použita ve výsledném řešení.
 
 \section{Technologie}
-Výběr technologií nebyl náhodný. Byly mi doporučeny vedoucím práce. Každá z nich by se dala nahradit, ale myslím si, že právě tato kombinace (\textit{Java + Maven, Kafka, Esper, ZooKeepr}) je ideální, protože jsou si navzájem přizpůsobené. Namátkou zmíním některé vazby, které usnadňují vývoj: \textit{Esper, Kafka i ZooKeeper} mají rozhraní pro Javu, proto je \textit{Maven} ideální. \textit{Kafka} používá \textit{ZooKeeper} pro distribuci nastavení, apod.
+Technologie mi byly doporučeny vedoucím práce. Každá z nich by se dala nahradit, ale myslím si, že právě tato kombinace (\textit{Java + Maven, Kafka, Esper, ZooKeepr}) je ideální, protože jsou navzájem kompatibilní. Namátkou zmíním některé vazby, které usnadňují vývoj: \textit{Esper, Kafka i ZooKeeper} mají rozhraní pro Javu, proto je \textit{Maven} ideální. \textit{Kafka} používá \textit{ZooKeeper} pro distribuci nastavení, apod.
 
 \subsection{Apache Maven}
 Apache Maven je nástroj pro správu, řízení a automatizaci sestavování aplikací (angl. build). Maven sám nemá žádné uživatelské rozhraní a běží pouze na příkazové řádce. Jeho účelem je usnadnit práci vývojáři tím, že definuje jednotný proces sestavení. \ref{bib_4} Také definuje strukturu aplikace, protože jednotlivé typy souborů hledá v určitých balíčcích. Například spustitelné Java soubory by měly být v adresáři \textit{src/maven/java}.
@@ -438,11 +441,11 @@ Protože je veškerá komunikace řízena událostmi a zasíláním zpráv, modu
 
 \subsection{Apache Kafka}
 \label{sec:kafka}
-Apache Kafka je systém pro zasílání zpráv. [\ref{bib_5}] Kafka klastr může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem aplikačního rámce Kafka je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive přepážkou (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet přepážek. Přepážka je menší jednotka než téma. Každé téma může být replikováno mezi brokery.
+Apache Kafka je systém pro zasílání zpráv. [\ref{bib_5}] Kafka klastr může být rozdělený mezi několik počítačů, každý nazýváme \textit{broker}. Základem aplikačního rámce Kafka je fronta zpráv. Ta je reprezentována tématem (angl. topic) respektive oddílem (angl. partition). Při vytváření tématu udáváme kromě jejího jména, také kolikrát se má replikovat mezi \textit{brokery} a počet oddílů. Oddíl je menší jednotka než téma. Každé téma může být replikováno mezi brokery.
 
 \subsection*{Konzument a producent}
 
-Do Kafka klastru data zapisují \textit{producenti} a na druhé straně z ní data čtou \textit{konzumenti} (angl. producer and consumer). Zapisování dat producentem je přímočaré. Producent rozhoduje do kterého tématu či přepážky se má zpráva zapsat. Zprávy jsou ukládány do fronty, tedy způsobem FIFO \footnote{FIFO -- první zapsán, první přečten (angl. first in first out)}. Čtení zpráv závisí na aktuálním stavu. Konzumenty je možné seskupovat do skupin a podle toho se pak rozlišuje způsob čtení zpráv na "queuing" a "publish-subscribe". V modelu "queue" je zpráva poslána vždy jednomu z konzumentů. Naopak v modelu "publish-subscribe" je každá zpráva poslána všem konzumentům. V Kafka dokumentaci se říká [\ref{bib_5}]:
+Do Kafka klastru data zapisují \textit{producenti} a na druhé straně z ní data čtou \textit{konzumenti} (angl. producer and consumer). Zapisování dat producentem je přímočaré. Producent rozhoduje, do kterého tématu, či oddílu se má zpráva zapsat. Zprávy jsou ukládány do fronty, tedy způsobem FIFO \footnote{FIFO -- první zapsán, první přečten (angl. first in first out)}. Čtení zpráv závisí na aktuálním stavu. Konzumenty je možné seskupovat do skupin a podle toho se pak rozlišuje způsob čtení zpráv na "queuing" a "publish-subscribe". V modelu "queue" je zpráva poslána vždy jednomu z konzumentů. Naopak v modelu "publish-subscribe" je každá zpráva poslána všem konzumentům. V Kafka dokumentaci se říká [\ref{bib_5}]:
 \begin{itemize}
   \item Pokud jsou všichni konzumenti ve stejné skupině, pak Kafka funguje v modelu "queue".
   \item Pokud je každý konzument v jiné skupině, pak je Kafka v modelu "publish-subscribe". Všechny zprávy jsou distribuovány všem konzumentům \footnote{Broadcast}.
@@ -450,7 +453,7 @@ Do Kafka klastru data zapisují \textit{producenti} a na druhé straně z ní da
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.65\textwidth, height=0.45\textheight]{images/kafka.eps}
+    \includegraphics[width=0.55\textwidth, height=0.35\textheight]{images/kafka.eps}
     \caption{Znázornění základního schématu aplikačního rámce Kafka}
     \label{fig:kafka}
 \end{figure}
@@ -464,8 +467,8 @@ Kafka poskytuje následující seznam garancí:
 \end{itemize}
 
 \subsection*{Použití}
-Jak už bylo řečeno dříve analýza událostí bude probíhat na počítačích, které data produkují. V navrhovaném řešení jsem nezaznamenal potřebu dělit témata na příčky (partition). Také Kafka není distribuovaná do několika brokerů a je spuštěna pouze na jenom stroji. Distribuci bych nakonfiguroval až v případě produkčního nasazení pro prevenci výpadků. Na každém počítači běží nejméně jeden producent a nejvýše jeden konzument. Jednotlivá témata jsou pojmenována podle ip adres počítačů. Konkrétně při iniciálním spuštění je jeden ze strojů určen jako konzument a počet producentů je roven počtu strojů. Protože existuje pouze jeden konzument, data jsou posílána pouze do jednoho odpovídajícího tématu. Viz obrázek \ref{fig:kafka-impl}
-
+Jak již bylo řečeno dříve, analýza událostí bude probíhat na počítačích, které data produkují. V navrhovaném řešení jsem nezaznamenal potřebu dělit témata na příčky (partition). Také Kafka není distribuovaná do několika brokerů a je spuštěna pouze na jenom stroji. Distribuci bych nakonfiguroval až v případě produkčního nasazení pro prevenci výpadků. Na každém počítači běží nejméně jeden producent a nejvýše jeden konzument. Jednotlivá témata jsou pojmenována podle ip adres počítačů. Konkrétně při iniciálním spuštění je jeden ze strojů určen jako konzument a počet producentů je roven počtu strojů. Protože existuje pouze jeden konzument, data jsou posílána pouze do jednoho odpovídajícího tématu. Viz obrázek \ref{fig:kafka-impl}
+\newpage
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.55\textwidth, height=0.3\textheight]{images/kafka-impl.eps}
@@ -491,7 +494,7 @@ Obdobně jako Kafka a naprostá většina distribuovaných systémů, musí i ZK
 \end{itemize}
 
 \subsection*{API}
-ZK nabízí uživateli (programátorovi) velice jednoduché rozhraní, pro manipulaci s jednotlivými uzly. Sestává se z těchto operací:
+ZK nabízí uživateli (programátorovi) velice jednoduché rozhraní pro manipulaci s jednotlivými uzly. Sestává se z těchto operací:
 \begin{itemize}
   \item Vytvoření (create)
   \item Smazání (delete)
@@ -508,7 +511,7 @@ Kromě operace \textit{sync} jsou v této práci použity všechny.
 Pozorovatelé \footnote{Z anglického slova \textit{Watches}. Jde o konkrétní implementaci návrhového vzoru "observable". [\ref{bib_8}]} jsou nedílnou součástí téměř každého událostmi řízeného systému. Stejně tak, je tomu u ZK. Na znode je možné zaregistrovat dva druhy pozorovatelů:
 
 \begin{itemize}
-  \item Datový pozorovatel -- změní stav, když jsou změněna data v uzlu. Tzn někdo zavolal operaci "zapsání dat". Změna stavu obsahuje nově nastavená data
+  \item Datový pozorovatel -- změní stav, když jsou změněna data v uzlu. To znamená někdo zavolal operaci "zapsání dat". Změna stavu obsahuje nově nastavená data
   \item Pozorovatel potomků -- změní stav, když nastane změna v některém z potomků daného uzlu. Událost obsahuje, mimo jiné, informaci o typu změny (smazání, vytvoření, zápis dat, ztráta konektivity) a identifikaci potomka. 
 \end{itemize}
 
@@ -534,7 +537,7 @@ ZK je použit pro řízení běhu celého procesu DEM. Jeho hlavní úlohou je d
 
 Je důležité zmínit, že cesta ve stromové struktuře je určena jednoznačným textovým identifikátorem. Jednotlivé uzly jsou pak odděleny lomítkem. Na obrázku \ref{fig:zookeeper-impl} můžeme vidět strukturu uzlů, při iniciálním spuštění DEM. Příklad identifikátoru prvního uzlu z druhé vrstvy je \textit{"/root/ip1/ip1"}, druhého uzlu z první vrstvy \textit{"/root/ip2"}, atd.
 
-Obrázek \ref{fig:zookeeper-impl} dále znázorňuje logickou strukturu DEM. První vrstva reprezentuje konzumenty a druhá vrstva producenty. Jinak řečeno "kdo komu posílá data". Podstatné je, uvědomit si, že strom zobrazuje pouze virtuální stav. Aplikace jako taková běží na daném stroji vždy jen jednou a strom pak reprezentuje spíše množství běžících vláken a jejich úlohu. Jak je vidět z obrázku \ref{fig:zookeeper-impl}, v DEM existují 4 producenti (jeden na každém fyzickém stroji) a jeden konzument (fyzický stroj s \textit{ip1}). To odpovídá stavu aplik. rámce Kafka z obrázku \ref{fig:kafka-impl}.
+Obrázek \ref{fig:zookeeper-impl} dále znázorňuje logickou strukturu DEM. První vrstva reprezentuje konzumenty a druhá vrstva producenty. Jinak řečeno "kdo komu posílá data". Podstatné je uvědomit si, že strom zobrazuje pouze virtuální stav. Aplikace jako taková běží na daném stroji vždy jen jednou a strom pak reprezentuje spíše množství běžících vláken a jejich úlohu. Jak je vidět z obrázku \ref{fig:zookeeper-impl}, v DEM existují 4 producenti (jeden na každém fyzickém stroji) a jeden konzument (fyzický stroj s \textit{ip1}). To odpovídá stavu aplik. rámce Kafka z obrázku \ref{fig:kafka-impl}.
 
 Výhody stromové struktury jsou zřejmé. U každého uzlu se dá zjistit jaké má potomky (které stroje posílají data a kam). Změna cíle, kam má stroj posílat data, je na úrovni rozhraní triviální. Stačí přesunout uzel v druhé vrstvě pod jiného rodiče.
 
@@ -547,7 +550,7 @@ Výhody stromové struktury jsou zřejmé. U každého uzlu se dá zjistit jaké
 
 \subsection{Esper}
 \label{sec:esper}
-Esper je "open source" nástroj pro komplexní zpracování událostí a zpracování proudu událostí\footnote{Zpracování proudu událostí, neboli anglicky \textit{event stream processing (ESP)}.} dostupný pod GNU GPL licencí\footnote{GNU GPL General Public Licence) je všeobecná veřejná licence - \url{https://www.gnu.org/licenses/gpl.html}}. Jedná se o velice užitečný nástroj, jehož největší předností je efektivita zpracování proudu událostí. V této kapitole popíšu základní princip jak Esper funguje a ukážu názorné ukázky použití. Základním zdrojem pro tuto kapitolu je oficiální dokumentace [\ref{bib_esper}]. Esper je napsaný v Javě, ale existuje i verze pro \textit{.NET}, zvaná \textit{NEsper}. Esper je primárně navržen na efektivní analýzu velkého množství událostí v reálném čase. S daty pracuje pouze v paměti a drží si minimální stav.
+Esper je "open source" nástroj pro komplexní zpracování událostí a zpracování proudu událostí\footnote{Zpracování proudu událostí, neboli anglicky \textit{event stream processing (ESP)}.} dostupný pod GNU GPL licencí\footnote{GNU GPL General Public Licence) je všeobecná veřejná licence - \url{https://www.gnu.org/licenses/gpl.html}}. Jedná se o velice užitečný nástroj, jehož největší předností je efektivita zpracování proudu událostí. V této kapitole popíši základní princip jak Esper funguje a ukážu názorné ukázky použití. Základním zdrojem pro tuto kapitolu je oficiální dokumentace [\ref{bib_esper}]. Esper je napsaný v Javě, ale existuje i verze pro \textit{.NET}, zvaná \textit{NEsper}. Esper je primárně navržen na efektivní analýzu velkého množství událostí v reálném čase. S daty pracuje pouze v paměti a drží si minimální stav.
 
 Princip aplikačního rámce Esper je odvozen od \textit{SQL} standardu a nabízí možnosti agregace dat, detekci vzorů událostí nebo analýzu v plovoucím časovém okně. Základem je dotazovací jazyk zvaný "Event Processing Language (EPL)". \textit{EPL} je deklarativní\footnote{Deklarativní jazyky specifikují cíl a algoritmizace je ponechána programu (interpretu) daného jazyka.} jazyk určený na analýzu časově seřazených událostí a detekci definovaných vzorů v těchto událostech. \textit{EPL} nabízí kaluzule: \textit{SELECT, FROM, WHERE, GROUP BY, HAVING} a \textit{ORDER BY}, které jsou běžně známé z \textit{SQL}.
 
@@ -590,7 +593,7 @@ Závěrem kapitoly uvádím aktivity diagram \ref{fig:esper_activity}, který re
 
 
 \section{Shrnutí}
-Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technologie je použita při implementaci daného požadavku z analýzy. A návrh schématu. Schéma je znázorněno na čtyřech strojích.
+Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje, jaká technologie je použita při implementaci daného požadavku z analýzy. A návrh schématu. Schéma je znázorněno na čtyřech strojích.
 
 \begin{table}[H]
   \centering
@@ -614,7 +617,7 @@ Kapitola obsahuje přehlednou tabulku, která konkrétně ukazuje která technol
 \begin{figure}[H]
 	\centering
     \includegraphics[width=.7\linewidth, height=.57\textheight]{images/app-architecture.eps}
-    \caption{Schéma aplikace, které znázorňuje které technologie jsou nasazeny na každém stroji a jaké mají mezi sebou vazby.}
+    \caption{Schéma aplikace, které znázorňuje, jaké technologie jsou nasazeny na každém stroji a jaké mají mezi sebou vazby.}
     \label{fig:app-architecture}
 \end{figure}
 
@@ -718,7 +721,7 @@ ZK je jádrem algoritmu. Na každém uzlu je navěšen posluchač, který zaznam
 	\label{fig:json-example} 
 \end{minipage}
 \end{center}
-
+\newpage
 Seznam hlavních řídících akcí pro ZooKeeper:
 
 \begin{itemize}
@@ -888,7 +891,7 @@ by source, level having count(*) > 7"
 	\label{fig:level_2_rule} 
 \end{minipage}
 \end{center}
-
+\newpage
 \section{Demo}
 \label{sec:demo}
 Tato kapitola má za cíl demonstrovat reálný běh aplikace na testovacích strojích. Všechny výstupy aplikace jsou logovány do souboru. Myslím si, že vhodným způsobem ukázky běhu programu jsou konkrétní výňatky z \textit{log} souborů. Každá ukázka je popsána, aby byly výstupy snadno pochopitelné.
@@ -1012,7 +1015,7 @@ Nejdříve uvedu kompletní seznam. Každému bodu je následně věnován odsta
 \subsection*{Více konzumentů}
 Tím, že jsou témata v aplikačním rámci Kafka členěna podle ip adres počítačů, není možné mít na jenom stroji více než jednoho konzumenta. Kdyby to tak bylo, četli by oba ze stejného tématu a "kradli si zprávy". Teoreticky by bylo možné aby se konzumenti dívali na obsah zpráv a podle toho je posílali do některé z instancí aplik. rámce Esper, ale takové řešení je příliš náchylné k chybám a těžko se škáluje.
 
-Vhodným řešením by bylo přidat ke každému tématu i přepážky, které by rozlišovaly druh zpráv. V případě této práce by v každém tématu byly dvě přepážky. Jedna pro jemnozrné (\textit{LEVEL2}) a druhá pro hrubozrné události (\textit{LEVEL1}). Přepážky je možné dynamicky přidávat a tím mít možnost na jednom stroji analyzovat události množství různých typů.
+Vhodným řešením by bylo přidat ke každému tématu i oddíly, které by rozlišovaly druh zpráv. V případě této práce by v každém tématu byly dva oddíly. Jedna pro jemnozrné (\textit{LEVEL2}) a druhá pro hrubozrné události (\textit{LEVEL1}). Oddíly je možné dynamicky přidávat a tím mít možnost na jednom stroji analyzovat události množství různých typů.
 
 \subsection*{Monitoring}
 Pokud by algoritmus nasazen do produkčního prostředí, byl by zároveň potřeba zavést  důsledný monitoring. Nejen to, jestli všechny instance pracují správně, ale také jaká pravidla jsou aktuálně nasazena a na jakých strojích. Dále vytížení aplikačního rámce Kafka. Objemy zpracovávaných dat. Atd.
@@ -1027,9 +1030,9 @@ V rámci testování jsem zkoušel jak se aplikace vzpamatuje z výpadků někte
 \chapter{Závěr}
 Hlavním cílem práce bylo vytvoření software na detekci vzorů událostí v distribuovaném prostředí. Tento cíl byl splněn v plném rozsahu požadavků. Aplikace je nazvána DEM a úspěšná detekce vzorů v proudu událostí byla vyzkoušena na čtyřech virtuálních strojích na Fakultě informatiky Masarykovy univerzity.
 
-První část práce se věnuje úvodu do problematiky zpracování událostí. Je zde vysvětleno co znamená pojem "komplexní zpracování událostí". Druhá kapitola navazuje představením tří nástrojů, které řeší distribuované zpracování dat. U každého nástroje je vysvětlen princip na kterém pracuje. Díky tomu čtenář získá lepší přehled o tom, jak je možné distribuovaně zpracovávat události.
+První část práce se věnuje úvodu do problematiky zpracování událostí. Je zde vysvětleno co znamená pojem "komplexní zpracování událostí". Druhá kapitola navazuje představením tří nástrojů, které řeší distribuované zpracování dat. U každého nástroje je vysvětlen princip, na jakém pracuje. Díky tomu čtenář získá lepší přehled o tom, jak je možné distribuovaně zpracovávat události.
 
-Ve třetí kapitole je rozbor požadavků na systém. Protože má DEM za cíl analyzovat data jsou v této kapitole specifikovány očekávané vstupy a výstupy. Zbytek požadavků je modelován pomocí diagramu užití.
+Ve třetí kapitole je rozbor požadavků na systém. Protože má DEM za cíl analyzovat data, jsou v této kapitole specifikovány očekávané vstupy a výstupy. Zbytek požadavků je modelován pomocí diagramu užití.
 
 Čtvrtá kapitola navazuje výběrem vhodných technologií a popisem architektury systému. Události jsou stěžejním prvkem při běhu aplikace. Proto je jejich sémantice věnována poslední část čtvrté kapitoly.
 

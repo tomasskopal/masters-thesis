@@ -215,8 +215,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="334.53613"
-     inkscape:cy="696.8996"
+     inkscape:cx="478.98677"
+     inkscape:cy="911.13215"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -233,7 +233,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -283,20 +283,20 @@
            y="118.98125">konzument</tspan></text>
     </g>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
-       d="m 280.20354,97.134099 91.6424,80.268581"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       d="m 304.22093,96.217237 71.80975,81.537733"
        id="path3512"
        inkscape:connector-curvature="0" />
     <path
        inkscape:connector-curvature="0"
        id="path4798"
-       d="m 405.47341,98.0555 -22.52879,78.85644"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker4800)" />
+       d="M 441.88349,95.770098 380.16005,177.76652"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker4800)" />
     <path
        inkscape:connector-curvature="0"
        id="path5734"
-       d="M 558.20033,97.125328 396.42018,176.25452"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker5736)" />
+       d="M 582.21273,94.53905 383.22247,179.27232"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker5736)" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker8443)"
        d="m 508,180.3622 c 0,157 0,157 0,157"
@@ -326,7 +326,7 @@
          y="350.36218">staré</tspan></text>
     <rect
        y="47.16256"
-       x="85.923515"
+       x="110.92352"
        height="48.323677"
        width="120.44857"
        id="rect9285"
@@ -334,35 +334,35 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="91"
-       y="77.362206"
+       x="116.78256"
+       y="76.715027"
        id="text9294"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan9296"
-         x="91"
-         y="77.362206">PC1 &lt;ip1&gt;</tspan></text>
+         x="116.78256"
+         y="76.715027">PC1 &lt;ip1&gt;</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.7595883px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect9298"
        width="120.44857"
        height="48.323677"
-       x="221.92352"
+       x="246.92352"
        y="47.16256" />
     <text
        sodipodi:linespacing="125%"
        id="text9300"
-       y="76.362206"
-       x="227"
+       y="76.734558"
+       x="252.78258"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
          sodipodi:role="line"
          id="tspan9316"
-         x="227"
-         y="76.362206">PC2 &lt;ip2&gt;</tspan></text>
+         x="252.78258"
+         y="76.734558">PC2 &lt;ip2&gt;</tspan></text>
     <rect
        y="47.16256"
-       x="356.92352"
+       x="381.92352"
        height="48.323677"
        width="120.44857"
        id="rect9304"
@@ -370,37 +370,37 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="362"
-       y="76.362206"
+       x="387.78256"
+       y="76.734558"
        id="text9306"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan9318"
-         x="362"
-         y="76.362206">PC3 &lt;ip3&gt;</tspan></text>
+         x="387.78256"
+         y="76.734558">PC3 &lt;ip3&gt;</tspan></text>
     <rect
        style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.7595883px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect9310"
        width="120.44857"
        height="48.323677"
-       x="495.92352"
+       x="520.92352"
        y="46.16256" />
     <text
        sodipodi:linespacing="125%"
        id="text9312"
-       y="75.362206"
-       x="501"
+       y="75.715027"
+       x="526.78259"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        xml:space="preserve"><tspan
          sodipodi:role="line"
          id="tspan9320"
-         x="501"
-         y="75.362206">PC4 &lt;ip4&gt;</tspan></text>
+         x="526.78259"
+         y="75.715027">PC4 &lt;ip4&gt;</tspan></text>
     <path
        inkscape:connector-curvature="0"
        id="path9964"
-       d="M 140.71153,96.949737 356.06044,179.53124"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker9966)" />
+       d="M 165.72809,96.046488 373.04008,179.29722"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker9966)" />
     <text
        sodipodi:linespacing="125%"
        id="text10512"

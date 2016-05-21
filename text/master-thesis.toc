@@ -14,48 +14,48 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3.1}\slshape Apache Samsa}{5}{section.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.2}\slshape Apache Storm}{8}{section.3.2}
+\contentsline {section}{\numberline {3.2}\slshape Apache Storm}{7}{section.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.3}\slshape CAVE}{10}{section.3.3}
+\contentsline {section}{\numberline {3.3}\slshape CAVE}{9}{section.3.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}\bfseries Anal\IeC {\'y}za}{13}{chapter.4}
+\contentsline {chapter}{\numberline {4}\bfseries Anal\IeC {\'y}za}{12}{chapter.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.1}\slshape Vstupy a v\IeC {\'y}stupy}{14}{section.4.1}
+\contentsline {section}{\numberline {4.1}\slshape Vstupy a v\IeC {\'y}stupy}{13}{section.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.2}\slshape Diagram u\IeC {\v z}it\IeC {\'\i }}{15}{section.4.2}
+\contentsline {section}{\numberline {4.2}\slshape Diagram u\IeC {\v z}it\IeC {\'\i }}{14}{section.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}\bfseries N\IeC {\'a}vrh}{19}{chapter.5}
+\contentsline {chapter}{\numberline {5}\bfseries N\IeC {\'a}vrh}{18}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}\slshape Technologie}{19}{section.5.1}
+\contentsline {section}{\numberline {5.1}\slshape Technologie}{18}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1.1}\rmfamily Apache Maven}{19}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.1}\rmfamily Apache Maven}{18}{subsection.5.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1.2}\rmfamily Apache Kafka}{20}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.2}\rmfamily Apache Kafka}{19}{subsection.5.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1.3}\rmfamily Apache ZooKeeper}{24}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.3}\rmfamily Apache ZooKeeper}{23}{subsection.5.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1.4}\rmfamily Esper}{27}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.4}\rmfamily Esper}{26}{subsection.5.1.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}\slshape Shrnut\IeC {\'\i }}{29}{section.5.2}
+\contentsline {section}{\numberline {5.2}\slshape Shrnut\IeC {\'\i }}{28}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}\slshape Ud\IeC {\'a}losti v syst\IeC {\'e}mu}{31}{section.5.3}
+\contentsline {section}{\numberline {5.3}\slshape Ud\IeC {\'a}losti v syst\IeC {\'e}mu}{30}{section.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}\bfseries Nasazen\IeC {\'\i }}{32}{chapter.6}
+\contentsline {chapter}{\numberline {6}\bfseries Nasazen\IeC {\'\i }}{31}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}\slshape Konfigurace}{32}{section.6.1}
+\contentsline {section}{\numberline {6.1}\slshape Konfigurace}{31}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}\slshape Implementace}{33}{section.6.2}
+\contentsline {section}{\numberline {6.2}\slshape Implementace}{32}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2.1}\rmfamily Spu\IeC {\v s}t\IeC {\v e}n\IeC {\'\i }}{35}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.1}\rmfamily Spu\IeC {\v s}t\IeC {\v e}n\IeC {\'\i }}{34}{subsection.6.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2.2}\rmfamily P\IeC {\v r}echody mezi stavy}{36}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.2}\rmfamily P\IeC {\v r}echody mezi stavy}{35}{subsection.6.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.3}\slshape Testov\IeC {\'a}n\IeC {\'\i }}{39}{section.6.3}
+\contentsline {section}{\numberline {6.3}\slshape Testov\IeC {\'a}n\IeC {\'\i }}{38}{section.6.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {6.4}\slshape Demo}{42}{section.6.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.5}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{46}{section.6.5}
+\contentsline {section}{\numberline {6.5}\slshape Zn\IeC {\'a}m\IeC {\'a} omezen\IeC {\'\i }}{45}{section.6.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {7}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{49}{chapter.7}
+\contentsline {chapter}{\numberline {7}\bfseries Z\IeC {\'a}v\IeC {\v e}r}{48}{chapter.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}\bfseries P\IeC {\v r}\IeC {\'\i }loha}{52}{appendix.A}
+\contentsline {chapter}{\numberline {A}\bfseries P\IeC {\v r}\IeC {\'\i }loha}{51}{appendix.A}
